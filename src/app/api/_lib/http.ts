@@ -2,6 +2,7 @@
 import { NextResponse } from "next/server";
 import type { ToolError } from "@/lib/types";
 import { DEV_FIXTURE_HEADER, isDevFixtureActive, markDevFixture } from "@/lib/dev-fixture";
+import { StoreError } from "@/lib/store";
 
 const NO_STORE = { "Cache-Control": "no-store" };
 
@@ -93,6 +94,8 @@ export function fail(err: unknown, context: string, fallback: string) {
   }
   const message = err instanceof Error ? err.message : String(err);
   console.error(`[${context}]`, message);
+  // Store errors carry an HTTP status and a short speakable message.
+  if (err instanceof StoreError) return toolError(err.message, err.status);
   if (/not found|unknown (patient|alert)/i.test(message)) return toolError("I could not find that record.", 404);
   return toolError(fallback, 502);
 }
