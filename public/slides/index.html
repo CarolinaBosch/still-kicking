@@ -30,7 +30,7 @@ p,li{font-size:clamp(17px,1.7vw,23px);line-height:1.45}
 .center{text-align:center}
 .muted{color:var(--soft)}
 .blob{position:absolute;border-radius:50%;z-index:-1;opacity:.55}
-.logo{width:clamp(150px,20vw,240px);height:auto;animation:bob 3.2s ease-in-out infinite}
+.logo{width:clamp(150px,20vw,240px);height:auto;mix-blend-mode:multiply;animation:bob 3.2s ease-in-out infinite}
 @keyframes bob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-10px) rotate(2deg)}}
 .bubble{display:inline-block;background:#fff;border:3px solid var(--ink);border-radius:28px;padding:14px 24px;font-family:Fredoka,sans-serif;font-size:clamp(20px,2.3vw,30px);position:relative;box-shadow:5px 5px 0 var(--ink)}
 .bubble.left:after,.bubble.right:after{content:"";position:absolute;bottom:-16px;width:22px;height:22px;background:#fff;border-right:3px solid var(--ink);border-bottom:3px solid var(--ink)}
@@ -79,7 +79,7 @@ ul.tick li:before{content:"";position:absolute;left:4px;top:.45em;width:16px;hei
 .dots i{width:11px;height:11px;border-radius:50%;background:#e7d6cd;display:block}
 .dots i.on{background:var(--coral);transform:scale(1.25)}
 .fine{font-size:13px;color:var(--soft);position:fixed;bottom:24px;right:24px}
-@media (max-width:760px){
+@media (max-width:600px){
   body{overflow:auto}
   .slide{position:relative;opacity:1;visibility:visible;transform:none;min-height:100vh;padding:48px 20px 64px}
   .nav,.fine{display:none}
