@@ -127,7 +127,22 @@ export default function Dashboard() {
           <h1 className="brand">Still Kicking <span className="brand-sub">Nurse dashboard</span></h1>
           <p className="tagline">A warm daily nurse check-in for older adults living at home.</p>
         </div>
-        <p className="disclaimer">Prototype. Not a medical device. Not a replacement for 911. Synthetic patients.</p>
+          <div className="header-right">
+          <nav className="header-links" aria-label="Project links">
+            <a href={DEMO_VIDEO_URL} target="_blank" rel="noopener noreferrer">
+              Demo video
+            </a>
+            <span aria-hidden="true"> · </span>
+            <a href="https://github.com/CarolinaBosch/still-kicking" target="_blank" rel="noopener noreferrer">
+              Code on GitHub
+            </a>
+            <span aria-hidden="true"> · </span>
+            <a href="/slides/" target="_blank" rel="noopener noreferrer">
+              Slides
+            </a>
+        </nav>
+          <p className="disclaimer">Prototype. Not a medical device. Not a replacement for 911. Synthetic patients.</p>
+        </div>
       </header>
 
       <section className="pitch" aria-label="Who this is for">
@@ -202,20 +217,6 @@ export default function Dashboard() {
           </div>
         </div>
       )}
-
-      <footer className="demo-footer">
-        <a href={DEMO_VIDEO_URL} target="_blank" rel="noopener noreferrer">
-          Watch the 2-minute demo video
-        </a>
-        <span aria-hidden="true"> · </span>
-        <a href="https://github.com/CarolinaBosch/still-kicking" target="_blank" rel="noopener noreferrer">
-          Code on GitHub
-        </a>
-        <span aria-hidden="true"> · </span>
-        <a href="/slides/" target="_blank" rel="noopener noreferrer">
-          Slides
-        </a>
-      </footer>
     </div>
   );
 }
