@@ -25,7 +25,7 @@ This is a hackathon prototype with three synthetic patients. Records, analysis a
 - **Voice:** ElevenLabs conversational agent with Claude Haiku 4.5 as the LLM, Carolina's cloned voice, two client tools (`trigger_emergency_alert`, `submit_checkin`), the `end_call` system tool, and dynamic variables per patient. The browser connects over WebRTC with a short-lived token from our server.
 - **Backend:** Next.js API routes and a nurse dashboard. A store keeps an in-process cache and writes through to a Daytona records sandbox in the background, so emergencies never wait on the network.
 - **Engine:** Python, stdlib only: red-flag rules, trend flags against the person's own baseline, pattern clusters, adherence attribution, caregiver summary. It runs in a fresh Daytona sandbox per call; its output is validated as untrusted.
-- **Tests:** 33 engine tests that run in a Daytona sandbox from a dashboard button.
+- **Tests:** 36 engine tests that run in a Daytona sandbox from a dashboard button.
 - **Process:** Carolina led a squad of Claude Code agents (lead, voice, sandbox, builder, demo) working in parallel against a fixed shared contract (`src/lib/types.ts`).
 
 ## Challenges
@@ -53,4 +53,4 @@ ElevenLabs is the whole patient-facing side. The "Still Kicking Nurse" agent run
 
 ## Daytona
 
-Daytona is the backend for patient data and every piece of analysis. Patient records live in a long-lived records sandbox (we planned a Volume, but it returned "Access denied" on our account). Every finished call spins up a fresh, labeled, ephemeral sandbox, uploads the engine and one input file, runs it, and deletes the sandbox, so one patient's data never shares a machine with another's and a bad run can't leak into the next. Against real Daytona, Walt's analysis took about 1.1 s end to end. The engine's output is treated as untrusted and validated field by field, no host secrets enter any sandbox, and every step has a timeout. The same pattern runs our 33 engine tests in a sandbox from a dashboard button.
+Daytona is the backend for patient data and every piece of analysis. Patient records live in a long-lived records sandbox (we planned a Volume, but it returned "Access denied" on our account). Every finished call spins up a fresh, labeled, ephemeral sandbox, uploads the engine and one input file, runs it, and deletes the sandbox, so one patient's data never shares a machine with another's and a bad run can't leak into the next. Against real Daytona, Walt's analysis took about 1.1 s end to end. The engine's output is treated as untrusted and validated field by field, no host secrets enter any sandbox, and every step has a timeout. The same pattern runs our 36 engine tests in a sandbox from a dashboard button.

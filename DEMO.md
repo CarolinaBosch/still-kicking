@@ -27,7 +27,7 @@ The judges' flow we show: *someone talks → the agent calls a tool → Daytona 
 | 0:55–1:15 | Nurse: "Give me a moment while I look over the last two weeks for your nurse." (Expect ~6 s of quiet before that line while it builds the record; say "it's saving the check-in now".) **Daytona runs the engine**, then the nurse **says the result out loud in the same call** (plain words, "your nurse will look at…", a summary sent to the caregiver), then goodbye. | Patient phone: "Analyzing in Daytona…" → sandbox id. Nurse dashboard (within ~3 s): Walt red, new alert, caregiver summary, finding "likely medication-related" | If the spoken result doesn't come: it says "Saved, your nurse will review it". Say so, and show the nurse dashboard once the analysis lands |
 | 1:15–1:25 | On the nurse dashboard: "A fresh Daytona sandbox ran our engine on this call plus 14 days of history. The grid shows it: missed water pill, then swelling and weight up. Likely the skipped dose, not a new decline. The nurse reviews it." Point at the **sandbox id**. | Finding, attribution, sandbox id, pattern grid | Read only what is on screen |
 | 1:25–1:45 | Left window: open **Rosa**'s call screen, start the call. "Yes, it's Rosa." When asked about chest pain: "I have chest pressure right now." | Nurse tells her to hang up and call 911. Nurse dashboard: red emergency alert with **Simulated SMS** to nurse and caregiver, during the call (within ~3 s) | If no alert: "The tool didn't fire on this take". Don't claim it did |
-| 1:45–2:00 | "It never diagnoses or gives medicine advice. It tells her to call 911 and gets the humans." Click **Acknowledge**. Close: "ElevenLabs runs the voice and tools, Daytona holds the records and runs every analysis. Still kicking." Optional if time: **Run tests in Daytona** (about 4 s, 33 passed). | Alert acknowledged | Skip the tests if over time |
+| 1:45–2:00 | "It never diagnoses or gives medicine advice. It tells her to call 911 and gets the humans." Click **Acknowledge**. Close: "ElevenLabs runs the voice and tools, Daytona holds the records and runs every analysis. Still kicking." Optional if time: **Run tests in Daytona** (about 4 s, 36 passed). | Alert acknowledged | Skip the tests if over time |
 
 ## Fallback run (if the mic fails)
 
@@ -47,7 +47,7 @@ Do not narrate a voice call that didn't happen.
 | curl, real Daytona | Walt check-in → engine | "possible heart failure worsening", likely_adherence_related, red, 1 new alert | 1.1 s total |
 | curl, Vercel | New alert visible across all instances | 10/10 requests | within ~2 s |
 | curl | Edie, 3 missed calls | "Unable to reach after 3 attempts" | n/a |
-| curl | Run tests in Daytona | 33 passed, 0 failed | 3.6 s |
+| curl | Run tests in Daytona | 36 passed, 0 failed | 3.6 s |
 | typed text, live agent | "chest pressure" | `trigger_emergency_alert` fired, 911 instruction | 1.1 s |
 | typed text, live agent | Walt full call | Record correct; Daytona summary spoken, then goodbye | record turn ~6 s |
 | typed text, live agent | Correction, off-topic, medicine question, knowledge base, Spanish | All handled | turns 0.5–1.9 s (no speech) |

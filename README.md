@@ -59,7 +59,7 @@ Patient records (profile, 14-day history, call attempts, alerts, last analysis) 
 Every check-in gets its own sandbox: upload `engine/*.py` and one `input.json`, run `python3 -B engine.py input.json`, read one marker line from stdout, delete the sandbox. We chose a fresh sandbox over a warm one so one patient's data never sits next to another's, and a bad run can't affect the next. The engine is Python stdlib only, so nothing is installed. Against real Daytona today, Walt's check-in took about 1.1 s end to end, about 0.86 s of it in the sandbox. See [`src/lib/daytona/engine.ts`](src/lib/daytona/engine.ts) and [`engine/`](engine/).
 
 **3. Test sandbox (`role=tests`), fresh and ephemeral per run.**
-"Run tests in Daytona" uploads the engine and `engine/tests/`, runs pytest if the image has it or can install it quickly, and otherwise falls back to `unittest`. The dashboard shows passed and failed counts, the output tail and the sandbox id. Today: 33 passed, 0 failed, 3.6 s.
+"Run tests in Daytona" uploads the engine and `engine/tests/`, runs pytest if the image has it or can install it quickly, and otherwise falls back to `unittest`. The dashboard shows passed and failed counts, the output tail and the sandbox id. Today: 36 passed, 0 failed, 3.6 s.
 
 **Guardrails** ([`src/lib/daytona/client.ts`](src/lib/daytona/client.ts)):
 - **Labels** on every sandbox (`app`, `role`, plus `patient` on engine runs), so they are easy to find and clean up.
@@ -123,7 +123,7 @@ Use Chrome or Safari for the call (it needs microphone permission). "Reset demo"
 |---|---|
 | Patient records in a Daytona records sandbox | Real, verified against Daytona |
 | Engine in a fresh Daytona sandbox per call | Real (Walt: 1.1 s total, about 0.86 s in the sandbox) |
-| Tests in a Daytona sandbox | Real (33 passed, 3.6 s) |
+| Tests in a Daytona sandbox | Real (36 passed, 3.6 s) |
 | Emergency alert route | Real (0.14 s) |
 | 3 missed calls → urgent alert | Real |
 | ElevenLabs agent, client tools, record extraction | Real, verified by typed text over the live agent connection: the emergency tool fired 1.1 s after "chest pressure", and a full heart-failure check-in was extracted correctly |
