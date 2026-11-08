@@ -211,6 +211,10 @@ export default function Dashboard() {
         <a href="https://github.com/CarolinaBosch/still-kicking" target="_blank" rel="noopener noreferrer">
           Code on GitHub
         </a>
+        <span aria-hidden="true"> · </span>
+        <a href="/slides/" target="_blank" rel="noopener noreferrer">
+          Slides
+        </a>
       </footer>
     </div>
   );

@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Still Kicking slides</title>
+<link rel="icon" href="logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --coral:#d2604b; --coral-deep:#a8432f; --peach:#fde6dc; --cream:#fff8f1;
+  --mint:#d9f2e6; --mint-deep:#1f6b4c; --sun:#ffe7a3; --sun-deep:#7a5300;
+  --sky:#dcecfb; --sky-deep:#1d4f7f; --ink:#3a2a26; --soft:#7b6660;
+  --red:#c8352a; --red-bg:#fde2df;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--cream);color:var(--ink);font-family:Nunito,system-ui,sans-serif}
+body{overflow:hidden}
+.deck{height:100%;width:100%;position:relative}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:56px 72px 88px;opacity:0;visibility:hidden;transform:translateY(16px) scale(.98);transition:opacity .35s ease,transform .35s ease,visibility .35s}
+.slide.on{opacity:1;visibility:visible;transform:none}
+h1,h2,h3{font-family:Fredoka,Nunito,sans-serif;font-weight:600;margin:0;letter-spacing:.2px}
+h1{font-size:clamp(44px,7vw,92px);color:var(--coral)}
+h2{font-size:clamp(30px,4.2vw,54px);color:var(--coral-deep);text-align:center;margin-bottom:28px}
+h3{font-size:clamp(20px,2vw,26px)}
+p,li{font-size:clamp(17px,1.7vw,23px);line-height:1.45}
+.wrap{width:100%;max-width:1120px}
+.center{text-align:center}
+.muted{color:var(--soft)}
+.blob{position:absolute;border-radius:50%;z-index:-1;opacity:.55}
+.logo{width:clamp(150px,20vw,240px);height:auto;animation:bob 3.2s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-10px) rotate(2deg)}}
+.bubble{display:inline-block;background:#fff;border:3px solid var(--ink);border-radius:28px;padding:14px 24px;font-family:Fredoka,sans-serif;font-size:clamp(20px,2.3vw,30px);position:relative;box-shadow:5px 5px 0 var(--ink)}
+.bubble.left:after,.bubble.right:after{content:"";position:absolute;bottom:-16px;width:22px;height:22px;background:#fff;border-right:3px solid var(--ink);border-bottom:3px solid var(--ink)}
+.bubble.left:after{left:34px;transform:rotate(45deg)}
+.bubble.right:after{right:34px;transform:rotate(45deg)}
+.bubble.coral{background:var(--peach)}
+.bubble.coral:after{background:var(--peach)}
+.chat{display:flex;flex-direction:column;gap:30px;align-items:flex-start;margin-top:26px}
+.chat .r{align-self:flex-end}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px;width:100%}
+.card{background:#fff;border:3px solid var(--ink);border-radius:26px;padding:22px 24px;box-shadow:6px 6px 0 var(--ink)}
+.card h3{margin-bottom:8px}
+.card p{margin:0}
+.c-mint{background:var(--mint)} .c-mint h3{color:var(--mint-deep)}
+.c-sun{background:var(--sun)} .c-sun h3{color:var(--sun-deep)}
+.c-sky{background:var(--sky)} .c-sky h3{color:var(--sky-deep)}
+.c-peach{background:var(--peach)} .c-peach h3{color:var(--coral-deep)}
+.emoji{font-size:clamp(34px,3.4vw,46px);display:block;margin-bottom:6px}
+.flow{display:flex;align-items:stretch;gap:10px;flex-wrap:wrap;justify-content:center}
+.step{flex:1 1 170px;max-width:220px;background:#fff;border:3px solid var(--ink);border-radius:24px;padding:18px 14px;text-align:center;box-shadow:5px 5px 0 var(--ink)}
+.step b{display:block;font-family:Fredoka,sans-serif;font-size:clamp(18px,1.8vw,23px);margin-bottom:4px}
+.step span{font-size:clamp(14px,1.3vw,17px);color:var(--soft)}
+.arrow{align-self:center;font-family:Fredoka,sans-serif;font-size:34px;color:var(--coral)}
+.grid{border-collapse:separate;border-spacing:6px;margin:6px auto 0}
+.grid th{font-weight:700;text-align:right;padding-right:12px;font-size:clamp(14px,1.4vw,19px);white-space:nowrap}
+.grid td{width:clamp(22px,3vw,40px);height:clamp(22px,3vw,40px);border-radius:10px;background:#f1e9e3;text-align:center;font-weight:800;font-size:clamp(13px,1.3vw,18px)}
+.grid td.x{background:var(--red-bg);color:var(--red)}
+.grid td.o{background:var(--sun);color:var(--sun-deep)}
+.grid .days td{background:none;font-weight:600;color:var(--soft);font-size:12px}
+.sticker{display:inline-block;background:var(--coral);color:#fff;font-family:Fredoka,sans-serif;border-radius:999px;padding:8px 18px;font-size:clamp(16px,1.6vw,21px);transform:rotate(-3deg);box-shadow:4px 4px 0 var(--ink)}
+.alert{background:var(--red-bg);border:3px solid var(--red);border-radius:24px;padding:18px 22px;box-shadow:6px 6px 0 var(--ink);max-width:520px}
+.alert h3{color:var(--red)}
+.sms{background:#fff;border-radius:16px;padding:8px 12px;margin-top:10px;font-size:clamp(14px,1.3vw,17px)}
+.tag{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.4px;background:var(--ink);color:#fff;border-radius:6px;padding:2px 7px;margin-right:6px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:26px;width:100%;align-items:center}
+ul.tick{list-style:none;padding:0;margin:0}
+ul.tick li{padding-left:34px;position:relative;margin:6px 0}
+ul.tick li:before{content:"";position:absolute;left:4px;top:.45em;width:16px;height:16px;border-radius:50%;background:var(--coral)}
+.links{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:26px}
+.links a{font-family:Fredoka,sans-serif;font-size:clamp(17px,1.7vw,22px);text-decoration:none;color:var(--ink);background:#fff;border:3px solid var(--ink);border-radius:999px;padding:12px 22px;box-shadow:4px 4px 0 var(--ink)}
+.links a:hover,.links a:focus-visible{background:var(--peach);outline:none}
+.nav{position:fixed;left:0;right:0;bottom:18px;display:flex;justify-content:center;align-items:center;gap:14px;z-index:5}
+.nav button{font:600 16px Fredoka,sans-serif;background:#fff;border:3px solid var(--ink);border-radius:999px;width:46px;height:46px;cursor:pointer;box-shadow:3px 3px 0 var(--ink);color:var(--ink)}
+.nav button:focus-visible{outline:3px solid var(--coral);outline-offset:3px}
+.dots{display:flex;gap:8px}
+.dots i{width:11px;height:11px;border-radius:50%;background:#e7d6cd;display:block}
+.dots i.on{background:var(--coral);transform:scale(1.25)}
+.fine{font-size:13px;color:var(--soft);position:fixed;bottom:24px;right:24px}
+@media (max-width:760px){
+  body{overflow:auto}
+  .slide{position:relative;opacity:1;visibility:visible;transform:none;min-height:100vh;padding:48px 20px 64px}
+  .nav,.fine{display:none}
+  .two{grid-template-columns:1fr}
+  .arrow{transform:rotate(90deg)}
+}
+@media (prefers-reduced-motion:reduce){.logo{animation:none}.slide{transition:none}}
+@media print{body{overflow:visible}.slide{position:relative;opacity:1;visibility:visible;transform:none;page-break-after:always;height:100vh}.nav,.fine{display:none}}
+</style>
+</head>
+<body>
+<main class="deck" id="deck" aria-roledescription="slide deck">
+
+<section class="slide on" aria-label="Slide 1: Still Kicking">
+  <div class="blob" style="width:420px;height:420px;background:var(--peach);top:-90px;left:-110px"></div>
+  <div class="blob" style="width:300px;height:300px;background:var(--mint);bottom:-60px;right:-50px"></div>
+  <img class="logo" src="logo.png" alt="Still Kicking logo: a smiling grandma with glasses inside a heart-shaped speech bubble">
+  <h1>Still Kicking</h1>
+  <div class="chat" style="align-items:center">
+    <div class="bubble left">"How are you today?"</div>
+    <div class="bubble coral right" style="margin-left:180px">"Still kicking!"</div>
+  </div>
+  <p class="muted center" style="margin-top:30px">The daily call Grandma actually picks up.<br>A warm AI nurse check-in for older adults living at home.</p>
+</section>
+
+<section class="slide" aria-label="Slide 2: Who it's for">
+  <h2>Meet the VIPs <span style="font-size:.55em">(Very Independent Persons)</span></h2>
+  <div class="cards wrap">
+    <div class="card c-peach"><span class="emoji" aria-hidden="true">👵</span><h3>Walt, 83, at home</h3><p>Heart failure, strong opinions, zero interest in moving. Small changes at home can turn serious fast.</p></div>
+    <div class="card c-sky"><span class="emoji" aria-hidden="true">💌</span><h3>Maria, his worried wife</h3><p>Asks "did you take your pills?" four times a day. Gets "yes, dear" back. Wants to know what actually changed.</p></div>
+    <div class="card c-mint"><span class="emoji" aria-hidden="true">🏁</span><h3>The finish line</h3><p>After every call, the nurse and caregiver know what changed in plain words, and get alerted right away if it's serious.</p></div>
+  </div>
+  <p class="muted center" style="margin-top:22px">All patients in the demo are synthetic.</p>
+</section>
+
+<section class="slide" aria-label="Slide 3: How a call goes">
+  <h2>How the call goes <span style="font-size:.55em">(spoiler: no hold music)</span></h2>
+  <div class="flow wrap">
+    <div class="step"><b>☎️ Ring ring</b><span>Not a scammer, promise. A friendly nurse voice, one question at a time</span></div>
+    <div class="arrow" aria-hidden="true">→</div>
+    <div class="step"><b>🚩 Red flags first</b><span>Chest pain, breathing, falls, stroke signs</span></div>
+    <div class="arrow" aria-hidden="true">→</div>
+    <div class="step"><b>🩺 Stop and Watch</b><span>Eating, swelling, mood, meds, and the classic "what day is it?"</span></div>
+    <div class="arrow" aria-hidden="true">→</div>
+    <div class="step"><b>🧪 Daytona</b><span>A fresh sandbox checks today against 14 days</span></div>
+    <div class="arrow" aria-hidden="true">→</div>
+    <div class="step"><b>🗣️ Said out loud</b><span>Spoken back in the same call. No portal, no password, no "check your email"</span></div>
+  </div>
+  <div class="chat wrap" style="max-width:900px">
+    <div class="bubble left" style="font-size:clamp(17px,1.8vw,22px)">"Give me a moment while I look over the last two weeks for your nurse."</div>
+    <div class="bubble coral right" style="font-size:clamp(17px,1.8vw,22px)">"Your nurse will look at the swelling and the water pills you missed. I've sent Maria a summary too."</div>
+  </div>
+</section>
+
+<section class="slide" aria-label="Slide 4: Skipped pill or getting worse">
+  <h2>Skipped pill, or plot twist?</h2>
+  <div class="two wrap">
+    <div>
+      <table class="grid" aria-label="Walt's last 7 days: missed Furosemide on the last 3 days, swelling on the same 3 days">
+        <tr class="days"><th></th><td>Mon</td><td>Tue</td><td>Wed</td><td>Thu</td><td>Fri</td><td>Sat</td><td>Sun</td></tr>
+        <tr><th>Missed water pill</th><td>·</td><td>·</td><td>·</td><td>·</td><td class="x">✕</td><td class="x">✕</td><td class="x">✕</td></tr>
+        <tr><th>Swelling</th><td>·</td><td>·</td><td>·</td><td>·</td><td class="o">●</td><td class="o">●</td><td class="o">●</td></tr>
+        <tr><th>Weight</th><td>178</td><td>178</td><td>178</td><td>178</td><td>180</td><td>182</td><td>184</td></tr>
+      </table>
+      <p class="center" style="margin-top:14px"><span class="sticker">+6 lb (and it wasn't the pie)</span></p>
+    </div>
+    <div>
+      <ul class="tick">
+        <li>Walt's ankles puffed up the exact days he skipped his water pill. Coincidence? The engine thinks not.</li>
+        <li>The engine labels it <b>likely the skipped dose</b>, not a new decline.</li>
+        <li>It never diagnoses. It says "your nurse will review."</li>
+      </ul>
+      <p class="muted" style="font-size:15px">Illustration of the dashboard's 14-day pattern grid, using Walt's synthetic data.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" aria-label="Slide 5: When it's serious">
+  <h2>When it's serious, the jokes stop</h2>
+  <div class="two wrap">
+    <div class="chat" style="margin:0">
+      <div class="bubble coral left">"I have chest pressure right now."</div>
+      <div class="bubble right" style="font-size:clamp(17px,1.8vw,22px)">"This could be serious. Please hang up and call 911 now. I'm letting your nurse and Maria know right now."</div>
+    </div>
+    <div class="alert">
+      <h3>🚨 Chest pain reported during call</h3>
+      <div class="sms"><span class="tag">Simulated SMS</span>to the nurse: call them now.</div>
+      <div class="sms"><span class="tag">Simulated SMS</span>to the caregiver: they were told to call 911.</div>
+      <p style="font-size:16px;margin:10px 0 0">The alert fires during the call. Miss 3 calls in a row and a nurse gets alerted too.</p>
+    </div>
+  </div>
+</section>
+
+<section class="slide" aria-label="Slide 6: Under the hood">
+  <h2>Under the hood <span style="font-size:.55em">(it's mostly Python in a box)</span></h2>
+  <div class="cards wrap">
+    <div class="card c-peach">
+      <h3>🎙️ ElevenLabs: the charm</h3>
+      <ul class="tick">
+        <li>Voice agent in Carolina's cloned voice, Claude as its brain</li>
+        <li>Real tool calls: emergency alert, check-in record</li>
+        <li>Knowledge base, Spanish switching, tuned turn-taking</li>
+      </ul>
+    </div>
+    <div class="card c-mint">
+      <h3>📦 Daytona: the brains in a box</h3>
+      <ul class="tick">
+        <li>Patient records live in a Daytona records sandbox</li>
+        <li>A fresh sandbox runs our Python engine on every call, about 1 s</li>
+        <li>33 engine tests run inside a sandbox from the dashboard</li>
+      </ul>
+    </div>
+  </div>
+  <p class="center" style="margin-top:22px"><span class="sticker">Someone talks → tool → Daytona → said out loud</span></p>
+</section>
+
+<section class="slide" aria-label="Slide 7: Kind and careful">
+  <h2>Cheeky, not reckless</h2>
+  <div class="cards wrap">
+    <div class="card c-sun"><span class="emoji" aria-hidden="true">🙅</span><h3>Never diagnoses</h3><p>It's a nurse check-in, not Dr. Google. Medicine questions go to the real nurse.</p></div>
+    <div class="card c-sky"><span class="emoji" aria-hidden="true">📞</span><h3>911 comes first</h3><p>It never says help is coming. It tells them to call 911 and gets the humans.</p></div>
+    <div class="card c-mint"><span class="emoji" aria-hidden="true">🧸</span><h3>No real grandmas were harmed</h3><p>Synthetic patients only. A prototype, not a medical device. Real use needs clinical validation and compliant vendors.</p></div>
+  </div>
+  <p class="muted center" style="margin-top:22px">Next: real phone calls, real SMS, setup calls, more languages.</p>
+</section>
+
+<section class="slide" aria-label="Slide 8: Try it">
+  <div class="blob" style="width:380px;height:380px;background:var(--sun);top:-80px;right:-90px"></div>
+  <div class="blob" style="width:320px;height:320px;background:var(--sky);bottom:-70px;left:-60px"></div>
+  <img class="logo" src="logo.png" alt="" style="width:clamp(120px,14vw,170px)">
+  <h2 style="margin-top:12px">Go on, call Walt. He's still kicking.</h2>
+  <div class="links">
+    <a href="https://still-kicking.vercel.app" target="_blank" rel="noopener noreferrer">Nurse dashboard</a>
+    <a href="https://still-kicking.vercel.app/patient/walt" target="_blank" rel="noopener noreferrer">Walt's call screen</a>
+    <a href="https://www.loom.com/share/ecdde797d42845019106adb87be5bd30" target="_blank" rel="noopener noreferrer">2-minute demo video</a>
+    <a href="https://github.com/CarolinaBosch/still-kicking" target="_blank" rel="noopener noreferrer">Code on GitHub</a>
+  </div>
+  <p class="muted center" style="margin-top:26px">Built by Carolina Bosch and a squad of Claude Code agents</p>
+</section>
+
+</main>
+<nav class="nav" aria-label="Slide controls">
+  <button id="prev" aria-label="Previous slide">←</button>
+  <div class="dots" id="dots" aria-hidden="true"></div>
+  <button id="next" aria-label="Next slide">→</button>
+</nav>
+<div class="fine" id="count" aria-live="polite"></div>
+<script>
+(function(){
+  var slides=[].slice.call(document.querySelectorAll('.slide'));
+  var dots=document.getElementById('dots'), count=document.getElementById('count');
+  slides.forEach(function(){var i=document.createElement('i');dots.appendChild(i)});
+  var n=0;
+  function go(k){
+    n=Math.max(0,Math.min(slides.length-1,k));
+    slides.forEach(function(s,i){s.classList.toggle('on',i===n);s.setAttribute('aria-hidden',i===n?'false':'true')});
+    [].forEach.call(dots.children,function(d,i){d.classList.toggle('on',i===n)});
+    count.textContent=(n+1)+' / '+slides.length;
+    try{history.replaceState(null,'','#'+(n+1))}catch(e){}
+  }
+  document.getElementById('prev').onclick=function(){go(n-1)};
+  document.getElementById('next').onclick=function(){go(n+1)};
+  document.addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();go(n+1)}
+    if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(n-1)}
+    if(e.key==='Home')go(0); if(e.key==='End')go(slides.length-1);
+  });
+  var x0=null;
+  document.addEventListener('touchstart',function(e){x0=e.touches[0].clientX},{passive:true});
+  document.addEventListener('touchend',function(e){if(x0===null)return;var dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>50)go(n+(dx<0?1:-1));x0=null});
+  var h=parseInt((location.hash||'').slice(1),10);
+  go(isNaN(h)?0:h-1);
+})();
+</script>
+</body>
+</html>
