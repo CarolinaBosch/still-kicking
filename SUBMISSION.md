@@ -1,5 +1,9 @@
 # Still Kicking: submission text
 
+- **Demo video:** https://www.loom.com/share/ecdde797d42845019106adb87be5bd30
+- **Repo:** https://github.com/CarolinaBosch/still-kicking
+- **Live app:** https://still-kicking.vercel.app
+
 ## Short description (≤140 characters)
 
 A warm AI nurse check-in for older adults at home: it spots changes, separates missed pills from real decline, and gets humans fast.

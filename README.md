@@ -2,6 +2,9 @@
 
 > "How are you today?" "Still kicking!"
 
+**Demo video (2 min):** https://www.loom.com/share/ecdde797d42845019106adb87be5bd30  
+**Live app:** https://still-kicking.vercel.app (nurse dashboard) · https://still-kicking.vercel.app/patient/walt (patient call screen)
+
 A warm AI nurse check-in for older adults living at home. It talks with them, compares today with their own baseline, tells a skipped pill apart from a real change, writes the caregiver a plain-language summary, and alerts a human the moment something sounds serious.
 
 Built at a hackathon with **ElevenLabs** (the voice agent) and **Daytona** (patient records, per-call analysis and tests, all in sandboxes), by Carolina Bosch and a squad of Claude Code agents.
