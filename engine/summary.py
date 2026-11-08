@@ -33,8 +33,11 @@ def _medication_line(record: dict) -> str:
 
 def build_summary(patient: dict, record: dict, status: str, flags: list[str], findings: list[dict], red: list[dict]) -> dict:
     name = patient.get("preferred_name") or patient.get("name") or "Your family member"
+    declined = (record.get("condition_specific") or {}).get("checkin_declined") is True
     if red:
         today = f"{name} reported something urgent during today's call and the care team was alerted."
+    elif declined:
+        today = f"{name} asked to keep today's check-in short, so only a few questions were answered. The nurse may want to follow up."
     elif status == "red":
         today = f"{name} talked with us today and some changes need the nurse's attention soon."
     elif status == "yellow":

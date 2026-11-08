@@ -67,6 +67,12 @@ def analyze(patient: dict, history: list[dict], record: dict) -> dict:
                 "quote": record.get("patient_quote") or None,
             })
 
+    # A check-in the patient asked to cut short is never "all clear": missing answers are
+    # not good answers. It is recorded as such, not as a symptom (no agitation, no diagnosis).
+    declined = (record.get("condition_specific") or {}).get("checkin_declined") is True
+    if declined:
+        flags = ["check-in cut short at the patient's request"] + flags
+
     if red or any(f["severity"] in ("urgent", "emergency") for f in findings):
         status = "red"
     elif findings or flags:
