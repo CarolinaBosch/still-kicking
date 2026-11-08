@@ -1,6 +1,6 @@
 # Still Kicking: submission text
 
-- **Demo video:** https://www.loom.com/share/ecdde797d42845019106adb87be5bd30
+- **Demo video:** https://www.loom.com/share/ede33ea18fb5446dbdf6dd002b8bd0f0
 - **Repo:** https://github.com/CarolinaBosch/still-kicking
 - **Live app:** https://still-kicking.vercel.app
 

@@ -221,7 +221,7 @@ export default function Dashboard() {
   );
 }
 
-const DEMO_VIDEO_URL = "https://www.loom.com/share/ecdde797d42845019106adb87be5bd30";
+const DEMO_VIDEO_URL = "https://www.loom.com/share/ede33ea18fb5446dbdf6dd002b8bd0f0";
 
 function TestResultView({ state }: { state: TestState }) {
   if (state.phase === "error") return <ErrorNote message={state.message} />;
