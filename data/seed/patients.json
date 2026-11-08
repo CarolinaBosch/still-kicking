@@ -1,2052 +1,2081 @@
 {
- "anchor": "2026-01-15T00:00:00Z",
- "note": "Synthetic demo data only. Timestamps are shifted at load so the last seeded day is yesterday.",
- "patients": [
-  {
-   "patient": {
-    "id": "p1",
-    "name": "Rosa Testwell",
-    "preferred_name": "Rosa",
-    "age": 78,
-    "language": "en",
-    "tone": "cheerful",
-    "address": "100 Example Lane, Springfield (synthetic)",
-    "conditions": [
-     "COPD",
-     "hypertension"
-    ],
-    "medications": [
-     {
-      "name": "Tiotropium",
-      "dose": "18 mcg",
-      "schedule": "one inhalation every morning",
-      "purpose": "breathing (maintenance)",
-      "med_class": "inhaler",
-      "prn": false
-     },
-     {
-      "name": "Albuterol",
-      "dose": "90 mcg",
-      "schedule": "2 puffs as needed",
-      "purpose": "breathing (rescue)",
-      "med_class": "inhaler",
-      "prn": true
-     },
-     {
-      "name": "Amlodipine",
-      "dose": "5 mg",
-      "schedule": "every morning",
-      "purpose": "blood pressure",
-      "med_class": "bp",
-      "prn": false
-     }
-    ],
-    "allergies": [
-     "penicillin"
-    ],
-    "caregiver": {
-     "name": "Dana Testwell",
-     "relationship": "daughter",
-     "phone": "555-0101"
-    },
-    "nurse": {
-     "name": "Nurse Sam Example",
-     "phone": "555-0190"
-    },
-    "baseline": {
-     "mobility": "walks without aids, short of breath on stairs",
-     "appetite": "good",
-     "sleep": "7 hours",
-     "memory": "sharp",
-     "mood": "upbeat",
-     "weight_lb": 142,
-     "usual_pain_score": 1
-    },
-    "next_call_time": "tomorrow at 10:00 AM"
-   },
-   "history": [
+  "anchor": "2026-01-15T00:00:00Z",
+  "note": "Synthetic demo data only. Timestamps are shifted at load so the last seeded day is yesterday. Edie's open alert was produced by running engine/engine.py on her last seeded call (seeded so the demo starts with one patient needing attention).",
+  "patients": [
     {
-     "call_id": "seed-p1-d01",
-     "patient_id": "p1",
-     "timestamp": "2026-01-01T10:00:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": false,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": false,
-      "weight_or_swelling": false,
-      "agitated": false,
-      "tired_weak_confused": false,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": true,
-     "medication_adherence": {
-      "all_taken": true,
-      "missed": [],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {},
-     "weight_lb": 142.5,
-     "patient_message_for_caregiver": "Tell Dana I'm fine.",
-     "patient_quote": "Feeling good, went for my walk.",
-     "extraction_confidence": 0.9
-    },
-    {
-     "call_id": "seed-p1-d02",
-     "patient_id": "p1",
-     "timestamp": "2026-01-02T10:00:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": false,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": false,
-      "weight_or_swelling": false,
-      "agitated": false,
-      "tired_weak_confused": false,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": true,
-     "medication_adherence": {
-      "all_taken": true,
-      "missed": [],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {},
-     "weight_lb": 143.0,
-     "patient_message_for_caregiver": "Tell Dana I'm fine.",
-     "patient_quote": "Feeling good, went for my walk.",
-     "extraction_confidence": 0.9
-    },
-    {
-     "call_id": "seed-p1-d03",
-     "patient_id": "p1",
-     "timestamp": "2026-01-03T10:00:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": false,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": false,
-      "weight_or_swelling": false,
-      "agitated": false,
-      "tired_weak_confused": false,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": true,
-     "medication_adherence": {
-      "all_taken": true,
-      "missed": [],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {},
-     "weight_lb": 142.0,
-     "patient_message_for_caregiver": "Tell Dana I'm fine.",
-     "patient_quote": "Feeling good, went for my walk.",
-     "extraction_confidence": 0.9
-    },
-    {
-     "call_id": "seed-p1-d04",
-     "patient_id": "p1",
-     "timestamp": "2026-01-04T10:00:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": false,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": false,
-      "weight_or_swelling": false,
-      "agitated": false,
-      "tired_weak_confused": false,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": true,
-     "medication_adherence": {
-      "all_taken": true,
-      "missed": [],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {},
-     "weight_lb": 142.5,
-     "patient_message_for_caregiver": "Tell Dana I'm fine.",
-     "patient_quote": "Feeling good, went for my walk.",
-     "extraction_confidence": 0.9
-    },
-    {
-     "call_id": "seed-p1-d05",
-     "patient_id": "p1",
-     "timestamp": "2026-01-05T10:00:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": false,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": false,
-      "weight_or_swelling": false,
-      "agitated": false,
-      "tired_weak_confused": false,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": true,
-     "medication_adherence": {
-      "all_taken": true,
-      "missed": [],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {},
-     "weight_lb": 143.0,
-     "patient_message_for_caregiver": "Tell Dana I'm fine.",
-     "patient_quote": "Feeling good, went for my walk.",
-     "extraction_confidence": 0.9
-    },
-    {
-     "call_id": "seed-p1-d06",
-     "patient_id": "p1",
-     "timestamp": "2026-01-06T10:00:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": false,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": false,
-      "weight_or_swelling": false,
-      "agitated": false,
-      "tired_weak_confused": false,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": true,
-     "medication_adherence": {
-      "all_taken": true,
-      "missed": [],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {},
-     "weight_lb": 142.0,
-     "patient_message_for_caregiver": "Tell Dana I'm fine.",
-     "patient_quote": "Feeling good, went for my walk.",
-     "extraction_confidence": 0.9
-    },
-    {
-     "call_id": "seed-p1-d07",
-     "patient_id": "p1",
-     "timestamp": "2026-01-07T10:00:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": false,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": false,
-      "weight_or_swelling": false,
-      "agitated": false,
-      "tired_weak_confused": false,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": true,
-     "medication_adherence": {
-      "all_taken": true,
-      "missed": [],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {},
-     "weight_lb": 142.5,
-     "patient_message_for_caregiver": "Tell Dana I'm fine.",
-     "patient_quote": "Feeling good, went for my walk.",
-     "extraction_confidence": 0.9
-    },
-    {
-     "call_id": "seed-p1-d08",
-     "patient_id": "p1",
-     "timestamp": "2026-01-08T10:00:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": false,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": false,
-      "weight_or_swelling": false,
-      "agitated": false,
-      "tired_weak_confused": false,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": true,
-     "medication_adherence": {
-      "all_taken": true,
-      "missed": [],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {},
-     "weight_lb": 143.0,
-     "patient_message_for_caregiver": "Tell Dana I'm fine.",
-     "patient_quote": "Feeling good, went for my walk.",
-     "extraction_confidence": 0.9
-    },
-    {
-     "call_id": "seed-p1-d09",
-     "patient_id": "p1",
-     "timestamp": "2026-01-09T10:00:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": false,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": false,
-      "weight_or_swelling": false,
-      "agitated": false,
-      "tired_weak_confused": false,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": true,
-     "medication_adherence": {
-      "all_taken": true,
-      "missed": [],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {},
-     "weight_lb": 142.0,
-     "patient_message_for_caregiver": "Tell Dana I'm fine.",
-     "patient_quote": "Feeling good, went for my walk.",
-     "extraction_confidence": 0.9
-    },
-    {
-     "call_id": "seed-p1-d10",
-     "patient_id": "p1",
-     "timestamp": "2026-01-10T10:00:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": false,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": false,
-      "weight_or_swelling": false,
-      "agitated": false,
-      "tired_weak_confused": false,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": true,
-     "medication_adherence": {
-      "all_taken": true,
-      "missed": [],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {},
-     "weight_lb": 142.5,
-     "patient_message_for_caregiver": "Tell Dana I'm fine.",
-     "patient_quote": "Feeling good, went for my walk.",
-     "extraction_confidence": 0.9
-    },
-    {
-     "call_id": "seed-p1-d11",
-     "patient_id": "p1",
-     "timestamp": "2026-01-11T10:00:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": false,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": false,
-      "weight_or_swelling": false,
-      "agitated": false,
-      "tired_weak_confused": false,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": true,
-     "medication_adherence": {
-      "all_taken": true,
-      "missed": [],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {},
-     "weight_lb": 143.0,
-     "patient_message_for_caregiver": "Tell Dana I'm fine.",
-     "patient_quote": "Feeling good, went for my walk.",
-     "extraction_confidence": 0.9
-    },
-    {
-     "call_id": "seed-p1-d12",
-     "patient_id": "p1",
-     "timestamp": "2026-01-12T10:00:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": false,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": false,
-      "weight_or_swelling": false,
-      "agitated": false,
-      "tired_weak_confused": false,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": true,
-     "medication_adherence": {
-      "all_taken": true,
-      "missed": [],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {},
-     "weight_lb": 142.0,
-     "patient_message_for_caregiver": "Tell Dana I'm fine.",
-     "patient_quote": "Feeling good, went for my walk.",
-     "extraction_confidence": 0.9
-    },
-    {
-     "call_id": "seed-p1-d13",
-     "patient_id": "p1",
-     "timestamp": "2026-01-13T10:00:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": false,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": false,
-      "weight_or_swelling": false,
-      "agitated": false,
-      "tired_weak_confused": false,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": true,
-     "medication_adherence": {
-      "all_taken": true,
-      "missed": [],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {},
-     "weight_lb": 142.5,
-     "patient_message_for_caregiver": "Tell Dana I'm fine.",
-     "patient_quote": "Feeling good, went for my walk.",
-     "extraction_confidence": 0.9
-    },
-    {
-     "call_id": "seed-p1-d14",
-     "patient_id": "p1",
-     "timestamp": "2026-01-14T10:00:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": false,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": false,
-      "weight_or_swelling": false,
-      "agitated": false,
-      "tired_weak_confused": false,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": true,
-     "medication_adherence": {
-      "all_taken": true,
-      "missed": [],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {},
-     "weight_lb": 143.0,
-     "patient_message_for_caregiver": "Tell Dana I'm fine.",
-     "patient_quote": "Feeling good, went for my walk.",
-     "extraction_confidence": 0.9
-    }
-   ],
-   "attempts": [
-    {
-     "patient_id": "p1",
-     "at": "2026-01-01T10:00:00Z",
-     "answered": true
-    },
-    {
-     "patient_id": "p1",
-     "at": "2026-01-02T10:00:00Z",
-     "answered": true
-    },
-    {
-     "patient_id": "p1",
-     "at": "2026-01-03T10:00:00Z",
-     "answered": true
-    },
-    {
-     "patient_id": "p1",
-     "at": "2026-01-04T10:00:00Z",
-     "answered": true
-    },
-    {
-     "patient_id": "p1",
-     "at": "2026-01-05T10:00:00Z",
-     "answered": true
-    },
-    {
-     "patient_id": "p1",
-     "at": "2026-01-06T09:30:00Z",
-     "answered": false
-    },
-    {
-     "patient_id": "p1",
-     "at": "2026-01-06T10:00:00Z",
-     "answered": true
-    },
-    {
-     "patient_id": "p1",
-     "at": "2026-01-07T10:00:00Z",
-     "answered": true
-    },
-    {
-     "patient_id": "p1",
-     "at": "2026-01-08T10:00:00Z",
-     "answered": true
-    },
-    {
-     "patient_id": "p1",
-     "at": "2026-01-09T10:00:00Z",
-     "answered": true
-    },
-    {
-     "patient_id": "p1",
-     "at": "2026-01-10T10:00:00Z",
-     "answered": true
-    },
-    {
-     "patient_id": "p1",
-     "at": "2026-01-11T10:00:00Z",
-     "answered": true
-    },
-    {
-     "patient_id": "p1",
-     "at": "2026-01-12T10:00:00Z",
-     "answered": true
-    },
-    {
-     "patient_id": "p1",
-     "at": "2026-01-13T10:00:00Z",
-     "answered": true
-    },
-    {
-     "patient_id": "p1",
-     "at": "2026-01-14T10:00:00Z",
-     "answered": true
-    }
-   ]
-  },
-  {
-   "patient": {
-    "id": "p2",
-    "name": "Walter Samplesen",
-    "preferred_name": "Walt",
-    "age": 83,
-    "language": "en",
-    "tone": "calm",
-    "address": "200 Sample Street, Springfield (synthetic)",
-    "conditions": [
-     "heart failure",
-     "hypertension"
-    ],
-    "medications": [
-     {
-      "name": "Furosemide",
-      "dose": "40 mg",
-      "schedule": "every morning",
-      "purpose": "fluid / swelling",
-      "med_class": "diuretic",
-      "prn": false
-     },
-     {
-      "name": "Carvedilol",
-      "dose": "6.25 mg",
-      "schedule": "twice a day",
-      "purpose": "heart",
-      "med_class": "heart",
-      "prn": false
-     },
-     {
-      "name": "Lisinopril",
-      "dose": "10 mg",
-      "schedule": "every morning",
-      "purpose": "blood pressure",
-      "med_class": "bp",
-      "prn": false
-     }
-    ],
-    "allergies": [],
-    "caregiver": {
-     "name": "Maria Samplesen",
-     "relationship": "wife",
-     "phone": "555-0102"
-    },
-    "nurse": {
-     "name": "Nurse Sam Example",
-     "phone": "555-0190"
-    },
-    "baseline": {
-     "mobility": "walks with a cane",
-     "appetite": "fair",
-     "sleep": "sleeps on two pillows",
-     "memory": "sharp",
-     "mood": "steady",
-     "weight_lb": 178,
-     "usual_pain_score": 2
-    },
-    "next_call_time": "tomorrow at 9:30 AM"
-   },
-   "history": [
-    {
-     "call_id": "seed-p2-d01",
-     "patient_id": "p2",
-     "timestamp": "2026-01-01T09:30:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": false,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": false,
-      "weight_or_swelling": false,
-      "agitated": false,
-      "tired_weak_confused": false,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": true,
-     "medication_adherence": {
-      "all_taken": true,
-      "missed": [],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {},
-     "weight_lb": 178.5,
-     "patient_message_for_caregiver": "All good here.",
-     "patient_quote": "Same as always.",
-     "extraction_confidence": 0.9
-    },
-    {
-     "call_id": "seed-p2-d02",
-     "patient_id": "p2",
-     "timestamp": "2026-01-02T09:30:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": false,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": false,
-      "weight_or_swelling": false,
-      "agitated": false,
-      "tired_weak_confused": false,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": true,
-     "medication_adherence": {
-      "all_taken": true,
-      "missed": [],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {},
-     "weight_lb": 178,
-     "patient_message_for_caregiver": "All good here.",
-     "patient_quote": "Same as always.",
-     "extraction_confidence": 0.9
-    },
-    {
-     "call_id": "seed-p2-d03",
-     "patient_id": "p2",
-     "timestamp": "2026-01-03T09:30:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": false,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": false,
-      "weight_or_swelling": false,
-      "agitated": false,
-      "tired_weak_confused": false,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": true,
-     "medication_adherence": {
-      "all_taken": true,
-      "missed": [],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {},
-     "weight_lb": 178.5,
-     "patient_message_for_caregiver": "All good here.",
-     "patient_quote": "Same as always.",
-     "extraction_confidence": 0.9
-    },
-    {
-     "call_id": "seed-p2-d04",
-     "patient_id": "p2",
-     "timestamp": "2026-01-04T09:30:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": false,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": false,
-      "weight_or_swelling": false,
-      "agitated": false,
-      "tired_weak_confused": false,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": true,
-     "medication_adherence": {
-      "all_taken": true,
-      "missed": [],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {},
-     "weight_lb": 178,
-     "patient_message_for_caregiver": "All good here.",
-     "patient_quote": "Same as always.",
-     "extraction_confidence": 0.9
-    },
-    {
-     "call_id": "seed-p2-d05",
-     "patient_id": "p2",
-     "timestamp": "2026-01-05T09:30:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": false,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": false,
-      "weight_or_swelling": false,
-      "agitated": false,
-      "tired_weak_confused": false,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": true,
-     "medication_adherence": {
-      "all_taken": true,
-      "missed": [],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {},
-     "weight_lb": 178.5,
-     "patient_message_for_caregiver": "All good here.",
-     "patient_quote": "Same as always.",
-     "extraction_confidence": 0.9
-    },
-    {
-     "call_id": "seed-p2-d06",
-     "patient_id": "p2",
-     "timestamp": "2026-01-06T09:30:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": false,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": false,
-      "weight_or_swelling": false,
-      "agitated": false,
-      "tired_weak_confused": false,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": true,
-     "medication_adherence": {
-      "all_taken": true,
-      "missed": [],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {},
-     "weight_lb": 178,
-     "patient_message_for_caregiver": "All good here.",
-     "patient_quote": "Same as always.",
-     "extraction_confidence": 0.9
-    },
-    {
-     "call_id": "seed-p2-d07",
-     "patient_id": "p2",
-     "timestamp": "2026-01-07T09:30:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": false,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": false,
-      "weight_or_swelling": false,
-      "agitated": false,
-      "tired_weak_confused": false,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": true,
-     "medication_adherence": {
-      "all_taken": true,
-      "missed": [],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {},
-     "weight_lb": 178.5,
-     "patient_message_for_caregiver": "All good here.",
-     "patient_quote": "Same as always.",
-     "extraction_confidence": 0.9
-    },
-    {
-     "call_id": "seed-p2-d08",
-     "patient_id": "p2",
-     "timestamp": "2026-01-08T09:30:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": false,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": false,
-      "weight_or_swelling": false,
-      "agitated": false,
-      "tired_weak_confused": false,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": true,
-     "medication_adherence": {
-      "all_taken": true,
-      "missed": [],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {},
-     "weight_lb": 178,
-     "patient_message_for_caregiver": "All good here.",
-     "patient_quote": "Same as always.",
-     "extraction_confidence": 0.9
-    },
-    {
-     "call_id": "seed-p2-d09",
-     "patient_id": "p2",
-     "timestamp": "2026-01-09T09:30:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": false,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": false,
-      "weight_or_swelling": false,
-      "agitated": false,
-      "tired_weak_confused": false,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": true,
-     "medication_adherence": {
-      "all_taken": true,
-      "missed": [],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {},
-     "weight_lb": 178.5,
-     "patient_message_for_caregiver": "All good here.",
-     "patient_quote": "Same as always.",
-     "extraction_confidence": 0.9
-    },
-    {
-     "call_id": "seed-p2-d10",
-     "patient_id": "p2",
-     "timestamp": "2026-01-10T09:30:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": false,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": false,
-      "weight_or_swelling": false,
-      "agitated": false,
-      "tired_weak_confused": false,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": true,
-     "medication_adherence": {
-      "all_taken": true,
-      "missed": [],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {},
-     "weight_lb": 178,
-     "patient_message_for_caregiver": "All good here.",
-     "patient_quote": "Same as always.",
-     "extraction_confidence": 0.9
-    },
-    {
-     "call_id": "seed-p2-d11",
-     "patient_id": "p2",
-     "timestamp": "2026-01-11T09:30:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": false,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": false,
-      "weight_or_swelling": false,
-      "agitated": false,
-      "tired_weak_confused": false,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": true,
-     "medication_adherence": {
-      "all_taken": true,
-      "missed": [],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {},
-     "weight_lb": 178.5,
-     "patient_message_for_caregiver": "All good here.",
-     "patient_quote": "Same as always.",
-     "extraction_confidence": 0.9
-    },
-    {
-     "call_id": "seed-p2-d12",
-     "patient_id": "p2",
-     "timestamp": "2026-01-12T09:30:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": false,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": false,
-      "weight_or_swelling": true,
-      "agitated": false,
-      "tired_weak_confused": false,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": true,
-     "medication_adherence": {
-      "all_taken": false,
-      "missed": [
-       {
-        "med": "Furosemide",
-        "doses_missed": 1,
-        "reason": "didn't want to be running to the bathroom"
-       }
+      "patient": {
+        "id": "p1",
+        "name": "Rosa Testwell",
+        "preferred_name": "Rosa",
+        "age": 78,
+        "language": "en",
+        "tone": "cheerful",
+        "address": "100 Example Lane, Springfield (synthetic)",
+        "conditions": [
+          "COPD",
+          "hypertension"
+        ],
+        "medications": [
+          {
+            "name": "Tiotropium",
+            "dose": "18 mcg",
+            "schedule": "one inhalation every morning",
+            "purpose": "breathing (maintenance)",
+            "med_class": "inhaler",
+            "prn": false
+          },
+          {
+            "name": "Albuterol",
+            "dose": "90 mcg",
+            "schedule": "2 puffs as needed",
+            "purpose": "breathing (rescue)",
+            "med_class": "inhaler",
+            "prn": true
+          },
+          {
+            "name": "Amlodipine",
+            "dose": "5 mg",
+            "schedule": "every morning",
+            "purpose": "blood pressure",
+            "med_class": "bp",
+            "prn": false
+          }
+        ],
+        "allergies": [
+          "penicillin"
+        ],
+        "caregiver": {
+          "name": "Dana Testwell",
+          "relationship": "daughter",
+          "phone": "555-0101"
+        },
+        "nurse": {
+          "name": "Nurse Sam Example",
+          "phone": "555-0190"
+        },
+        "baseline": {
+          "mobility": "walks without aids, short of breath on stairs",
+          "appetite": "good",
+          "sleep": "7 hours",
+          "memory": "sharp",
+          "mood": "upbeat",
+          "weight_lb": 142,
+          "usual_pain_score": 1
+        },
+        "next_call_time": "tomorrow at 10:00 AM"
+      },
+      "history": [
+        {
+          "call_id": "seed-p1-d01",
+          "patient_id": "p1",
+          "timestamp": "2026-01-01T10:00:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": false,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": false,
+            "weight_or_swelling": false,
+            "agitated": false,
+            "tired_weak_confused": false,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": true,
+          "medication_adherence": {
+            "all_taken": true,
+            "missed": [],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {},
+          "weight_lb": 142.5,
+          "patient_message_for_caregiver": "Tell Dana I'm fine.",
+          "patient_quote": "Feeling good, went for my walk.",
+          "extraction_confidence": 0.9
+        },
+        {
+          "call_id": "seed-p1-d02",
+          "patient_id": "p1",
+          "timestamp": "2026-01-02T10:00:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": false,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": false,
+            "weight_or_swelling": false,
+            "agitated": false,
+            "tired_weak_confused": false,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": true,
+          "medication_adherence": {
+            "all_taken": true,
+            "missed": [],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {},
+          "weight_lb": 143.0,
+          "patient_message_for_caregiver": "Tell Dana I'm fine.",
+          "patient_quote": "Feeling good, went for my walk.",
+          "extraction_confidence": 0.9
+        },
+        {
+          "call_id": "seed-p1-d03",
+          "patient_id": "p1",
+          "timestamp": "2026-01-03T10:00:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": false,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": false,
+            "weight_or_swelling": false,
+            "agitated": false,
+            "tired_weak_confused": false,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": true,
+          "medication_adherence": {
+            "all_taken": true,
+            "missed": [],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {},
+          "weight_lb": 142.0,
+          "patient_message_for_caregiver": "Tell Dana I'm fine.",
+          "patient_quote": "Feeling good, went for my walk.",
+          "extraction_confidence": 0.9
+        },
+        {
+          "call_id": "seed-p1-d04",
+          "patient_id": "p1",
+          "timestamp": "2026-01-04T10:00:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": false,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": false,
+            "weight_or_swelling": false,
+            "agitated": false,
+            "tired_weak_confused": false,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": true,
+          "medication_adherence": {
+            "all_taken": true,
+            "missed": [],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {},
+          "weight_lb": 142.5,
+          "patient_message_for_caregiver": "Tell Dana I'm fine.",
+          "patient_quote": "Feeling good, went for my walk.",
+          "extraction_confidence": 0.9
+        },
+        {
+          "call_id": "seed-p1-d05",
+          "patient_id": "p1",
+          "timestamp": "2026-01-05T10:00:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": false,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": false,
+            "weight_or_swelling": false,
+            "agitated": false,
+            "tired_weak_confused": false,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": true,
+          "medication_adherence": {
+            "all_taken": true,
+            "missed": [],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {},
+          "weight_lb": 143.0,
+          "patient_message_for_caregiver": "Tell Dana I'm fine.",
+          "patient_quote": "Feeling good, went for my walk.",
+          "extraction_confidence": 0.9
+        },
+        {
+          "call_id": "seed-p1-d06",
+          "patient_id": "p1",
+          "timestamp": "2026-01-06T10:00:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": false,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": false,
+            "weight_or_swelling": false,
+            "agitated": false,
+            "tired_weak_confused": false,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": true,
+          "medication_adherence": {
+            "all_taken": true,
+            "missed": [],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {},
+          "weight_lb": 142.0,
+          "patient_message_for_caregiver": "Tell Dana I'm fine.",
+          "patient_quote": "Feeling good, went for my walk.",
+          "extraction_confidence": 0.9
+        },
+        {
+          "call_id": "seed-p1-d07",
+          "patient_id": "p1",
+          "timestamp": "2026-01-07T10:00:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": false,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": false,
+            "weight_or_swelling": false,
+            "agitated": false,
+            "tired_weak_confused": false,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": true,
+          "medication_adherence": {
+            "all_taken": true,
+            "missed": [],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {},
+          "weight_lb": 142.5,
+          "patient_message_for_caregiver": "Tell Dana I'm fine.",
+          "patient_quote": "Feeling good, went for my walk.",
+          "extraction_confidence": 0.9
+        },
+        {
+          "call_id": "seed-p1-d08",
+          "patient_id": "p1",
+          "timestamp": "2026-01-08T10:00:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": false,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": false,
+            "weight_or_swelling": false,
+            "agitated": false,
+            "tired_weak_confused": false,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": true,
+          "medication_adherence": {
+            "all_taken": true,
+            "missed": [],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {},
+          "weight_lb": 143.0,
+          "patient_message_for_caregiver": "Tell Dana I'm fine.",
+          "patient_quote": "Feeling good, went for my walk.",
+          "extraction_confidence": 0.9
+        },
+        {
+          "call_id": "seed-p1-d09",
+          "patient_id": "p1",
+          "timestamp": "2026-01-09T10:00:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": false,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": false,
+            "weight_or_swelling": false,
+            "agitated": false,
+            "tired_weak_confused": false,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": true,
+          "medication_adherence": {
+            "all_taken": true,
+            "missed": [],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {},
+          "weight_lb": 142.0,
+          "patient_message_for_caregiver": "Tell Dana I'm fine.",
+          "patient_quote": "Feeling good, went for my walk.",
+          "extraction_confidence": 0.9
+        },
+        {
+          "call_id": "seed-p1-d10",
+          "patient_id": "p1",
+          "timestamp": "2026-01-10T10:00:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": false,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": false,
+            "weight_or_swelling": false,
+            "agitated": false,
+            "tired_weak_confused": false,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": true,
+          "medication_adherence": {
+            "all_taken": true,
+            "missed": [],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {},
+          "weight_lb": 142.5,
+          "patient_message_for_caregiver": "Tell Dana I'm fine.",
+          "patient_quote": "Feeling good, went for my walk.",
+          "extraction_confidence": 0.9
+        },
+        {
+          "call_id": "seed-p1-d11",
+          "patient_id": "p1",
+          "timestamp": "2026-01-11T10:00:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": false,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": false,
+            "weight_or_swelling": false,
+            "agitated": false,
+            "tired_weak_confused": false,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": true,
+          "medication_adherence": {
+            "all_taken": true,
+            "missed": [],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {},
+          "weight_lb": 143.0,
+          "patient_message_for_caregiver": "Tell Dana I'm fine.",
+          "patient_quote": "Feeling good, went for my walk.",
+          "extraction_confidence": 0.9
+        },
+        {
+          "call_id": "seed-p1-d12",
+          "patient_id": "p1",
+          "timestamp": "2026-01-12T10:00:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": false,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": false,
+            "weight_or_swelling": false,
+            "agitated": false,
+            "tired_weak_confused": false,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": true,
+          "medication_adherence": {
+            "all_taken": true,
+            "missed": [],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {},
+          "weight_lb": 142.0,
+          "patient_message_for_caregiver": "Tell Dana I'm fine.",
+          "patient_quote": "Feeling good, went for my walk.",
+          "extraction_confidence": 0.9
+        },
+        {
+          "call_id": "seed-p1-d13",
+          "patient_id": "p1",
+          "timestamp": "2026-01-13T10:00:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": false,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": false,
+            "weight_or_swelling": false,
+            "agitated": false,
+            "tired_weak_confused": false,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": true,
+          "medication_adherence": {
+            "all_taken": true,
+            "missed": [],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {},
+          "weight_lb": 142.5,
+          "patient_message_for_caregiver": "Tell Dana I'm fine.",
+          "patient_quote": "Feeling good, went for my walk.",
+          "extraction_confidence": 0.9
+        },
+        {
+          "call_id": "seed-p1-d14",
+          "patient_id": "p1",
+          "timestamp": "2026-01-14T10:00:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": false,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": false,
+            "weight_or_swelling": false,
+            "agitated": false,
+            "tired_weak_confused": false,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": true,
+          "medication_adherence": {
+            "all_taken": true,
+            "missed": [],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {},
+          "weight_lb": 143.0,
+          "patient_message_for_caregiver": "Tell Dana I'm fine.",
+          "patient_quote": "Feeling good, went for my walk.",
+          "extraction_confidence": 0.9
+        }
       ],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {
-      "ankle_swelling": true,
-      "sob_lying_flat": false
-     },
-     "weight_lb": 180.5,
-     "patient_message_for_caregiver": "Don't worry, it's just my feet.",
-     "patient_quote": "My ankles are puffy and my shoes are tight.",
-     "extraction_confidence": 0.9
+      "attempts": [
+        {
+          "patient_id": "p1",
+          "at": "2026-01-01T10:00:00Z",
+          "answered": true
+        },
+        {
+          "patient_id": "p1",
+          "at": "2026-01-02T10:00:00Z",
+          "answered": true
+        },
+        {
+          "patient_id": "p1",
+          "at": "2026-01-03T10:00:00Z",
+          "answered": true
+        },
+        {
+          "patient_id": "p1",
+          "at": "2026-01-04T10:00:00Z",
+          "answered": true
+        },
+        {
+          "patient_id": "p1",
+          "at": "2026-01-05T10:00:00Z",
+          "answered": true
+        },
+        {
+          "patient_id": "p1",
+          "at": "2026-01-06T09:30:00Z",
+          "answered": false
+        },
+        {
+          "patient_id": "p1",
+          "at": "2026-01-06T10:00:00Z",
+          "answered": true
+        },
+        {
+          "patient_id": "p1",
+          "at": "2026-01-07T10:00:00Z",
+          "answered": true
+        },
+        {
+          "patient_id": "p1",
+          "at": "2026-01-08T10:00:00Z",
+          "answered": true
+        },
+        {
+          "patient_id": "p1",
+          "at": "2026-01-09T10:00:00Z",
+          "answered": true
+        },
+        {
+          "patient_id": "p1",
+          "at": "2026-01-10T10:00:00Z",
+          "answered": true
+        },
+        {
+          "patient_id": "p1",
+          "at": "2026-01-11T10:00:00Z",
+          "answered": true
+        },
+        {
+          "patient_id": "p1",
+          "at": "2026-01-12T10:00:00Z",
+          "answered": true
+        },
+        {
+          "patient_id": "p1",
+          "at": "2026-01-13T10:00:00Z",
+          "answered": true
+        },
+        {
+          "patient_id": "p1",
+          "at": "2026-01-14T10:00:00Z",
+          "answered": true
+        }
+      ]
     },
     {
-     "call_id": "seed-p2-d13",
-     "patient_id": "p2",
-     "timestamp": "2026-01-13T09:30:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": false,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": false,
-      "weight_or_swelling": true,
-      "agitated": false,
-      "tired_weak_confused": false,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": true,
-     "medication_adherence": {
-      "all_taken": false,
-      "missed": [
-       {
-        "med": "Furosemide",
-        "doses_missed": 1,
-        "reason": "didn't want to be running to the bathroom"
-       }
+      "patient": {
+        "id": "p2",
+        "name": "Walter Samplesen",
+        "preferred_name": "Walt",
+        "age": 83,
+        "language": "en",
+        "tone": "calm",
+        "address": "200 Sample Street, Springfield (synthetic)",
+        "conditions": [
+          "heart failure",
+          "hypertension"
+        ],
+        "medications": [
+          {
+            "name": "Furosemide",
+            "dose": "40 mg",
+            "schedule": "every morning",
+            "purpose": "fluid / swelling",
+            "med_class": "diuretic",
+            "prn": false
+          },
+          {
+            "name": "Carvedilol",
+            "dose": "6.25 mg",
+            "schedule": "twice a day",
+            "purpose": "heart",
+            "med_class": "heart",
+            "prn": false
+          },
+          {
+            "name": "Lisinopril",
+            "dose": "10 mg",
+            "schedule": "every morning",
+            "purpose": "blood pressure",
+            "med_class": "bp",
+            "prn": false
+          }
+        ],
+        "allergies": [],
+        "caregiver": {
+          "name": "Maria Samplesen",
+          "relationship": "wife",
+          "phone": "555-0102"
+        },
+        "nurse": {
+          "name": "Nurse Sam Example",
+          "phone": "555-0190"
+        },
+        "baseline": {
+          "mobility": "walks with a cane",
+          "appetite": "fair",
+          "sleep": "sleeps on two pillows",
+          "memory": "sharp",
+          "mood": "steady",
+          "weight_lb": 178,
+          "usual_pain_score": 2
+        },
+        "next_call_time": "tomorrow at 9:30 AM"
+      },
+      "history": [
+        {
+          "call_id": "seed-p2-d01",
+          "patient_id": "p2",
+          "timestamp": "2026-01-01T09:30:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": false,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": false,
+            "weight_or_swelling": false,
+            "agitated": false,
+            "tired_weak_confused": false,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": true,
+          "medication_adherence": {
+            "all_taken": true,
+            "missed": [],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {},
+          "weight_lb": 178.5,
+          "patient_message_for_caregiver": "All good here.",
+          "patient_quote": "Same as always.",
+          "extraction_confidence": 0.9
+        },
+        {
+          "call_id": "seed-p2-d02",
+          "patient_id": "p2",
+          "timestamp": "2026-01-02T09:30:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": false,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": false,
+            "weight_or_swelling": false,
+            "agitated": false,
+            "tired_weak_confused": false,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": true,
+          "medication_adherence": {
+            "all_taken": true,
+            "missed": [],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {},
+          "weight_lb": 178,
+          "patient_message_for_caregiver": "All good here.",
+          "patient_quote": "Same as always.",
+          "extraction_confidence": 0.9
+        },
+        {
+          "call_id": "seed-p2-d03",
+          "patient_id": "p2",
+          "timestamp": "2026-01-03T09:30:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": false,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": false,
+            "weight_or_swelling": false,
+            "agitated": false,
+            "tired_weak_confused": false,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": true,
+          "medication_adherence": {
+            "all_taken": true,
+            "missed": [],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {},
+          "weight_lb": 178.5,
+          "patient_message_for_caregiver": "All good here.",
+          "patient_quote": "Same as always.",
+          "extraction_confidence": 0.9
+        },
+        {
+          "call_id": "seed-p2-d04",
+          "patient_id": "p2",
+          "timestamp": "2026-01-04T09:30:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": false,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": false,
+            "weight_or_swelling": false,
+            "agitated": false,
+            "tired_weak_confused": false,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": true,
+          "medication_adherence": {
+            "all_taken": true,
+            "missed": [],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {},
+          "weight_lb": 178,
+          "patient_message_for_caregiver": "All good here.",
+          "patient_quote": "Same as always.",
+          "extraction_confidence": 0.9
+        },
+        {
+          "call_id": "seed-p2-d05",
+          "patient_id": "p2",
+          "timestamp": "2026-01-05T09:30:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": false,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": false,
+            "weight_or_swelling": false,
+            "agitated": false,
+            "tired_weak_confused": false,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": true,
+          "medication_adherence": {
+            "all_taken": true,
+            "missed": [],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {},
+          "weight_lb": 178.5,
+          "patient_message_for_caregiver": "All good here.",
+          "patient_quote": "Same as always.",
+          "extraction_confidence": 0.9
+        },
+        {
+          "call_id": "seed-p2-d06",
+          "patient_id": "p2",
+          "timestamp": "2026-01-06T09:30:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": false,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": false,
+            "weight_or_swelling": false,
+            "agitated": false,
+            "tired_weak_confused": false,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": true,
+          "medication_adherence": {
+            "all_taken": true,
+            "missed": [],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {},
+          "weight_lb": 178,
+          "patient_message_for_caregiver": "All good here.",
+          "patient_quote": "Same as always.",
+          "extraction_confidence": 0.9
+        },
+        {
+          "call_id": "seed-p2-d07",
+          "patient_id": "p2",
+          "timestamp": "2026-01-07T09:30:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": false,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": false,
+            "weight_or_swelling": false,
+            "agitated": false,
+            "tired_weak_confused": false,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": true,
+          "medication_adherence": {
+            "all_taken": true,
+            "missed": [],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {},
+          "weight_lb": 178.5,
+          "patient_message_for_caregiver": "All good here.",
+          "patient_quote": "Same as always.",
+          "extraction_confidence": 0.9
+        },
+        {
+          "call_id": "seed-p2-d08",
+          "patient_id": "p2",
+          "timestamp": "2026-01-08T09:30:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": false,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": false,
+            "weight_or_swelling": false,
+            "agitated": false,
+            "tired_weak_confused": false,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": true,
+          "medication_adherence": {
+            "all_taken": true,
+            "missed": [],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {},
+          "weight_lb": 178,
+          "patient_message_for_caregiver": "All good here.",
+          "patient_quote": "Same as always.",
+          "extraction_confidence": 0.9
+        },
+        {
+          "call_id": "seed-p2-d09",
+          "patient_id": "p2",
+          "timestamp": "2026-01-09T09:30:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": false,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": false,
+            "weight_or_swelling": false,
+            "agitated": false,
+            "tired_weak_confused": false,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": true,
+          "medication_adherence": {
+            "all_taken": true,
+            "missed": [],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {},
+          "weight_lb": 178.5,
+          "patient_message_for_caregiver": "All good here.",
+          "patient_quote": "Same as always.",
+          "extraction_confidence": 0.9
+        },
+        {
+          "call_id": "seed-p2-d10",
+          "patient_id": "p2",
+          "timestamp": "2026-01-10T09:30:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": false,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": false,
+            "weight_or_swelling": false,
+            "agitated": false,
+            "tired_weak_confused": false,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": true,
+          "medication_adherence": {
+            "all_taken": true,
+            "missed": [],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {},
+          "weight_lb": 178,
+          "patient_message_for_caregiver": "All good here.",
+          "patient_quote": "Same as always.",
+          "extraction_confidence": 0.9
+        },
+        {
+          "call_id": "seed-p2-d11",
+          "patient_id": "p2",
+          "timestamp": "2026-01-11T09:30:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": false,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": false,
+            "weight_or_swelling": false,
+            "agitated": false,
+            "tired_weak_confused": false,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": true,
+          "medication_adherence": {
+            "all_taken": true,
+            "missed": [],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {},
+          "weight_lb": 178.5,
+          "patient_message_for_caregiver": "All good here.",
+          "patient_quote": "Same as always.",
+          "extraction_confidence": 0.9
+        },
+        {
+          "call_id": "seed-p2-d12",
+          "patient_id": "p2",
+          "timestamp": "2026-01-12T09:30:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": false,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": false,
+            "weight_or_swelling": true,
+            "agitated": false,
+            "tired_weak_confused": false,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": true,
+          "medication_adherence": {
+            "all_taken": false,
+            "missed": [
+              {
+                "med": "Furosemide",
+                "doses_missed": 1,
+                "reason": "didn't want to be running to the bathroom"
+              }
+            ],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {
+            "ankle_swelling": true,
+            "sob_lying_flat": false
+          },
+          "weight_lb": 180.5,
+          "patient_message_for_caregiver": "Don't worry, it's just my feet.",
+          "patient_quote": "My ankles are puffy and my shoes are tight.",
+          "extraction_confidence": 0.9
+        },
+        {
+          "call_id": "seed-p2-d13",
+          "patient_id": "p2",
+          "timestamp": "2026-01-13T09:30:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": false,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": false,
+            "weight_or_swelling": true,
+            "agitated": false,
+            "tired_weak_confused": false,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": true,
+          "medication_adherence": {
+            "all_taken": false,
+            "missed": [
+              {
+                "med": "Furosemide",
+                "doses_missed": 1,
+                "reason": "didn't want to be running to the bathroom"
+              }
+            ],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {
+            "ankle_swelling": true,
+            "sob_lying_flat": true
+          },
+          "weight_lb": 182.5,
+          "patient_message_for_caregiver": "Don't worry, it's just my feet.",
+          "patient_quote": "My ankles are puffy and my shoes are tight.",
+          "extraction_confidence": 0.9
+        },
+        {
+          "call_id": "seed-p2-d14",
+          "patient_id": "p2",
+          "timestamp": "2026-01-14T09:30:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": false,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": false,
+            "weight_or_swelling": true,
+            "agitated": false,
+            "tired_weak_confused": false,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": true,
+          "medication_adherence": {
+            "all_taken": false,
+            "missed": [
+              {
+                "med": "Furosemide",
+                "doses_missed": 1,
+                "reason": "didn't want to be running to the bathroom"
+              }
+            ],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {
+            "ankle_swelling": true,
+            "sob_lying_flat": true
+          },
+          "weight_lb": 184.0,
+          "patient_message_for_caregiver": "Don't worry, it's just my feet.",
+          "patient_quote": "My ankles are puffy and my shoes are tight.",
+          "extraction_confidence": 0.9
+        }
       ],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {
-      "ankle_swelling": true,
-      "sob_lying_flat": true
-     },
-     "weight_lb": 182.5,
-     "patient_message_for_caregiver": "Don't worry, it's just my feet.",
-     "patient_quote": "My ankles are puffy and my shoes are tight.",
-     "extraction_confidence": 0.9
+      "attempts": [
+        {
+          "patient_id": "p2",
+          "at": "2026-01-01T09:30:00Z",
+          "answered": true
+        },
+        {
+          "patient_id": "p2",
+          "at": "2026-01-02T09:30:00Z",
+          "answered": true
+        },
+        {
+          "patient_id": "p2",
+          "at": "2026-01-03T09:30:00Z",
+          "answered": true
+        },
+        {
+          "patient_id": "p2",
+          "at": "2026-01-04T09:30:00Z",
+          "answered": true
+        },
+        {
+          "patient_id": "p2",
+          "at": "2026-01-05T09:30:00Z",
+          "answered": true
+        },
+        {
+          "patient_id": "p2",
+          "at": "2026-01-06T09:30:00Z",
+          "answered": true
+        },
+        {
+          "patient_id": "p2",
+          "at": "2026-01-07T09:30:00Z",
+          "answered": true
+        },
+        {
+          "patient_id": "p2",
+          "at": "2026-01-08T09:30:00Z",
+          "answered": true
+        },
+        {
+          "patient_id": "p2",
+          "at": "2026-01-09T09:30:00Z",
+          "answered": true
+        },
+        {
+          "patient_id": "p2",
+          "at": "2026-01-10T09:30:00Z",
+          "answered": true
+        },
+        {
+          "patient_id": "p2",
+          "at": "2026-01-11T09:30:00Z",
+          "answered": true
+        },
+        {
+          "patient_id": "p2",
+          "at": "2026-01-12T09:30:00Z",
+          "answered": true
+        },
+        {
+          "patient_id": "p2",
+          "at": "2026-01-13T09:30:00Z",
+          "answered": true
+        },
+        {
+          "patient_id": "p2",
+          "at": "2026-01-14T09:30:00Z",
+          "answered": true
+        }
+      ]
     },
     {
-     "call_id": "seed-p2-d14",
-     "patient_id": "p2",
-     "timestamp": "2026-01-14T09:30:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": false,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": false,
-      "weight_or_swelling": true,
-      "agitated": false,
-      "tired_weak_confused": false,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": true,
-     "medication_adherence": {
-      "all_taken": false,
-      "missed": [
-       {
-        "med": "Furosemide",
-        "doses_missed": 1,
-        "reason": "didn't want to be running to the bathroom"
-       }
+      "patient": {
+        "id": "p3",
+        "name": "Edith Placeholder",
+        "preferred_name": "Edie",
+        "age": 86,
+        "language": "en",
+        "tone": "calm",
+        "address": "300 Demo Court, Springfield (synthetic)",
+        "conditions": [
+          "dementia/MCI",
+          "hypertension"
+        ],
+        "medications": [
+          {
+            "name": "Donepezil",
+            "dose": "5 mg",
+            "schedule": "every evening",
+            "purpose": "memory",
+            "med_class": "other",
+            "prn": false
+          },
+          {
+            "name": "Amlodipine",
+            "dose": "5 mg",
+            "schedule": "every morning",
+            "purpose": "blood pressure",
+            "med_class": "bp",
+            "prn": false
+          }
+        ],
+        "allergies": [
+          "sulfa"
+        ],
+        "caregiver": {
+          "name": "Paul Placeholder",
+          "relationship": "son",
+          "phone": "555-0103"
+        },
+        "nurse": {
+          "name": "Nurse Sam Example",
+          "phone": "555-0190"
+        },
+        "baseline": {
+          "mobility": "walks with a walker indoors",
+          "appetite": "good",
+          "sleep": "naps in the afternoon",
+          "memory": "mild forgetfulness, knows the day and place",
+          "mood": "content",
+          "weight_lb": 128,
+          "usual_pain_score": 1
+        },
+        "next_call_time": "tomorrow at 11:00 AM"
+      },
+      "history": [
+        {
+          "call_id": "seed-p3-d01",
+          "patient_id": "p3",
+          "timestamp": "2026-01-01T11:00:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": false,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": false,
+            "weight_or_swelling": false,
+            "agitated": false,
+            "tired_weak_confused": false,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": true,
+          "medication_adherence": {
+            "all_taken": true,
+            "missed": [],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {},
+          "weight_lb": 128,
+          "patient_message_for_caregiver": "Tell Paul to visit Sunday.",
+          "patient_quote": "I had tea with the neighbor.",
+          "extraction_confidence": 0.9
+        },
+        {
+          "call_id": "seed-p3-d02",
+          "patient_id": "p3",
+          "timestamp": "2026-01-02T11:00:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": false,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": false,
+            "weight_or_swelling": false,
+            "agitated": false,
+            "tired_weak_confused": false,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": true,
+          "medication_adherence": {
+            "all_taken": true,
+            "missed": [],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {},
+          "weight_lb": 128,
+          "patient_message_for_caregiver": "Tell Paul to visit Sunday.",
+          "patient_quote": "I had tea with the neighbor.",
+          "extraction_confidence": 0.9
+        },
+        {
+          "call_id": "seed-p3-d03",
+          "patient_id": "p3",
+          "timestamp": "2026-01-03T11:00:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": false,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": false,
+            "weight_or_swelling": false,
+            "agitated": false,
+            "tired_weak_confused": false,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": true,
+          "medication_adherence": {
+            "all_taken": true,
+            "missed": [],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {},
+          "weight_lb": 128,
+          "patient_message_for_caregiver": "Tell Paul to visit Sunday.",
+          "patient_quote": "I had tea with the neighbor.",
+          "extraction_confidence": 0.9
+        },
+        {
+          "call_id": "seed-p3-d04",
+          "patient_id": "p3",
+          "timestamp": "2026-01-04T11:00:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": false,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": false,
+            "weight_or_swelling": false,
+            "agitated": false,
+            "tired_weak_confused": false,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": true,
+          "medication_adherence": {
+            "all_taken": true,
+            "missed": [],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {},
+          "weight_lb": 128,
+          "patient_message_for_caregiver": "Tell Paul to visit Sunday.",
+          "patient_quote": "I had tea with the neighbor.",
+          "extraction_confidence": 0.9
+        },
+        {
+          "call_id": "seed-p3-d05",
+          "patient_id": "p3",
+          "timestamp": "2026-01-05T11:00:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": false,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": false,
+            "weight_or_swelling": false,
+            "agitated": false,
+            "tired_weak_confused": false,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": true,
+          "medication_adherence": {
+            "all_taken": true,
+            "missed": [],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {},
+          "weight_lb": 128,
+          "patient_message_for_caregiver": "Tell Paul to visit Sunday.",
+          "patient_quote": "I had tea with the neighbor.",
+          "extraction_confidence": 0.9
+        },
+        {
+          "call_id": "seed-p3-d06",
+          "patient_id": "p3",
+          "timestamp": "2026-01-06T11:00:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": false,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": false,
+            "weight_or_swelling": false,
+            "agitated": false,
+            "tired_weak_confused": false,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": true,
+          "medication_adherence": {
+            "all_taken": true,
+            "missed": [],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {},
+          "weight_lb": 128,
+          "patient_message_for_caregiver": "Tell Paul to visit Sunday.",
+          "patient_quote": "I had tea with the neighbor.",
+          "extraction_confidence": 0.9
+        },
+        {
+          "call_id": "seed-p3-d07",
+          "patient_id": "p3",
+          "timestamp": "2026-01-07T11:00:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": false,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": false,
+            "weight_or_swelling": false,
+            "agitated": false,
+            "tired_weak_confused": false,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": true,
+          "medication_adherence": {
+            "all_taken": true,
+            "missed": [],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {},
+          "weight_lb": 128,
+          "patient_message_for_caregiver": "Tell Paul to visit Sunday.",
+          "patient_quote": "I had tea with the neighbor.",
+          "extraction_confidence": 0.9
+        },
+        {
+          "call_id": "seed-p3-d08",
+          "patient_id": "p3",
+          "timestamp": "2026-01-08T11:00:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": false,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": false,
+            "weight_or_swelling": false,
+            "agitated": false,
+            "tired_weak_confused": false,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": true,
+          "medication_adherence": {
+            "all_taken": true,
+            "missed": [],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {},
+          "weight_lb": 128,
+          "patient_message_for_caregiver": "Tell Paul to visit Sunday.",
+          "patient_quote": "I had tea with the neighbor.",
+          "extraction_confidence": 0.9
+        },
+        {
+          "call_id": "seed-p3-d09",
+          "patient_id": "p3",
+          "timestamp": "2026-01-09T11:00:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": false,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": false,
+            "weight_or_swelling": false,
+            "agitated": false,
+            "tired_weak_confused": false,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": true,
+          "medication_adherence": {
+            "all_taken": true,
+            "missed": [],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {},
+          "weight_lb": 128,
+          "patient_message_for_caregiver": "Tell Paul to visit Sunday.",
+          "patient_quote": "I had tea with the neighbor.",
+          "extraction_confidence": 0.9
+        },
+        {
+          "call_id": "seed-p3-d10",
+          "patient_id": "p3",
+          "timestamp": "2026-01-10T11:00:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": false,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": false,
+            "weight_or_swelling": false,
+            "agitated": false,
+            "tired_weak_confused": false,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": true,
+          "medication_adherence": {
+            "all_taken": true,
+            "missed": [],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {},
+          "weight_lb": 128,
+          "patient_message_for_caregiver": "Tell Paul to visit Sunday.",
+          "patient_quote": "I had tea with the neighbor.",
+          "extraction_confidence": 0.9
+        },
+        {
+          "call_id": "seed-p3-d11",
+          "patient_id": "p3",
+          "timestamp": "2026-01-11T11:00:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": false,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": false,
+            "weight_or_swelling": false,
+            "agitated": false,
+            "tired_weak_confused": false,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": true,
+          "medication_adherence": {
+            "all_taken": true,
+            "missed": [],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {},
+          "weight_lb": 128,
+          "patient_message_for_caregiver": "Tell Paul to visit Sunday.",
+          "patient_quote": "I had tea with the neighbor.",
+          "extraction_confidence": 0.9
+        },
+        {
+          "call_id": "seed-p3-d12",
+          "patient_id": "p3",
+          "timestamp": "2026-01-12T11:00:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": true,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": true,
+            "weight_or_swelling": false,
+            "agitated": false,
+            "tired_weak_confused": true,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": false,
+          "medication_adherence": {
+            "all_taken": true,
+            "missed": [],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {
+            "urinary_burning": true,
+            "urinary_frequency": false,
+            "new_confusion": true
+          },
+          "weight_lb": 127.5,
+          "patient_message_for_caregiver": "I'm a bit muddled.",
+          "patient_quote": "It burns when I go and I'm not sure what day it is.",
+          "extraction_confidence": 0.9
+        },
+        {
+          "call_id": "seed-p3-d13",
+          "patient_id": "p3",
+          "timestamp": "2026-01-13T11:00:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": true,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": true,
+            "weight_or_swelling": false,
+            "agitated": false,
+            "tired_weak_confused": true,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": false,
+          "medication_adherence": {
+            "all_taken": true,
+            "missed": [],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {
+            "urinary_burning": true,
+            "urinary_frequency": true,
+            "new_confusion": true
+          },
+          "weight_lb": 127.0,
+          "patient_message_for_caregiver": "I'm a bit muddled.",
+          "patient_quote": "It burns when I go and I'm not sure what day it is.",
+          "extraction_confidence": 0.9
+        },
+        {
+          "call_id": "seed-p3-d14",
+          "patient_id": "p3",
+          "timestamp": "2026-01-14T11:00:00Z",
+          "red_flags": [],
+          "stop_and_watch": {
+            "seems_different": true,
+            "talks_less": false,
+            "needs_more_help": false,
+            "ate_less": false,
+            "bowel_change": false,
+            "drank_less": true,
+            "weight_or_swelling": false,
+            "agitated": true,
+            "tired_weak_confused": true,
+            "skin_change": false,
+            "walking_toileting_help": false
+          },
+          "pain": {
+            "present": false,
+            "location": "",
+            "score": 0,
+            "new_or_worse": false
+          },
+          "orientation_correct": false,
+          "medication_adherence": {
+            "all_taken": true,
+            "missed": [],
+            "prn_use_increased": false,
+            "running_low": []
+          },
+          "phq2_score": 0,
+          "condition_specific": {
+            "urinary_burning": true,
+            "urinary_frequency": true,
+            "new_confusion": true
+          },
+          "weight_lb": 126.5,
+          "patient_message_for_caregiver": "I'm a bit muddled.",
+          "patient_quote": "It burns when I go and I'm not sure what day it is.",
+          "extraction_confidence": 0.9
+        }
       ],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {
-      "ankle_swelling": true,
-      "sob_lying_flat": true
-     },
-     "weight_lb": 184.0,
-     "patient_message_for_caregiver": "Don't worry, it's just my feet.",
-     "patient_quote": "My ankles are puffy and my shoes are tight.",
-     "extraction_confidence": 0.9
+      "attempts": [
+        {
+          "patient_id": "p3",
+          "at": "2026-01-01T11:00:00Z",
+          "answered": true
+        },
+        {
+          "patient_id": "p3",
+          "at": "2026-01-02T11:00:00Z",
+          "answered": true
+        },
+        {
+          "patient_id": "p3",
+          "at": "2026-01-03T11:00:00Z",
+          "answered": true
+        },
+        {
+          "patient_id": "p3",
+          "at": "2026-01-04T11:00:00Z",
+          "answered": true
+        },
+        {
+          "patient_id": "p3",
+          "at": "2026-01-05T11:00:00Z",
+          "answered": true
+        },
+        {
+          "patient_id": "p3",
+          "at": "2026-01-06T11:00:00Z",
+          "answered": true
+        },
+        {
+          "patient_id": "p3",
+          "at": "2026-01-07T11:00:00Z",
+          "answered": true
+        },
+        {
+          "patient_id": "p3",
+          "at": "2026-01-08T11:00:00Z",
+          "answered": true
+        },
+        {
+          "patient_id": "p3",
+          "at": "2026-01-09T11:00:00Z",
+          "answered": true
+        },
+        {
+          "patient_id": "p3",
+          "at": "2026-01-10T11:00:00Z",
+          "answered": true
+        },
+        {
+          "patient_id": "p3",
+          "at": "2026-01-11T11:00:00Z",
+          "answered": true
+        },
+        {
+          "patient_id": "p3",
+          "at": "2026-01-12T11:00:00Z",
+          "answered": true
+        },
+        {
+          "patient_id": "p3",
+          "at": "2026-01-13T10:30:00Z",
+          "answered": false
+        },
+        {
+          "patient_id": "p3",
+          "at": "2026-01-13T11:00:00Z",
+          "answered": true
+        },
+        {
+          "patient_id": "p3",
+          "at": "2026-01-14T11:00:00Z",
+          "answered": true
+        }
+      ],
+      "alerts": [
+        {
+          "id": "seed-p3-0",
+          "patient_id": "p3",
+          "severity": "urgent",
+          "kind": "pattern",
+          "title": "Nurse review: possible urinary infection, delirium or dehydration",
+          "detail": "new confusion on 3 of last 3 calls; drinking less on 3 of last 3 calls; urinary burning or frequency on 3 of last 3 calls. No medicine explains these signs and they are new compared with the usual pattern.",
+          "quote": "It burns when I go and I'm not sure what day it is.",
+          "created_at": "2026-01-14T11:00:00Z",
+          "status": "open",
+          "acknowledged_by": null,
+          "notes": [],
+          "sms_log": [
+            {
+              "to": "nurse",
+              "name": "Nurse Sam Example",
+              "at": "2026-01-14T11:00:00Z",
+              "text": "Still Kicking URGENT: Nurse review: possible urinary infection, delirium or dehydration (Edie). Please follow up today."
+            },
+            {
+              "to": "caregiver",
+              "name": "Paul Placeholder",
+              "at": "2026-01-14T11:00:00Z",
+              "text": "Still Kicking URGENT: Nurse review: possible urinary infection, delirium or dehydration (Edie). The nurse has been alerted and will follow up today."
+            }
+          ]
+        }
+      ]
     }
-   ],
-   "attempts": [
-    {
-     "patient_id": "p2",
-     "at": "2026-01-01T09:30:00Z",
-     "answered": true
-    },
-    {
-     "patient_id": "p2",
-     "at": "2026-01-02T09:30:00Z",
-     "answered": true
-    },
-    {
-     "patient_id": "p2",
-     "at": "2026-01-03T09:30:00Z",
-     "answered": true
-    },
-    {
-     "patient_id": "p2",
-     "at": "2026-01-04T09:30:00Z",
-     "answered": true
-    },
-    {
-     "patient_id": "p2",
-     "at": "2026-01-05T09:30:00Z",
-     "answered": true
-    },
-    {
-     "patient_id": "p2",
-     "at": "2026-01-06T09:30:00Z",
-     "answered": true
-    },
-    {
-     "patient_id": "p2",
-     "at": "2026-01-07T09:30:00Z",
-     "answered": true
-    },
-    {
-     "patient_id": "p2",
-     "at": "2026-01-08T09:30:00Z",
-     "answered": true
-    },
-    {
-     "patient_id": "p2",
-     "at": "2026-01-09T09:30:00Z",
-     "answered": true
-    },
-    {
-     "patient_id": "p2",
-     "at": "2026-01-10T09:30:00Z",
-     "answered": true
-    },
-    {
-     "patient_id": "p2",
-     "at": "2026-01-11T09:30:00Z",
-     "answered": true
-    },
-    {
-     "patient_id": "p2",
-     "at": "2026-01-12T09:30:00Z",
-     "answered": true
-    },
-    {
-     "patient_id": "p2",
-     "at": "2026-01-13T09:30:00Z",
-     "answered": true
-    },
-    {
-     "patient_id": "p2",
-     "at": "2026-01-14T09:30:00Z",
-     "answered": true
-    }
-   ]
-  },
-  {
-   "patient": {
-    "id": "p3",
-    "name": "Edith Placeholder",
-    "preferred_name": "Edie",
-    "age": 86,
-    "language": "en",
-    "tone": "calm",
-    "address": "300 Demo Court, Springfield (synthetic)",
-    "conditions": [
-     "dementia/MCI",
-     "hypertension"
-    ],
-    "medications": [
-     {
-      "name": "Donepezil",
-      "dose": "5 mg",
-      "schedule": "every evening",
-      "purpose": "memory",
-      "med_class": "other",
-      "prn": false
-     },
-     {
-      "name": "Amlodipine",
-      "dose": "5 mg",
-      "schedule": "every morning",
-      "purpose": "blood pressure",
-      "med_class": "bp",
-      "prn": false
-     }
-    ],
-    "allergies": [
-     "sulfa"
-    ],
-    "caregiver": {
-     "name": "Paul Placeholder",
-     "relationship": "son",
-     "phone": "555-0103"
-    },
-    "nurse": {
-     "name": "Nurse Sam Example",
-     "phone": "555-0190"
-    },
-    "baseline": {
-     "mobility": "walks with a walker indoors",
-     "appetite": "good",
-     "sleep": "naps in the afternoon",
-     "memory": "mild forgetfulness, knows the day and place",
-     "mood": "content",
-     "weight_lb": 128,
-     "usual_pain_score": 1
-    },
-    "next_call_time": "tomorrow at 11:00 AM"
-   },
-   "history": [
-    {
-     "call_id": "seed-p3-d01",
-     "patient_id": "p3",
-     "timestamp": "2026-01-01T11:00:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": false,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": false,
-      "weight_or_swelling": false,
-      "agitated": false,
-      "tired_weak_confused": false,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": true,
-     "medication_adherence": {
-      "all_taken": true,
-      "missed": [],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {},
-     "weight_lb": 128,
-     "patient_message_for_caregiver": "Tell Paul to visit Sunday.",
-     "patient_quote": "I had tea with the neighbor.",
-     "extraction_confidence": 0.9
-    },
-    {
-     "call_id": "seed-p3-d02",
-     "patient_id": "p3",
-     "timestamp": "2026-01-02T11:00:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": false,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": false,
-      "weight_or_swelling": false,
-      "agitated": false,
-      "tired_weak_confused": false,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": true,
-     "medication_adherence": {
-      "all_taken": true,
-      "missed": [],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {},
-     "weight_lb": 128,
-     "patient_message_for_caregiver": "Tell Paul to visit Sunday.",
-     "patient_quote": "I had tea with the neighbor.",
-     "extraction_confidence": 0.9
-    },
-    {
-     "call_id": "seed-p3-d03",
-     "patient_id": "p3",
-     "timestamp": "2026-01-03T11:00:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": false,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": false,
-      "weight_or_swelling": false,
-      "agitated": false,
-      "tired_weak_confused": false,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": true,
-     "medication_adherence": {
-      "all_taken": true,
-      "missed": [],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {},
-     "weight_lb": 128,
-     "patient_message_for_caregiver": "Tell Paul to visit Sunday.",
-     "patient_quote": "I had tea with the neighbor.",
-     "extraction_confidence": 0.9
-    },
-    {
-     "call_id": "seed-p3-d04",
-     "patient_id": "p3",
-     "timestamp": "2026-01-04T11:00:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": false,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": false,
-      "weight_or_swelling": false,
-      "agitated": false,
-      "tired_weak_confused": false,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": true,
-     "medication_adherence": {
-      "all_taken": true,
-      "missed": [],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {},
-     "weight_lb": 128,
-     "patient_message_for_caregiver": "Tell Paul to visit Sunday.",
-     "patient_quote": "I had tea with the neighbor.",
-     "extraction_confidence": 0.9
-    },
-    {
-     "call_id": "seed-p3-d05",
-     "patient_id": "p3",
-     "timestamp": "2026-01-05T11:00:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": false,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": false,
-      "weight_or_swelling": false,
-      "agitated": false,
-      "tired_weak_confused": false,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": true,
-     "medication_adherence": {
-      "all_taken": true,
-      "missed": [],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {},
-     "weight_lb": 128,
-     "patient_message_for_caregiver": "Tell Paul to visit Sunday.",
-     "patient_quote": "I had tea with the neighbor.",
-     "extraction_confidence": 0.9
-    },
-    {
-     "call_id": "seed-p3-d06",
-     "patient_id": "p3",
-     "timestamp": "2026-01-06T11:00:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": false,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": false,
-      "weight_or_swelling": false,
-      "agitated": false,
-      "tired_weak_confused": false,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": true,
-     "medication_adherence": {
-      "all_taken": true,
-      "missed": [],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {},
-     "weight_lb": 128,
-     "patient_message_for_caregiver": "Tell Paul to visit Sunday.",
-     "patient_quote": "I had tea with the neighbor.",
-     "extraction_confidence": 0.9
-    },
-    {
-     "call_id": "seed-p3-d07",
-     "patient_id": "p3",
-     "timestamp": "2026-01-07T11:00:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": false,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": false,
-      "weight_or_swelling": false,
-      "agitated": false,
-      "tired_weak_confused": false,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": true,
-     "medication_adherence": {
-      "all_taken": true,
-      "missed": [],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {},
-     "weight_lb": 128,
-     "patient_message_for_caregiver": "Tell Paul to visit Sunday.",
-     "patient_quote": "I had tea with the neighbor.",
-     "extraction_confidence": 0.9
-    },
-    {
-     "call_id": "seed-p3-d08",
-     "patient_id": "p3",
-     "timestamp": "2026-01-08T11:00:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": false,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": false,
-      "weight_or_swelling": false,
-      "agitated": false,
-      "tired_weak_confused": false,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": true,
-     "medication_adherence": {
-      "all_taken": true,
-      "missed": [],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {},
-     "weight_lb": 128,
-     "patient_message_for_caregiver": "Tell Paul to visit Sunday.",
-     "patient_quote": "I had tea with the neighbor.",
-     "extraction_confidence": 0.9
-    },
-    {
-     "call_id": "seed-p3-d09",
-     "patient_id": "p3",
-     "timestamp": "2026-01-09T11:00:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": false,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": false,
-      "weight_or_swelling": false,
-      "agitated": false,
-      "tired_weak_confused": false,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": true,
-     "medication_adherence": {
-      "all_taken": true,
-      "missed": [],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {},
-     "weight_lb": 128,
-     "patient_message_for_caregiver": "Tell Paul to visit Sunday.",
-     "patient_quote": "I had tea with the neighbor.",
-     "extraction_confidence": 0.9
-    },
-    {
-     "call_id": "seed-p3-d10",
-     "patient_id": "p3",
-     "timestamp": "2026-01-10T11:00:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": false,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": false,
-      "weight_or_swelling": false,
-      "agitated": false,
-      "tired_weak_confused": false,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": true,
-     "medication_adherence": {
-      "all_taken": true,
-      "missed": [],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {},
-     "weight_lb": 128,
-     "patient_message_for_caregiver": "Tell Paul to visit Sunday.",
-     "patient_quote": "I had tea with the neighbor.",
-     "extraction_confidence": 0.9
-    },
-    {
-     "call_id": "seed-p3-d11",
-     "patient_id": "p3",
-     "timestamp": "2026-01-11T11:00:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": false,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": false,
-      "weight_or_swelling": false,
-      "agitated": false,
-      "tired_weak_confused": false,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": true,
-     "medication_adherence": {
-      "all_taken": true,
-      "missed": [],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {},
-     "weight_lb": 128,
-     "patient_message_for_caregiver": "Tell Paul to visit Sunday.",
-     "patient_quote": "I had tea with the neighbor.",
-     "extraction_confidence": 0.9
-    },
-    {
-     "call_id": "seed-p3-d12",
-     "patient_id": "p3",
-     "timestamp": "2026-01-12T11:00:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": true,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": true,
-      "weight_or_swelling": false,
-      "agitated": false,
-      "tired_weak_confused": true,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": false,
-     "medication_adherence": {
-      "all_taken": true,
-      "missed": [],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {
-      "urinary_burning": true,
-      "urinary_frequency": false,
-      "new_confusion": true
-     },
-     "weight_lb": 127.5,
-     "patient_message_for_caregiver": "I'm a bit muddled.",
-     "patient_quote": "It burns when I go and I'm not sure what day it is.",
-     "extraction_confidence": 0.9
-    },
-    {
-     "call_id": "seed-p3-d13",
-     "patient_id": "p3",
-     "timestamp": "2026-01-13T11:00:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": true,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": true,
-      "weight_or_swelling": false,
-      "agitated": false,
-      "tired_weak_confused": true,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": false,
-     "medication_adherence": {
-      "all_taken": true,
-      "missed": [],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {
-      "urinary_burning": true,
-      "urinary_frequency": true,
-      "new_confusion": true
-     },
-     "weight_lb": 127.0,
-     "patient_message_for_caregiver": "I'm a bit muddled.",
-     "patient_quote": "It burns when I go and I'm not sure what day it is.",
-     "extraction_confidence": 0.9
-    },
-    {
-     "call_id": "seed-p3-d14",
-     "patient_id": "p3",
-     "timestamp": "2026-01-14T11:00:00Z",
-     "red_flags": [],
-     "stop_and_watch": {
-      "seems_different": true,
-      "talks_less": false,
-      "needs_more_help": false,
-      "ate_less": false,
-      "bowel_change": false,
-      "drank_less": true,
-      "weight_or_swelling": false,
-      "agitated": true,
-      "tired_weak_confused": true,
-      "skin_change": false,
-      "walking_toileting_help": false
-     },
-     "pain": {
-      "present": false,
-      "location": "",
-      "score": 0,
-      "new_or_worse": false
-     },
-     "orientation_correct": false,
-     "medication_adherence": {
-      "all_taken": true,
-      "missed": [],
-      "prn_use_increased": false,
-      "running_low": []
-     },
-     "phq2_score": 0,
-     "condition_specific": {
-      "urinary_burning": true,
-      "urinary_frequency": true,
-      "new_confusion": true
-     },
-     "weight_lb": 126.5,
-     "patient_message_for_caregiver": "I'm a bit muddled.",
-     "patient_quote": "It burns when I go and I'm not sure what day it is.",
-     "extraction_confidence": 0.9
-    }
-   ],
-   "attempts": [
-    {
-     "patient_id": "p3",
-     "at": "2026-01-01T11:00:00Z",
-     "answered": true
-    },
-    {
-     "patient_id": "p3",
-     "at": "2026-01-02T11:00:00Z",
-     "answered": true
-    },
-    {
-     "patient_id": "p3",
-     "at": "2026-01-03T11:00:00Z",
-     "answered": true
-    },
-    {
-     "patient_id": "p3",
-     "at": "2026-01-04T11:00:00Z",
-     "answered": true
-    },
-    {
-     "patient_id": "p3",
-     "at": "2026-01-05T11:00:00Z",
-     "answered": true
-    },
-    {
-     "patient_id": "p3",
-     "at": "2026-01-06T11:00:00Z",
-     "answered": true
-    },
-    {
-     "patient_id": "p3",
-     "at": "2026-01-07T11:00:00Z",
-     "answered": true
-    },
-    {
-     "patient_id": "p3",
-     "at": "2026-01-08T11:00:00Z",
-     "answered": true
-    },
-    {
-     "patient_id": "p3",
-     "at": "2026-01-09T11:00:00Z",
-     "answered": true
-    },
-    {
-     "patient_id": "p3",
-     "at": "2026-01-10T11:00:00Z",
-     "answered": true
-    },
-    {
-     "patient_id": "p3",
-     "at": "2026-01-11T11:00:00Z",
-     "answered": true
-    },
-    {
-     "patient_id": "p3",
-     "at": "2026-01-12T11:00:00Z",
-     "answered": true
-    },
-    {
-     "patient_id": "p3",
-     "at": "2026-01-13T10:30:00Z",
-     "answered": false
-    },
-    {
-     "patient_id": "p3",
-     "at": "2026-01-13T11:00:00Z",
-     "answered": true
-    },
-    {
-     "patient_id": "p3",
-     "at": "2026-01-14T11:00:00Z",
-     "answered": true
-    }
-   ]
-  }
- ]
+  ]
 }
