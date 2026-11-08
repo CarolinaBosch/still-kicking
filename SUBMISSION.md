@@ -12,7 +12,7 @@ A warm AI nurse check-in for older adults at home: it spots changes, separates m
 
 Many older adults live alone with conditions like heart failure, COPD or dementia, where small daily changes matter: a few pounds of fluid, a new cough, a sudden bout of confusion. A nurse can't call everyone every day. Still Kicking is a voice check-in that can.
 
-The Still Kicking nurse, an ElevenLabs agent running Claude, has a short, kind conversation: it confirms who answered, screens for red flags first, then asks the INTERACT "Stop and Watch" questions, checks medications, and asks a few condition-specific questions. If the person mentions chest pain, a fall or trouble breathing, it alerts the nurse and caregiver during the call and tells them to hang up and call 911.
+The Still Kicking nurse, an ElevenLabs agent running Claude, has a short, kind conversation: it confirms who answered, screens for red flags first, then asks questions adapted from INTERACT's "Stop and Watch" early-warning tool (a way to spot changes from a person's usual condition, not a diagnostic score), checks medications, and asks a few condition-specific questions. If the person mentions chest pain, a fall or trouble breathing, it alerts the nurse and caregiver during the call and tells them to hang up and call 911.
 
 At the end of the call the agent submits a structured record. A fresh Daytona sandbox runs our engine on it and the patient's history: trend flags, pattern clusters, and a medication attribution that tells "he skipped his water pill" apart from "something new is happening". The nurse sees a traffic-light status, alerts and a plain-language caregiver summary.
 

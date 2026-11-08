@@ -13,11 +13,14 @@ Built at a hackathon with **ElevenLabs** (the voice agent) and **Daytona** (pati
 
 ## What it does
 
-- **Daily voice check-in.** The Still Kicking nurse (Carolina's cloned voice) confirms who answered, screens for red flags first, then runs a short check based on the INTERACT "Stop and Watch" tool: pain, eating and drinking, swelling, mood (PHQ-2), orientation, medications, and a few condition-specific questions (heart failure, COPD, diabetes, blood pressure, dementia).
+- **Daily voice check-in.** The Still Kicking nurse (Carolina's cloned voice) confirms who answered, screens for red flags first, then runs a short check adapted from the INTERACT "Stop and Watch" early-warning tool: pain, eating and drinking, swelling, mood (PHQ-2), orientation, medications, and a few condition-specific questions (heart failure, COPD, diabetes, blood pressure, dementia).
 - **Emergency path during the call.** If the person mentions chest pain, trouble breathing, a fall, stroke signs, fainting, bleeding or not feeling safe, the agent fires `trigger_emergency_alert` before it says anything else and tells them to hang up and call 911. The nurse dashboard shows a red alert with a simulated SMS to the nurse and the caregiver.
 - **Analysis after the call.** The structured record goes to a fresh Daytona sandbox that runs the engine against the patient's history: trend flags, pattern clusters ("possible heart failure worsening"), medication attribution (likely adherence-related, likely a clinical change, or unclear), a traffic-light status, and a caregiver summary.
 - **Missed calls.** Three unanswered attempts in a row raise an urgent "Unable to reach after 3 attempts" alert.
 - **Nurse dashboard.** Patients with status lights, an alert queue (acknowledge, add a note, resolve), the simulated SMS log, engine findings with the sandbox id, and a "Run tests in Daytona" button.
+
+> **About INTERACT "Stop and Watch".** We adapt ideas from INTERACT's Stop and Watch early-warning tool (an approach AHRQ describes). It helps caregivers notice and report changes from a person's usual condition, such as new confusion, eating less, moving less or more weakness. It is a communication tool, not a diagnostic score, and it does not decide on its own who needs major care. It was designed for care settings, so using its ideas for people living at home, and our thresholds, would need clinical validation before real use.
+
 
 Three synthetic patients ship with 14 days of history:
 
