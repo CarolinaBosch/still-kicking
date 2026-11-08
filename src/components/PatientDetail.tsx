@@ -3,6 +3,7 @@
 import CallPanel from "@/components/CallPanel";
 import type { Alert, AnalysisResult, Attribution, PatientState } from "@/lib/types";
 import { consecutiveMissed } from "./client-api";
+import { PatternGrid } from "./PatternGrid";
 import { ErrorNote, SandboxChip, Spinner, StatusLight } from "./ui";
 
 const ATTRIBUTION_LABEL: Record<Attribution, string> = {
@@ -79,6 +80,8 @@ export function PatientDetail({
       </div>
 
       <AnalysisView analysis={analysis} />
+
+      <PatternGrid state={state} />
     </section>
   );
 }
