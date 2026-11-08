@@ -54,3 +54,9 @@ ElevenLabs is the whole patient-facing side. The "Still Kicking Nurse" agent run
 ## Daytona
 
 Daytona is the backend for patient data and every piece of analysis. Patient records live in a long-lived records sandbox (we planned a Volume, but it returned "Access denied" on our account). Every finished call spins up a fresh, labeled, ephemeral sandbox, uploads the engine and one input file, runs it, and deletes the sandbox, so one patient's data never shares a machine with another's and a bad run can't leak into the next. Against real Daytona, Walt's analysis took about 1.1 s end to end. The engine's output is treated as untrusted and validated field by field, no host secrets enter any sandbox, and every step has a timeout. The same pattern runs our 36 engine tests in a sandbox from a dashboard button.
+
+## Team
+
+- **Amy Tran**, team captain, senior student at SDSU
+- **Carolina Bosch**
+- A squad of Claude Code agents (lead, voice, sandbox, builder, demo)

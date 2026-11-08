@@ -7,7 +7,7 @@
 
 A warm AI nurse check-in for older adults living at home. It talks with them, compares today with their own baseline, tells a skipped pill apart from a real change, writes the caregiver a plain-language summary, and alerts a human the moment something sounds serious.
 
-Built at a hackathon with **ElevenLabs** (the voice agent) and **Daytona** (patient records, per-call analysis and tests, all in sandboxes), by Carolina Bosch and a squad of Claude Code agents.
+Built at a hackathon with **ElevenLabs** (the voice agent) and **Daytona** (patient records, per-call analysis and tests, all in sandboxes), by team captain Amy Tran, Carolina Bosch and a squad of Claude Code agents.
 
 **It never diagnoses, prescribes or changes medication. It listens, records, flags and hands off to humans.**
 
@@ -147,7 +147,9 @@ Use Chrome or Safari for the call (it needs microphone permission). "Reset demo"
 
 ## Team
 
-Carolina Bosch, with a squad of Claude Code agents (lead, voice, sandbox, builder, demo).
+- **Amy Tran**, team captain, senior student at SDSU
+- **Carolina Bosch**
+- A squad of Claude Code agents (lead, voice, sandbox, builder, demo)
 
 ## Disclaimer
 
