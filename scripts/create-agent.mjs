@@ -259,8 +259,10 @@ async function main() {
       },
       // Warm and a little slower than default for older listeners.
       tts: { voiceId: VOICE_ID, modelId: TTS_MODEL, speed: 0.9, stability: 0.6, similarityBoost: 0.8 },
-      // Older adults pause mid-sentence; give them time before the agent takes the turn.
-      turn: { turnTimeout: 10, turnEagerness: "patient" },
+      // ~1.5 s replies: normal eagerness plus speculative turn (LLM starts during the pause). turnTimeout 10 s
+      // still gives older adults room before the agent re-prompts. Interruptions stay on (client_events
+      // includes "interruption"; no tool disables them).
+      turn: { turnTimeout: 10, turnEagerness: "normal", speculativeTurn: true },
       conversation: { maxDurationSeconds: 600 },
     },
     // Private agent: the browser can only connect with a conversation token from our server.
