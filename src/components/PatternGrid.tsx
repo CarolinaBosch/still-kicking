@@ -1,5 +1,7 @@
-import type { CSSProperties } from "react";
-import type { CheckinRecord, PatientState, StopAndWatch } from "@/lib/types";
+"use client";
+
+import { useState, type CSSProperties, type KeyboardEvent } from "react";
+import type { AnalysisResult, CheckinRecord, PatientState, StopAndWatch } from "@/lib/types";
 
 const DAYS = 14;
 
@@ -10,11 +12,11 @@ const SW_LABEL: Record<keyof StopAndWatch, string> = {
   ate_less: "Ate less",
   bowel_change: "Bowel change",
   drank_less: "Drank less",
-  weight_or_swelling: "Weight gain / swelling",
+  weight_or_swelling: "Swelling",
   agitated: "Agitated",
-  tired_weak_confused: "Tired, weak or confused",
+  tired_weak_confused: "Tired or weak",
   skin_change: "Skin change",
-  walking_toileting_help: "Help walking / toileting",
+  walking_toileting_help: "Needs help walking",
 };
 
 /** none = no call that day; na = call happened but the item was not asked / unclear. */
@@ -31,16 +33,10 @@ function dayKey(d: Date): string {
   return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
 }
 
-/** 14 days ending today if there is a call today, otherwise ending yesterday (today's call has not happened yet). */
+/** 14 days ending today. */
 function buildDays(history: CheckinRecord[]): Day[] {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const calledToday = history.some((r) => {
-    const t = new Date(r.timestamp);
-    return !Number.isNaN(t.getTime()) && dayKey(t) === dayKey(today);
-  });
-  const end = new Date(today);
-  if (!calledToday) end.setDate(end.getDate() - 1);
+  const end = new Date();
+  end.setHours(0, 0, 0, 0);
   const days: Day[] = [];
   for (let i = DAYS - 1; i >= 0; i--) {
     const d = new Date(end);
@@ -173,50 +169,133 @@ function buildSummary(
   const quiet = lines.length === 0;
   if (quiet) lines.push(`No missed medication or reported concerns in the last ${DAYS} days.`);
 
-  const noCall = days.flatMap((d, i) => (d.records.length === 0 ? [i] : []));
+  const noCall = days.flatMap((d, i) => (d.records.length === 0 && i < days.length - 1 ? [i] : []));
   if (noCall.length) lines.push(`No call on ${datesText(days, noCall)}.`);
 
   return { lines, quiet };
 }
 
-const GLYPH: Record<CellKind, string> = { none: "–", na: "?", ok: "✓", hit: "!" };
+const GLYPH: Record<CellKind, string> = { none: "–", na: "?", ok: "", hit: "!" };
+const WEEKDAY = ["S", "M", "T", "W", "T", "F", "S"];
+
+type Probe = (r: CheckinRecord) => boolean | null;
+
+/** true if any check flags it, false if any check was asked and negative, otherwise null. */
+function anyOf(...probes: Probe[]): Probe {
+  return (r) => {
+    const vals = probes.map((p) => p(r));
+    if (vals.includes(true)) return true;
+    if (vals.includes(false)) return false;
+    return null;
+  };
+}
+const sw = (k: keyof StopAndWatch): Probe => (r) => r.stop_and_watch[k];
+const cs = (k: string): Probe => (r) => {
+  const v = r.condition_specific[k];
+  return typeof v === "boolean" ? v : null;
+};
+
+interface RowDef {
+  label: string;
+  probe: Probe;
+  swKeys: (keyof StopAndWatch)[];
+  orientation?: boolean;
+}
+
+function hasCond(conds: string[], ...needles: string[]): boolean {
+  return conds.some((c) => needles.some((n) => c.toLowerCase().includes(n)));
+}
+
+function conditionRows(conds: string[]): RowDef[] {
+  const rows: RowDef[] = [];
+  if (hasCond(conds, "copd")) {
+    rows.push({ label: "Inhaler use", probe: anyOf(cs("rescue_inhaler_more"), (r) => r.medication_adherence.prn_use_increased), swKeys: [] });
+    rows.push({ label: "Cough", probe: anyOf(cs("cough_worse"), cs("sputum_change")), swKeys: [] });
+  }
+  if (hasCond(conds, "heart failure", "chf")) {
+    rows.push({ label: "Swelling", probe: anyOf(sw("weight_or_swelling"), cs("ankle_swelling")), swKeys: ["weight_or_swelling"] });
+    rows.push({ label: "Breathless lying flat", probe: cs("sob_lying_flat"), swKeys: [] });
+  }
+  if (hasCond(conds, "dementia", "mci")) {
+    rows.push({
+      label: "Confusion",
+      probe: anyOf((r) => (r.orientation_correct === null ? null : !r.orientation_correct), sw("tired_weak_confused"), cs("new_confusion")),
+      swKeys: ["tired_weak_confused"],
+      orientation: true,
+    });
+    rows.push({ label: "Drank less", probe: sw("drank_less"), swKeys: ["drank_less"] });
+  }
+  return rows;
+}
+
+/** "tomorrow at 9:30 AM" -> "9:30 AM"; falls back to the raw string. */
+function callTime(raw: string): string {
+  const m = raw.match(/\d{1,2}(:\d{2})?\s*[AaPp]\.?[Mm]\.?/);
+  return m ? m[0].toUpperCase() : raw;
+}
+
+function engineNote(a: AnalysisResult | null, days: Day[]): string | null {
+  if (!a || a.findings.length === 0) return null;
+  const adh = a.findings.find((f) => f.attribution === "likely_adherence_related");
+  if (adh) {
+    const meds = new Map<string, number[]>();
+    days.forEach((d, i) => {
+      for (const m of new Set(d.records.flatMap(missedMeds))) if (m !== "a dose") meds.set(m, [...(meds.get(m) ?? []), i]);
+    });
+    const what = (adh.evidence[0] || adh.reason || "these changes").replace(/\.$/, "");
+    const medText = [...meds].map(([m, idx]) => `${m} (${datesText(days, idx)})`);
+    if (medText.length) return `Engine note: ${what} may be related to missed ${joinList(medText)}. Nurse to review.`;
+    return `Engine note: ${what} may be related to missed medicines (${adh.reason.replace(/\.$/, "")}). Nurse to review.`;
+  }
+  if (a.findings.some((f) => f.attribution === "likely_clinical_change")) {
+    return "Engine note: these changes are not explained by missed medicines. Nurse to review.";
+  }
+  return null;
+}
 
 export function PatternGrid({ state }: { state: PatientState }) {
+  const [open, setOpen] = useState<number | null>(null);
   const days = buildDays(state.history);
   const inWindow = days.flatMap((d) => d.records);
   const last = DAYS - 1;
+  const todayPending = days[last].records.length === 0;
+  const todayText = `Today: call at ${callTime(state.patient.next_call_time)}`;
+  const isHF = hasCond(state.patient.conditions, "heart failure", "chf");
+
+  const condRows = conditionRows(state.patient.conditions);
+  const covered = new Set(condRows.flatMap((r) => r.swKeys));
+  const orientCovered = condRows.some((r) => r.orientation);
 
   const swKeys = (Object.keys(SW_LABEL) as (keyof StopAndWatch)[]).filter((k) =>
     inWindow.some((r) => r.stop_and_watch[k] === true),
   );
+  const otherRows: RowDef[] = swKeys
+    .filter((k) => !covered.has(k))
+    .map((k) => ({ label: SW_LABEL[k], probe: sw(k), swKeys: [k] }));
+  if (!orientCovered && inWindow.some((r) => r.orientation_correct === false)) {
+    otherRows.push({ label: "Confusion", probe: (r) => (r.orientation_correct === null ? null : !r.orientation_correct), swKeys: [] });
+  }
 
+  const medRow = {
+    label: "Missed meds",
+    med: true,
+    cell: (rs: CheckinRecord[]): Cell => {
+      const meds = [...new Set(rs.flatMap(missedMeds))];
+      if (meds.length) return { kind: "hit", detail: `missed ${meds.join(", ")}` };
+      if (rs.every((r) => r.medication_adherence.all_taken === null)) return { kind: "na" };
+      return { kind: "ok", detail: "all taken" };
+    },
+  };
+  const probeCell = (probe: Probe) => (rs: CheckinRecord[]): Cell => {
+    const vals = rs.map(probe);
+    if (vals.includes(true)) return { kind: "hit", detail: "reported" };
+    if (vals.includes(false)) return { kind: "ok", detail: "asked, no change" };
+    return { kind: "na" };
+  };
   const rows: { label: string; med?: boolean; cell: (rs: CheckinRecord[]) => Cell }[] = [
-    {
-      label: "Missed medication",
-      med: true,
-      cell: (rs) => {
-        const meds = [...new Set(rs.flatMap(missedMeds))];
-        if (meds.length) return { kind: "hit", detail: `missed ${meds.join(", ")}` };
-        if (rs.every((r) => r.medication_adherence.all_taken === null)) return { kind: "na" };
-        return { kind: "ok", detail: "all taken" };
-      },
-    },
-    ...swKeys.map((k) => ({
-      label: SW_LABEL[k],
-      cell: (rs: CheckinRecord[]): Cell => {
-        if (rs.some((r) => r.stop_and_watch[k] === true)) return { kind: "hit", detail: "reported" };
-        if (rs.some((r) => r.stop_and_watch[k] === false)) return { kind: "ok", detail: "asked, not reported" };
-        return { kind: "na" };
-      },
-    })),
-    {
-      label: "Knew day of week",
-      cell: (rs) => {
-        if (rs.some((r) => r.orientation_correct === false)) return { kind: "hit", detail: "did not know the day" };
-        if (rs.some((r) => r.orientation_correct === true)) return { kind: "ok", detail: "knew the day" };
-        return { kind: "na" };
-      },
-    },
+    medRow,
+    ...condRows.map((r) => ({ label: r.label, cell: probeCell(r.probe) })),
+    ...otherRows.map((r) => ({ label: r.label, cell: probeCell(r.probe) })),
   ];
 
   const baseline = state.patient.baseline.weight_lb;
@@ -226,21 +305,31 @@ export function PatternGrid({ state }: { state: PatientState }) {
   });
 
   const summary = buildSummary(days, swKeys, weights);
+  const note = engineNote(state.last_analysis, days);
 
-  // Month labels: one at the left edge and one at each first-of-month. Drop the left one if a month starts right after it.
   const monthAt = days.map((d, i) => (i === 0 || d.date.getDate() === 1 ? MON(d.date) : null));
   const firstChange = monthAt.findIndex((m, i) => i > 0 && m !== null);
   if (firstChange > 0 && firstChange < 3) monthAt[0] = null;
 
-  const cellText = (d: Day, row: string, c: Cell) => {
+  const cellText = (d: Day, i: number, row: string, c: Cell) => {
     const when = dayLabel(d.date);
-    if (c.kind === "none") return `${when}: no call`;
-    if (c.kind === "na") return `${when}: ${row}, not asked`;
+    if (c.kind === "none") return i === last && todayPending ? todayText : `${when}: no call`;
+    if (c.kind === "na") return `${when}: ${row}, called, not asked`;
     return `${when}: ${row}, ${c.detail}`;
   };
 
+  const openDay = open !== null ? days[open] : null;
+  const openRec = openDay ? openDay.records[openDay.records.length - 1] : null;
+
+  const onKey = (e: KeyboardEvent) => {
+    if (e.key === "Escape" && open !== null) {
+      e.stopPropagation();
+      setOpen(null);
+    }
+  };
+
   return (
-    <div className="panel">
+    <div className="panel" onKeyDown={onKey}>
       <h3 className="eyebrow">14-day pattern</h3>
 
       <section className={`pg-summary ${summary.quiet ? "pg-summary-quiet" : ""}`} aria-label="For nurse review">
@@ -251,6 +340,8 @@ export function PatternGrid({ state }: { state: PatientState }) {
           ))}
         </ul>
       </section>
+
+      {todayPending && <p className="pg-today-note">{todayText}</p>}
 
       <div
         className="pg"
@@ -266,6 +357,14 @@ export function PatternGrid({ state }: { state: PatientState }) {
             </span>
           ))}
         </div>
+        <div className="pg-row pg-weekdays" aria-hidden>
+          <span className="pg-label" />
+          {days.map((d) => (
+            <span key={d.key} className="pg-wd">
+              {WEEKDAY[d.date.getDay()]}
+            </span>
+          ))}
+        </div>
         <div className="pg-row" role="row">
           <span className="pg-label" role="columnheader">
             <span className="sr-only">Finding</span>
@@ -275,8 +374,8 @@ export function PatternGrid({ state }: { state: PatientState }) {
               key={d.key}
               role="columnheader"
               className={`pg-day ${d.date.getDate() === 1 ? "pg-day-first" : ""} ${i === last ? "pg-last" : ""}`}
-              title={dayLabel(d.date)}
-              aria-label={dayLabel(d.date)}
+              title={i === last ? `Today, ${dayLabel(d.date)}` : dayLabel(d.date)}
+              aria-label={i === last ? `Today, ${dayLabel(d.date)}` : dayLabel(d.date)}
             >
               {d.date.getDate()}
             </span>
@@ -288,44 +387,85 @@ export function PatternGrid({ state }: { state: PatientState }) {
             <span className="pg-label" role="rowheader">
               {row.label}
             </span>
-            {days.map((d) => {
+            {days.map((d, i) => {
               const c: Cell = d.records.length === 0 ? { kind: "none" } : row.cell(d.records);
-              const text = cellText(d, row.label, c);
-              const kind = c.kind === "hit" && row.med ? "med" : c.kind;
+              const text = cellText(d, i, row.label, c);
+              const pending = c.kind === "none" && i === last && todayPending;
+              const kind = pending ? "pending" : c.kind === "hit" && row.med ? "med" : c.kind;
+              if (c.kind === "hit") {
+                return (
+                  <span key={d.key} role="cell" className="pg-cellwrap">
+                    <button
+                      type="button"
+                      className={`pg-cell pg-btn pg-${kind} ${open === i ? "pg-open" : ""}`}
+                      title={text}
+                      aria-label={`${text}. Show what they said`}
+                      aria-expanded={open === i}
+                      aria-controls="pg-quote"
+                      onClick={() => setOpen(open === i ? null : i)}
+                    >
+                      <span aria-hidden>{kind === "med" ? "✕" : GLYPH.hit}</span>
+                    </button>
+                  </span>
+                );
+              }
               return (
                 <span key={d.key} role="cell" className={`pg-cell pg-${kind}`} title={text} aria-label={text}>
-                  <span aria-hidden>{kind === "med" ? "✕" : GLYPH[c.kind]}</span>
+                  <span aria-hidden>{pending ? "" : GLYPH[c.kind]}</span>
                 </span>
               );
             })}
           </div>
         ))}
+        {otherRows.length === 0 && <p className="pg-quiet">No other changes</p>}
 
-        <WeightTrend days={days} weights={weights} />
+        <WeightTrend days={days} weights={weights} hf={isHF} />
       </div>
+
+      <div id="pg-quote" aria-live="polite">
+        {openDay && (
+          <div className="pg-quote">
+            <strong>{dayLabel(openDay.date)}:</strong>{" "}
+            {openRec?.patient_quote ? <q>{openRec.patient_quote}</q> : <span className="text-muted">No quote recorded.</span>}
+            {openRec?.patient_message_for_caregiver && (
+              <span className="pg-quote-msg"> Message for caregiver: {openRec.patient_message_for_caregiver}</span>
+            )}
+            <button type="button" className="pg-quote-close" onClick={() => setOpen(null)} aria-label="Close quote">
+              ×
+            </button>
+          </div>
+        )}
+      </div>
+
+      {note && <p className="pg-insight">{note}</p>}
 
       <ul className="pg-legend" aria-label="Legend">
         <li>
-          <span className="pg-key pg-med" aria-hidden>✕</span> Missed medication
+          <span className="pg-key pg-med" aria-hidden>✕</span> Missed meds
         </li>
         <li>
-          <span className="pg-key pg-hit" aria-hidden>!</span> Concern reported
+          <span className="pg-key pg-hit" aria-hidden>!</span> Change reported (tap to see quote)
         </li>
         <li>
-          <span className="pg-key pg-ok" aria-hidden>✓</span> Asked, no concern
+          <span className="pg-key pg-ok" aria-hidden /> Asked, fine
         </li>
         <li>
-          <span className="pg-key pg-na" aria-hidden>?</span> Call, not asked
+          <span className="pg-key pg-na" aria-hidden>?</span> Called, not asked
         </li>
         <li>
           <span className="pg-key pg-none" aria-hidden>–</span> No call
         </li>
+        {isHF && (
+          <li>
+            <span className="pg-key pg-hfkey" aria-hidden /> HF threshold: &gt;2 lb/day, &gt;5 lb/week
+          </li>
+        )}
       </ul>
     </div>
   );
 }
 
-function WeightTrend({ days, weights }: { days: Day[]; weights: (number | null)[] }) {
+function WeightTrend({ days, weights, hf }: { days: Day[]; weights: (number | null)[]; hf: boolean }) {
   const known = weights.flatMap((w, i) => (w === null ? [] : [{ i, w }]));
   if (known.length < 2) {
     return (
@@ -339,19 +479,43 @@ function WeightTrend({ days, weights }: { days: Day[]; weights: (number | null)[
   const first = known[0];
   const lastK = known[known.length - 1];
   const delta = Math.round((lastK.w - first.w) * 10) / 10;
-  const min = Math.min(...known.map((p) => p.w));
-  const max = Math.max(...known.map((p) => p.w));
-  const span = Math.max(max - min, 2);
-  const pct = (w: number) => 12 + ((w - min) / span) * 76; // % from bottom
+  const lo0 = Math.min(...known.map((p) => p.w));
+  const hi0 = Math.max(...known.map((p) => p.w));
+  const mid = (lo0 + hi0) / 2;
+  const span = Math.max(hi0 - lo0, 10);
+  const min = mid - span / 2;
+  const max = mid + span / 2;
+  const pct = (w: number) => 8 + ((w - min) / span) * 84;
   const sign = delta > 0 ? "+" : delta < 0 ? "−" : "±";
   const rising = delta >= 2;
-  const gaps = weights.flatMap((w, i) => (w === null ? [i] : []));
+  const gaps = weights.flatMap((w, i) => (w === null && i < days.length - 1 ? [i] : []));
   const gapText = gaps.length ? `No weight on ${datesText(days, gaps)}` : "";
+
+  // HF thresholds: >2 lb vs previous day, >5 lb vs any weight in the prior 7 days.
+  const hfDay = new Set<number>();
+  const hfWeek = new Set<number>();
+  if (hf) {
+    weights.forEach((w, i) => {
+      if (w === null) return;
+      const prev = i > 0 ? weights[i - 1] : null;
+      if (prev !== null && w - prev > 2) hfDay.add(i);
+      for (let j = Math.max(0, i - 7); j < i; j++) {
+        const wj = weights[j];
+        if (wj !== null && w - wj > 5) {
+          for (let k = j; k <= i; k++) hfWeek.add(k);
+          break;
+        }
+      }
+    });
+  }
+  const hfText =
+    hfDay.size || hfWeek.size
+      ? ` Above HF threshold on ${datesText(days, [...new Set([...hfDay, ...hfWeek])].filter((i) => weights[i] !== null))}.`
+      : "";
   const summary =
     `Weight ${fmtLb(first.w)} lb on ${short(days[first.i].date)} to ${fmtLb(lastK.w)} lb on ${short(days[lastK.i].date)}, ` +
-    `net ${sign}${fmtLb(Math.abs(delta))} lb. ${gapText}`;
+    `net ${sign}${fmtLb(Math.abs(delta))} lb. ${gapText}${hfText}`;
 
-  // Line segments only between adjacent days that both have a weight; unknown days break the line.
   const segs: string[] = [];
   for (let i = 0; i < weights.length - 1; i++) {
     const a = weights[i];
@@ -360,45 +524,41 @@ function WeightTrend({ days, weights }: { days: Day[]; weights: (number | null)[
   }
 
   return (
-    <>
-      <div className="pg-weight-head" role="row">
-        <span role="cell">
-          <strong>Weight</strong> {fmtLb(first.w)} &rarr; {fmtLb(lastK.w)} lb{" "}
-          <span className={`pg-delta ${rising ? "pg-delta-up" : ""}`}>
-            (net {sign}
-            {fmtLb(Math.abs(delta))} lb)
-          </span>
-          {gapText && <span className="pg-weight-gaps text-muted"> · {gapText} (hatched)</span>}
+    <div className="pg-row pg-weight-row" role="row">
+      <span className="pg-label pg-weight-label" role="rowheader">
+        <span className="pg-weight-title">
+          Weight {fmtLb(lastK.w)} lb · <span className={`pg-delta ${rising ? "pg-delta-up" : ""}`}>{sign}{fmtLb(Math.abs(delta))} lb</span>
         </span>
-      </div>
-      <div className="pg-row pg-weight-row" role="row">
-        <span className="pg-label pg-weight-label text-muted" role="rowheader" aria-label="Weight, pounds">
+        <span className="pg-weight-scale text-muted" aria-hidden>
           <span>{fmtLb(max)}</span>
           <span>{fmtLb(min)}</span>
         </span>
-        <span className="pg-weight-track" role="cell" aria-label={summary}>
-          <svg className="pg-weight-line" viewBox={`0 0 ${DAYS} 100`} preserveAspectRatio="none" aria-hidden>
-            <path d={segs.join(" ")} className={rising ? "pg-spark-up" : "pg-spark-flat"} vectorEffect="non-scaling-stroke" />
-          </svg>
-          {weights.map((w, i) => {
-            const when = dayLabel(days[i].date);
-            if (w === null) {
-              const reason = days[i].records.length === 0 ? "no call" : "not recorded";
-              return (
-                <span key={days[i].key} className="pg-wgap" style={{ gridColumn: i + 1 }} title={`${when}: weight unknown (${reason})`}>
-                  <span aria-hidden>?</span>
-                </span>
-              );
-            }
-            const isEnd = i === first.i || i === lastK.i;
+      </span>
+      <span className="pg-weight-track" role="cell" aria-label={summary}>
+        {weights.map((w, i) => {
+          const when = dayLabel(days[i].date);
+          const band = hfWeek.has(i) ? "pg-hfweek" : "";
+          if (w === null) {
+            if (i === days.length - 1) return <span key={days[i].key} className="pg-wslot" style={{ gridColumn: i + 1 }} />;
+            const reason = days[i].records.length === 0 ? "no call" : "not recorded";
             return (
-              <span key={days[i].key} className="pg-wslot" style={{ gridColumn: i + 1 }} title={`${when}: ${fmtLb(w)} lb`}>
-                <span className={`pg-wdot ${rising ? "pg-wdot-up" : ""} ${isEnd ? "pg-wdot-end" : ""}`} style={{ bottom: `${pct(w)}%` }} />
+              <span key={days[i].key} className={`pg-wgap ${band}`} style={{ gridColumn: i + 1 }} title={`${when}: weight unknown (${reason})`}>
+                <span aria-hidden>?</span>
               </span>
             );
-          })}
-        </span>
-      </div>
-    </>
+          }
+          const isEnd = i === first.i || i === lastK.i;
+          const flag = hfDay.has(i) ? " · over 2 lb in a day" : hfWeek.has(i) ? " · over 5 lb in a week" : "";
+          return (
+            <span key={days[i].key} className={`pg-wslot ${band} ${hfDay.has(i) ? "pg-hfday" : ""}`} style={{ gridColumn: i + 1 }} title={`${when}: ${fmtLb(w)} lb${flag}`}>
+              <span className={`pg-wdot ${rising ? "pg-wdot-up" : ""} ${isEnd ? "pg-wdot-end" : ""}`} style={{ bottom: `${pct(w)}%` }} />
+            </span>
+          );
+        })}
+        <svg className="pg-weight-line" viewBox={`0 0 ${DAYS} 100`} preserveAspectRatio="none" aria-hidden>
+          <path d={segs.join(" ")} className={rising ? "pg-spark-up" : "pg-spark-flat"} vectorEffect="non-scaling-stroke" />
+        </svg>
+      </span>
+    </div>
   );
 }
