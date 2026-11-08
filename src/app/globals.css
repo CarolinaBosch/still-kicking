@@ -419,3 +419,20 @@ body {
 .clinical-ref p { font-size: 0.9rem; line-height: 1.55; color: var(--muted); }
 .clinical-ref a { color: var(--accent); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
 .clinical-ref a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+
+/* "Why this flag?" disclosure on alert cards */
+.why-flag { margin-top: 0.4rem; }
+.why-toggle { font-size: 0.9rem; }
+.why-panel { margin-top: 0.4rem; padding: 0.6rem 0.75rem; border: 1px solid var(--border, #d0d5dd); border-radius: 0.5rem; font-size: 0.9rem; display: grid; gap: 0.45rem; }
+.why-panel p { margin: 0; }
+.why-rows, .why-obs { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.2rem; }
+.why-rows { gap: 0.55rem; }
+.why-row { padding-left: 0.6rem; border-left: 2px solid var(--border, #d0d5dd); }
+.why-row-head { display: flex; gap: 0.5rem; align-items: baseline; }
+.why-obs li::before { content: "• "; }
+.why-synth { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; border: 1px solid currentColor; border-radius: 0.3rem; padding: 0 0.3rem; opacity: 0.8; }
+.why-label { font-weight: 700; font-style: normal; }
+.why-quote { font-style: italic; }
+.why-noquote, .why-ref { font-size: 0.82rem; opacity: 0.8; }
+.why-missing { font-weight: 600; }
+.why-review { border: 2px solid currentColor; border-radius: 0.45rem; padding: 0.45rem 0.6rem; font-weight: 600; }
