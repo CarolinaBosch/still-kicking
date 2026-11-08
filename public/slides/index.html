@@ -19,8 +19,9 @@
 html,body{margin:0;height:100%;background:var(--cream);color:var(--ink);font-family:Nunito,system-ui,sans-serif}
 body{overflow:hidden}
 .deck{height:100%;width:100%;position:relative}
-.slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:56px 72px 88px;opacity:0;visibility:hidden;transform:translateY(16px) scale(.98);transition:opacity .35s ease,transform .35s ease,visibility .35s}
-.slide.on{opacity:1;visibility:visible;transform:none}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;justify-content:center;align-items:center;padding:56px 72px 88px}
+.slide.on{display:flex;animation:pop .3s ease-out}
+@keyframes pop{from{transform:translateY(12px) scale(.985)}to{transform:none}}
 h1,h2,h3{font-family:Fredoka,Nunito,sans-serif;font-weight:600;margin:0;letter-spacing:.2px}
 h1{font-size:clamp(44px,7vw,92px);color:var(--coral)}
 h2{font-size:clamp(30px,4.2vw,54px);color:var(--coral-deep);text-align:center;margin-bottom:28px}
@@ -81,13 +82,13 @@ ul.tick li:before{content:"";position:absolute;left:4px;top:.45em;width:16px;hei
 .fine{font-size:13px;color:var(--soft);position:fixed;bottom:24px;right:24px}
 @media (max-width:600px){
   body{overflow:auto}
-  .slide{position:relative;opacity:1;visibility:visible;transform:none;min-height:100vh;padding:48px 20px 64px}
+  .slide{position:relative;display:flex;min-height:100vh;padding:48px 20px 64px}
   .nav,.fine{display:none}
   .two{grid-template-columns:1fr}
   .arrow{transform:rotate(90deg)}
 }
-@media (prefers-reduced-motion:reduce){.logo{animation:none}.slide{transition:none}}
-@media print{body{overflow:visible}.slide{position:relative;opacity:1;visibility:visible;transform:none;page-break-after:always;height:100vh}.nav,.fine{display:none}}
+@media (prefers-reduced-motion:reduce){.logo,.slide.on{animation:none}}
+@media print{body{overflow:visible}.slide{position:relative;display:flex;page-break-after:always;height:100vh}.nav,.fine{display:none}}
 </style>
 </head>
 <body>
