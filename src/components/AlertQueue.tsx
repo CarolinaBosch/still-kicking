@@ -4,6 +4,7 @@ import { useState } from "react";
 import type { Alert, PatientState } from "@/lib/types";
 import { formatClock, formatWhen, nurseName } from "./client-api";
 import { ErrorNote, Spinner } from "./ui";
+import { WhyThisFlag } from "./WhyThisFlag";
 
 export type AlertAction = { action: "acknowledge" | "resolve"; note?: string };
 
@@ -20,6 +21,7 @@ export function AlertQueue({
   const active = alerts.filter((a) => a.status !== "resolved");
   const resolved = alerts.filter((a) => a.status === "resolved");
   const byId = new Map(patients.map((s) => [s.patient.id, s.patient]));
+  const stateById = new Map(patients.map((s) => [s.patient.id, s]));
 
   return (
     <section className="panel alert-queue" aria-labelledby="alerts-title" aria-live="polite">
@@ -29,7 +31,7 @@ export function AlertQueue({
       {active.length === 0 && <p className="text-muted">No active alerts.</p>}
       <ul className="alert-list">
         {active.map((a) => (
-          <AlertItem key={a.id} alert={a} patientName={byId.get(a.patient_id)?.name ?? a.patient_id} nurse={byId.get(a.patient_id)?.nurse.name ?? "Nurse"} onAction={onAction} />
+          <AlertItem key={a.id} alert={a} patientName={byId.get(a.patient_id)?.name ?? a.patient_id} nurse={byId.get(a.patient_id)?.nurse.name ?? "Nurse"} state={stateById.get(a.patient_id)} onAction={onAction} />
         ))}
       </ul>
       {resolved.length > 0 && (
@@ -40,7 +42,7 @@ export function AlertQueue({
           {showResolved && (
             <ul className="alert-list">
               {resolved.map((a) => (
-                <AlertItem key={a.id} alert={a} patientName={byId.get(a.patient_id)?.name ?? a.patient_id} nurse={byId.get(a.patient_id)?.nurse.name ?? "Nurse"} onAction={onAction} />
+                <AlertItem key={a.id} alert={a} patientName={byId.get(a.patient_id)?.name ?? a.patient_id} nurse={byId.get(a.patient_id)?.nurse.name ?? "Nurse"} state={stateById.get(a.patient_id)} onAction={onAction} />
               ))}
             </ul>
           )}
@@ -54,11 +56,13 @@ function AlertItem({
   alert,
   patientName,
   nurse,
+  state,
   onAction,
 }: {
   alert: Alert;
   patientName: string;
   nurse: string;
+  state: PatientState | undefined;
   onAction: (alert: Alert, by: string, a: AlertAction) => Promise<void>;
 }) {
   const [busy, setBusy] = useState<null | "acknowledge" | "resolve" | "note">(null);
@@ -108,6 +112,8 @@ function AlertItem({
           ))}
         </ul>
       )}
+
+      <WhyThisFlag alert={alert} state={state} />
 
       <p className="alert-status">
         Status: <strong>{alert.status}</strong>
