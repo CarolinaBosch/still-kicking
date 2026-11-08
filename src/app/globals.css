@@ -80,6 +80,17 @@ body {
     border: 1px solid var(--line); background: var(--surface); border-radius: 0.5rem; padding: 0.35rem 0.7rem;
   }
 
+  .pitch { display: grid; gap: 0.6rem; margin-top: 1rem; grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 768px) { .pitch { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .pitch-card {
+    background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent);
+    border-radius: 0.6rem; padding: 0.55rem 0.8rem; font-size: 0.95rem; line-height: 1.35;
+  }
+  .pitch-label {
+    font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent);
+    margin-bottom: 0.15rem;
+  }
+
   .fixture-banner {
     margin-top: 1rem; padding: 0.6rem 0.9rem; border-radius: 0.5rem;
     background: var(--yellow-soft); color: var(--yellow); font-weight: 600; border: 1px dashed var(--yellow);

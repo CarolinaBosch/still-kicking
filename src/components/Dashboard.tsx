@@ -149,6 +149,21 @@ export default function Dashboard() {
         <p className="disclaimer">Prototype. Not a medical device. Not a replacement for 911. Synthetic patients.</p>
       </header>
 
+      <section className="pitch" aria-label="Who this is for">
+        <div className="pitch-card">
+          <h2 className="pitch-label">User</h2>
+          <p>An older adult living alone with a chronic condition, and their worried family caregiver.</p>
+        </div>
+        <div className="pitch-card">
+          <h2 className="pitch-label">Finish line</h2>
+          <p>After every call, the nurse and caregiver know what changed in plain words, and get alerted immediately if it&rsquo;s serious.</p>
+        </div>
+        <div className="pitch-card">
+          <h2 className="pitch-label">How</h2>
+          <p>ElevenLabs agent &rarr; tool calls &rarr; Daytona sandbox &rarr; result spoken in the same call.</p>
+        </div>
+      </section>
+
       {devFixture && (
         <p className="fixture-banner" role="status">
           Dev fixture data: the Daytona store is not implemented yet, so this page shows in-memory sample data.
