@@ -66,7 +66,8 @@ const SUBMIT_CHECKIN = {
   type: "client",
   name: "submit_checkin",
   description:
-    "Save today's structured check-in record. Call it exactly once: right before the goodbye, or right after the 911 " +
+    "Save today's structured check-in record and run the two-week review for the nurse. Returns a short summary to " +
+    "share with the person before goodbye. Call it exactly once: right before the goodbye, or right after the 911 " +
     "instruction in an emergency. Record only what the person actually said; use null for anything not asked or " +
     "unclear. Never guess.",
   parameters: {
@@ -169,9 +170,10 @@ const SUBMIT_CHECKIN = {
   },
   // Generating the full record takes a few seconds; force a short line first so the line is not silent.
   preToolSpeech: "force",
-  // The browser starts the Daytona analysis in the background and answers at once.
+  // The browser waits up to ~22 s for the Daytona two-week analysis and returns a short summary
+  // for the nurse to say before goodbye (or "Saved. Your nurse will review it." on timeout).
   expectsResponse: true,
-  responseTimeoutSecs: 10,
+  responseTimeoutSecs: 25,
 };
 
 const TOOLS = [TRIGGER_EMERGENCY_ALERT, SUBMIT_CHECKIN];
