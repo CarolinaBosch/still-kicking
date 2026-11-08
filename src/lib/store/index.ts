@@ -36,9 +36,19 @@ const HISTORY_FOR_ENGINE = 30; // calls sent to the engine with each new record
 const DUPLICATE_ALERT_WINDOW_MS = 60 * 60_000;
 const RESET_FLUSH_WAIT_MS = 15_000;
 
+// On Vercel several function instances can serve the dashboard at once, each with its own
+// cache. In that "shared" mode every read older than FRESH_MS re-reads the records sandbox,
+// and every write waits until it has reached the records sandbox, so all instances agree.
+// Locally (one process) the cache alone is the source of truth and writes stay in the background.
+const SHARED = Boolean(process.env.VERCEL);
+const FRESH_MS = 1_500;
+const SETTLE_MS = 8_000;
+
 const cache = processGlobal("store", () => ({
   states: new Map<string, PatientState>(),
   ready: null as Promise<void> | null,
+  loadedAt: 0,
+  refreshing: null as Promise<void> | null,
 }));
 
 // ---------- cache ----------
@@ -46,6 +56,33 @@ const cache = processGlobal("store", () => ({
 function fill(states: PatientState[]): void {
   cache.states.clear();
   for (const s of states) cache.states.set(s.patient.id, s);
+  cache.loadedAt = Date.now();
+}
+
+/** Shared mode: re-read the records sandbox (after our own pending writes land). Keeps the cache on failure. */
+async function refresh(): Promise<void> {
+  if (!cache.refreshing) {
+    cache.refreshing = (async () => {
+      try {
+        await flushRecords();
+        const stored = await loadRecords();
+        if (stored) fill(stored);
+      } catch (err) {
+        console.error("[store] refresh from records sandbox failed, using cache", errText(err));
+      }
+    })().finally(() => {
+      cache.refreshing = null;
+    });
+  }
+  await cache.refreshing;
+}
+
+/** Shared mode: wait until this request's writes reached the records sandbox, so other instances see them. */
+async function settle(): Promise<void> {
+  if (!SHARED) return;
+  await withTimeout(flushRecords(), SETTLE_MS, "records write slow").catch((err) =>
+    console.error("[store] write not confirmed yet; cache holds it", errText(err)),
+  );
 }
 
 async function hydrate(): Promise<void> {
@@ -77,6 +114,7 @@ async function states(): Promise<Map<string, PatientState>> {
   } catch (err) {
     throw new StoreError("Patient records are not available right now.", 503, { cause: err });
   }
+  if (SHARED && Date.now() - cache.loadedAt > FRESH_MS) await refresh();
   return cache.states;
 }
 
@@ -269,6 +307,7 @@ export async function analyzeCheckin(record: CheckinRecord): Promise<AnalysisRes
   state.alerts.unshift(...newAlerts);
   state.last_analysis = result;
   commit(state);
+  await settle();
   return snapshot(result);
 }
 
@@ -287,7 +326,8 @@ export async function raiseEmergency(input: EmergencyInput): Promise<Alert> {
     quote: text(field(input, "quote"), 300) || null,
   });
   state.alerts.unshift(alert);
-  commit(state); // cache now; the records sandbox write happens in the background
+  commit(state); // cache now; the records sandbox write happens in the background (awaited on Vercel)
+  await settle();
   return snapshot(alert);
 }
 
@@ -311,6 +351,7 @@ export async function recordMissedCall(patientId: string): Promise<MissedCallRes
     state.alerts.unshift(alert);
   }
   commit(state);
+  await settle();
   return { consecutive_missed: count, alert: alert && snapshot(alert) };
 }
 
@@ -331,6 +372,7 @@ export async function updateAlert(
     const clean = text(note, 1000).trim();
     if (clean) alert.notes.push(`${who}: ${clean}`);
     commit(state);
+    await settle();
     return snapshot(alert);
   }
   throw new StoreError("I couldn't find that alert.", 404);
