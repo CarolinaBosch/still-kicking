@@ -161,6 +161,7 @@ const SUBMIT_CHECKIN = {
           more_confused: bool("More confused than usual."),
           urinary_burning: bool("Burning when urinating."),
           fever: bool("Fever."),
+          checkin_declined: bool("true if the person was frustrated and asked to stop, so the check-in was cut short."),
         },
       },
       weight_lb: num("Today's weight in pounds if they weighed. Omit otherwise."),
