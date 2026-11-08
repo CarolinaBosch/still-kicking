@@ -243,7 +243,11 @@ function engineNote(a: AnalysisResult | null, days: Day[]): string | null {
       for (const m of new Set(d.records.flatMap(missedMeds))) if (m !== "a dose") meds.set(m, [...(meds.get(m) ?? []), i]);
     });
     const what = (adh.evidence[0] || adh.reason || "these changes").replace(/\.$/, "");
-    const medText = [...meds].map(([m, idx]) => `${m} (${datesText(days, idx)})`);
+    // Only the medicines the engine itself named in its reason (e.g. a missed blood pressure
+    // pill is not offered as an explanation for swelling).
+    const reasonText = adh.reason.toLowerCase();
+    const named = [...meds].filter(([m]) => reasonText.includes(m.toLowerCase()));
+    const medText = named.map(([m, idx]) => `${m} (${datesText(days, idx)})`);
     if (medText.length) return `Engine note: ${what} may be related to missed ${joinList(medText)}. Nurse to review.`;
     return `Engine note: ${what} may be related to missed medicines (${adh.reason.replace(/\.$/, "")}). Nurse to review.`;
   }
