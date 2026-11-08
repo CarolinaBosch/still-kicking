@@ -12,10 +12,17 @@ export function AlertQueue({
   alerts,
   patients,
   onAction,
+  activeAlertId,
+  activeNonce,
+  onOpen,
 }: {
   alerts: Alert[];
   patients: PatientState[];
   onAction: (alert: Alert, by: string, a: AlertAction) => Promise<void>;
+  activeAlertId: string | null;
+  activeNonce: number;
+  /** Selects the alert's patient. Returns false when no patient record matches. */
+  onOpen: (alert: Alert) => boolean;
 }) {
   const [showResolved, setShowResolved] = useState(false);
   const active = alerts.filter((a) => a.status !== "resolved");
@@ -31,7 +38,7 @@ export function AlertQueue({
       {active.length === 0 && <p className="text-muted">No active alerts.</p>}
       <ul className="alert-list">
         {active.map((a) => (
-          <AlertItem key={a.id} alert={a} patientName={byId.get(a.patient_id)?.name ?? a.patient_id} nurse={byId.get(a.patient_id)?.nurse.name ?? "Nurse"} state={stateById.get(a.patient_id)} onAction={onAction} />
+          <AlertItem key={a.id} alert={a} patientName={byId.get(a.patient_id)?.name ?? a.patient_id} nurse={byId.get(a.patient_id)?.nurse.name ?? "Nurse"} state={stateById.get(a.patient_id)} onAction={onAction} active={a.id === activeAlertId} activeNonce={activeNonce} onOpen={onOpen} />
         ))}
       </ul>
       {resolved.length > 0 && (
@@ -42,7 +49,7 @@ export function AlertQueue({
           {showResolved && (
             <ul className="alert-list">
               {resolved.map((a) => (
-                <AlertItem key={a.id} alert={a} patientName={byId.get(a.patient_id)?.name ?? a.patient_id} nurse={byId.get(a.patient_id)?.nurse.name ?? "Nurse"} state={stateById.get(a.patient_id)} onAction={onAction} />
+                <AlertItem key={a.id} alert={a} patientName={byId.get(a.patient_id)?.name ?? a.patient_id} nurse={byId.get(a.patient_id)?.nurse.name ?? "Nurse"} state={stateById.get(a.patient_id)} onAction={onAction} active={a.id === activeAlertId} activeNonce={activeNonce} onOpen={onOpen} />
               ))}
             </ul>
           )}
@@ -58,13 +65,20 @@ function AlertItem({
   nurse,
   state,
   onAction,
+  active,
+  activeNonce,
+  onOpen,
 }: {
   alert: Alert;
   patientName: string;
   nurse: string;
   state: PatientState | undefined;
   onAction: (alert: Alert, by: string, a: AlertAction) => Promise<void>;
+  active: boolean;
+  activeNonce: number;
+  onOpen: (alert: Alert) => boolean;
 }) {
+  const [notFound, setNotFound] = useState(false);
   const [busy, setBusy] = useState<null | "acknowledge" | "resolve" | "note">(null);
   const [error, setError] = useState<string | null>(null);
   const [noteOpen, setNoteOpen] = useState(false);
@@ -91,15 +105,28 @@ function AlertItem({
 
   const resolved = alert.status === "resolved";
   return (
-    <li className={`alert-item sev-${alert.severity} ${resolved ? "alert-resolved" : ""}`}>
+    <li className={`alert-item sev-${alert.severity} ${resolved ? "alert-resolved" : ""} ${active ? "alert-active" : ""}`} aria-current={active ? "true" : undefined}>
       <div className="alert-head">
-        <span className={`sev-badge sev-badge-${alert.severity}`}>{alert.severity}</span>
+        <span className="alert-head-left">
+          <span className={`sev-badge sev-badge-${alert.severity}`}>{alert.severity}</span>
+          {active && <span className="viewing-tag">Viewing</span>}
+        </span>
         <span className="alert-time" title={alert.created_at}>
           {formatClock(alert.created_at)} · {formatWhen(alert.created_at)}
         </span>
       </div>
-      <p className="alert-title">{alert.title}</p>
+      <p className="alert-title">
+        <button
+          type="button"
+          className="alert-open"
+          onClick={() => setNotFound(!onOpen(alert))}
+        >
+          {alert.title}
+          <span className="alert-open-hint">Open record<span className="sr-only"> for {patientName}</span></span>
+        </button>
+      </p>
       <p className="alert-patient">{patientName}</p>
+      {notFound && <p className="alert-notfound" role="alert">Patient record not found for this alert.</p>}
       {alert.quote && <blockquote className="quote">&ldquo;{alert.quote}&rdquo;</blockquote>}
       {alert.detail && <p className="alert-detail">{alert.detail}</p>}
 
@@ -113,7 +140,7 @@ function AlertItem({
         </ul>
       )}
 
-      <WhyThisFlag alert={alert} state={state} />
+      <WhyThisFlag key={active ? `active-${activeNonce}` : "idle"} alert={alert} state={state} defaultOpen={active} />
 
       <p className="alert-status">
         Status: <strong>{alert.status}</strong>

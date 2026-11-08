@@ -198,8 +198,16 @@ export function buildEvidence(alert: Alert, state: PatientState | undefined): Ev
   };
 }
 
-export function WhyThisFlag({ alert, state }: { alert: Alert; state: PatientState | undefined }) {
-  const [open, setOpen] = useState(false);
+export function WhyThisFlag({
+  alert,
+  state,
+  defaultOpen = false,
+}: {
+  alert: Alert;
+  state: PatientState | undefined;
+  defaultOpen?: boolean;
+}) {
+  const [open, setOpen] = useState(defaultOpen);
   const panelId = useId();
   const ev = open ? buildEvidence(alert, state) : null;
 

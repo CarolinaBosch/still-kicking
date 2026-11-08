@@ -28,6 +28,9 @@ export default function Dashboard() {
   const [tests, setTests] = useState<TestState>({ phase: "idle" });
   const [resetting, setResetting] = useState(false);
   const [resetError, setResetError] = useState<string | null>(null);
+  const [activeAlertId, setActiveAlertId] = useState<string | null>(null);
+  const [activeNonce, setActiveNonce] = useState(0);
+  const [focusDetail, setFocusDetail] = useState(0);
   const inflight = useRef(false);
 
   const refresh = useCallback(async () => {
@@ -71,6 +74,29 @@ export default function Dashboard() {
       ) ?? cur,
     );
   }, []);
+
+  const openAlert = useCallback(
+    (alert: Alert): boolean => {
+      if (!patients?.some((s) => s.patient.id === alert.patient_id)) return false;
+      setSelectedId(alert.patient_id);
+      setActiveAlertId(alert.id);
+      setActiveNonce((n) => n + 1);
+      setFocusDetail((n) => n + 1);
+      return true;
+    },
+    [patients],
+  );
+
+  // After an alert opens a record: bring the patient detail into view and move focus to its heading.
+  useEffect(() => {
+    if (focusDetail === 0) return;
+    const heading = document.getElementById("detail-title");
+    if (!heading) return;
+    heading.setAttribute("tabindex", "-1");
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    heading.closest(".col-detail")?.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    heading.focus({ preventScroll: true });
+  }, [focusDetail]);
 
   async function onMissedCall(patientId: string) {
     setMissed((cur) => ({ ...cur, [patientId]: { ...(cur[patientId] ?? NO_MISSED), busy: true, error: null } }));
@@ -198,7 +224,14 @@ export default function Dashboard() {
         <div className="layout">
           <div className="col-patients">
             <h2 className="eyebrow">Patients</h2>
-            <PatientList patients={patients} selectedId={selectedId} onSelect={setSelectedId} />
+            <PatientList
+              patients={patients}
+              selectedId={selectedId}
+              onSelect={(id) => {
+                setSelectedId(id);
+                if (id !== selectedId) setActiveAlertId(null);
+              }}
+            />
           </div>
           <div className="col-detail">
             {selected ? (
@@ -213,7 +246,14 @@ export default function Dashboard() {
             )}
           </div>
           <div className="col-alerts">
-            <AlertQueue alerts={alerts} patients={patients} onAction={onAlertAction} />
+            <AlertQueue
+              alerts={alerts}
+              patients={patients}
+              onAction={onAlertAction}
+              activeAlertId={activeAlertId}
+              activeNonce={activeNonce}
+              onOpen={openAlert}
+            />
           </div>
         </div>
       )}

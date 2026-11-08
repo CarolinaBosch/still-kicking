@@ -33,7 +33,10 @@ export function PatientList({
                     {p.age} · {p.conditions.join(", ")}
                   </span>
                 </span>
-                <StatusLight status={s.status} />
+                <span className="alert-head-left">
+                  {selected && <span className="selected-tag">Selected</span>}
+                  <StatusLight status={s.status} />
+                </span>
               </span>
               <HistoryStrip history={s.history} />
               <span className="patient-card-foot">
