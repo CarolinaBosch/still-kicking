@@ -104,7 +104,7 @@ npm run dev                  # http://localhost:3000 (we ran it with: npm run de
 Environment variables (see [`.env.example`](.env.example)):
 - `ELEVENLABS_API_KEY`, `ELEVENLABS_VOICE_ID`, `ELEVENLABS_AGENT_ID`
 - `DAYTONA_API_KEY`, `DAYTONA_API_URL` (defaults to `https://app.daytona.io/api`)
-- `ANTHROPIC_API_KEY` is in the template but the app does not read it: the LLM runs inside the ElevenLabs agent.
+- No Anthropic key is needed: the Claude LLM runs inside the ElevenLabs agent.
 
 Run the engine tests locally:
 
