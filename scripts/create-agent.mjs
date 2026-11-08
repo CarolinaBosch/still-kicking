@@ -9,6 +9,7 @@
 // updates them instead of creating duplicates. Tool names and parameters must match the
 // useConversationClientTool handlers in src/components/Conversation.tsx and src/lib/types.ts.
 
+import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
@@ -66,7 +67,8 @@ const SUBMIT_CHECKIN = {
   type: "client",
   name: "submit_checkin",
   description:
-    "Save today's structured check-in record. Call it exactly once: right before the goodbye, or right after the 911 " +
+    "Save today's structured check-in record and run the two-week review for the nurse. Returns a short summary to " +
+    "share with the person before goodbye. Call it exactly once: right before the goodbye, or right after the 911 " +
     "instruction in an emergency. Record only what the person actually said; use null for anything not asked or " +
     "unclear. Never guess.",
   parameters: {
@@ -169,9 +171,10 @@ const SUBMIT_CHECKIN = {
   },
   // Generating the full record takes a few seconds; force a short line first so the line is not silent.
   preToolSpeech: "force",
-  // The browser starts the Daytona analysis in the background and answers at once.
+  // The browser waits up to ~22 s for the Daytona two-week analysis and returns a short summary
+  // for the nurse to say before goodbye (or "Saved. Your nurse will review it." on timeout).
   expectsResponse: true,
-  responseTimeoutSecs: 10,
+  responseTimeoutSecs: 25,
 };
 
 const TOOLS = [TRIGGER_EMERGENCY_ALERT, SUBMIT_CHECKIN];
@@ -202,6 +205,19 @@ async function loadPrompt() {
   return { prompt: section("System prompt"), firstMessage: section("First message") };
 }
 
+// Knowledge base: docs/knowledge-base.md as a text document, included in the prompt (usage_mode "prompt":
+// small doc, no retrieval latency). The name carries a content hash so edits create a fresh document.
+async function upsertKnowledgeBase(client) {
+  const text = await readFile(path.join(here, "..", "docs", "knowledge-base.md"), "utf8");
+  const hash = createHash("sha256").update(text).digest("hex").slice(0, 8);
+  const name = `Still Kicking: what this call is (${hash})`;
+  const { documents } = await client.conversationalAi.knowledgeBase.list({ search: "Still Kicking", pageSize: 100 });
+  const existing = documents.find((d) => d.name === name);
+  const id = existing ? existing.id : (await client.conversationalAi.knowledgeBase.documents.createFromText({ text, name })).id;
+  console.log(`${existing ? "Reusing" : "Created"} knowledge base doc ${name} (${id})`);
+  return { type: "text", name, id, usageMode: "prompt" };
+}
+
 async function upsertTool(client, config) {
   const { tools } = await client.conversationalAi.tools.list({ search: config.name, types: "client" });
   const existing = tools.find((t) => t.toolConfig?.name === config.name);
@@ -230,6 +246,7 @@ async function main() {
 
   const toolIds = [];
   for (const tool of TOOLS) toolIds.push(await upsertTool(client, tool));
+  const knowledgeBase = [await upsertKnowledgeBase(client)];
 
   const body = {
     name: AGENT_NAME,
@@ -245,6 +262,7 @@ async function main() {
           llm: LLM,
           temperature: TEMPERATURE,
           toolIds,
+          knowledgeBase,
           builtInTools: {
             endCall: {
               type: "system",
@@ -252,13 +270,34 @@ async function main() {
               description: "End the call after the goodbye, or after telling the person to call 911.",
               params: { systemToolType: "end_call" },
             },
+            // Second language: switches to Spanish mid-call when the person speaks Spanish or asks for it.
+            languageDetection: {
+              type: "system",
+              name: "language_detection",
+              description: "Switch to Spanish if the person speaks Spanish or asks for Spanish; back to English if asked.",
+              params: { systemToolType: "language_detection" },
+            },
+          },
+        },
+      },
+      // English stays the default; Spanish is an additional language (eleven_v4_turbo supports es with the clone).
+      languagePresets: {
+        es: {
+          overrides: {
+            agent: {
+              language: "es",
+              firstMessage:
+                "Hola {{preferred_name}}, le habla su enfermera de Still Kicking para su llamada diaria. ¿Hablo con {{preferred_name}}?",
+            },
           },
         },
       },
       // Warm and a little slower than default for older listeners.
       tts: { voiceId: VOICE_ID, modelId: TTS_MODEL, speed: 0.9, stability: 0.6, similarityBoost: 0.8 },
-      // Older adults pause mid-sentence; give them time before the agent takes the turn.
-      turn: { turnTimeout: 10, turnEagerness: "patient" },
+      // ~1.5 s replies: normal eagerness plus speculative turn (LLM starts during the pause). turnTimeout 10 s
+      // still gives older adults room before the agent re-prompts. Interruptions stay on (client_events
+      // includes "interruption"; no tool disables them).
+      turn: { turnTimeout: 10, turnEagerness: "normal", speculativeTurn: true },
       conversation: { maxDurationSeconds: 600 },
     },
     // Private agent: the browser can only connect with a conversation token from our server.

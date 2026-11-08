@@ -4,8 +4,8 @@
 // Contract: <CallPanel patient onEmergency onAnalysis />. Client tools:
 //   trigger_emergency_alert → POST /api/tools/emergency → onEmergency(Alert)
 //   submit_checkin          → POST /api/calls/complete  → onAnalysis(AnalysisResult)
-// The Daytona analysis is started in the background so the nurse can say goodbye right away;
-// the panel keeps showing its progress after the call ends.
+// submit_checkin waits up to ~22 s for the Daytona analysis so the nurse can say the result in the
+// same call; if it takes longer the agent says goodbye and the panel keeps showing progress.
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ConversationProvider, useConversation, useConversationClientTool } from "@elevenlabs/react";
@@ -34,6 +34,36 @@ type Analysis =
 
 const EMERGENCY_TIMEOUT_MS = 8_000; // agent waits 10 s (responseTimeoutSecs)
 const ANALYSIS_TIMEOUT_MS = 180_000; // fresh Daytona sandbox + engine run
+const SPOKEN_RESULT_WAIT_MS = 22_000; // agent waits 25 s (submit_checkin responseTimeoutSecs)
+const SAVED_FALLBACK = "Saved. Your nurse will review it. Say a warm goodbye and end the call.";
+
+function sentence(text: string): string {
+  const t = text.trim().replace(/\s+/g, " ");
+  if (!t) return "";
+  return /[.!?]$/.test(t) ? t : `${t}.`;
+}
+
+/** Turns the Daytona result into facts the nurse can say back in the same call (never codes or ids). */
+function speakableSummary(result: AnalysisResult, caregiver: string): string {
+  const s = result.summary;
+  const watch = (s?.patterns_to_watch ?? [])
+    .map((p) => p.replace(/[:,-]?\s*(the|your)?\s*nurse will (review|look at)[^.]*\.?$/i, "").trim())
+    .filter(Boolean)
+    .slice(0, 2);
+  const facts = [
+    s?.today ? `Today: ${sentence(s.today)}` : "",
+    s?.medications ? `Medicines: ${sentence(s.medications)}` : "",
+    watch.length ? `Your nurse will look at: ${watch.join("; ")}.` : "",
+    `A summary was sent to ${caregiver}.`,
+  ]
+    .filter(Boolean)
+    .join(" ");
+  return (
+    "Two-week review done. Tell them this in one or two short, gentle sentences, speaking to them as \"you\". " +
+    "Say \"your nurse will look at\" the things to watch in everyday words; never name a diagnosis or condition " +
+    `as fact, never give medicine advice. Facts: ${facts} Then say one warm goodbye and end the call.`
+  );
+}
 
 export function CallPanel(props: CallPanelProps) {
   return (
@@ -110,19 +140,29 @@ function CallPanelInner({ patient, onEmergency, onAnalysis }: CallPanelProps) {
     }
   });
 
-  useConversationClientTool(TOOL_SUBMIT, (params: Record<string, unknown>) => {
-    if (submittedRef.current) return "Already saved. Say a warm goodbye.";
+  useConversationClientTool(TOOL_SUBMIT, async (params: Record<string, unknown>) => {
+    if (submittedRef.current) return "Already saved. Say a warm goodbye and end the call.";
     submittedRef.current = true;
     const record = toCheckinRecord(params ?? {}, patient.id, callIdRef.current || newCallId());
     setAnalysis({ state: "running", since: Date.now() });
-    // Not awaited: the agent says goodbye while Daytona analyzes.
-    postJson<AnalysisResult>("/api/calls/complete", record, ANALYSIS_TIMEOUT_MS)
-      .then((result) => {
+    // The analysis keeps running past the spoken timeout so the dashboard still updates.
+    const analysisRun = postJson<AnalysisResult>("/api/calls/complete", record, ANALYSIS_TIMEOUT_MS).then(
+      (result) => {
         setAnalysis({ state: "done", sandboxId: result.sandbox_id, ms: result.sandbox_ms });
         onAnalysis(result);
-      })
-      .catch((err) => setAnalysis({ state: "error", message: errMessage(err) }));
-    return "Saved. Now say a warm goodbye and end the call.";
+        return result;
+      },
+      (err) => {
+        setAnalysis({ state: "error", message: errMessage(err) });
+        return null;
+      },
+    );
+    const spoken = await Promise.race([
+      analysisRun,
+      new Promise<null>((resolve) => setTimeout(() => resolve(null), SPOKEN_RESULT_WAIT_MS)),
+    ]);
+    if (!spoken) return SAVED_FALLBACK;
+    return speakableSummary(spoken, patient.caregiver?.name || "your family");
   });
 
   // Call timer and analysis elapsed time.
