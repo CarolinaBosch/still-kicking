@@ -80,6 +80,17 @@ body {
     border: 1px solid var(--line); background: var(--surface); border-radius: 0.5rem; padding: 0.35rem 0.7rem;
   }
 
+  .pitch { display: grid; gap: 0.6rem; margin-top: 1rem; grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 768px) { .pitch { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .pitch-card {
+    background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent);
+    border-radius: 0.6rem; padding: 0.55rem 0.8rem; font-size: 0.95rem; line-height: 1.35;
+  }
+  .pitch-label {
+    font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent);
+    margin-bottom: 0.15rem;
+  }
+
   .fixture-banner {
     margin-top: 1rem; padding: 0.6rem 0.9rem; border-radius: 0.5rem;
     background: var(--yellow-soft); color: var(--yellow); font-weight: 600; border: 1px dashed var(--yellow);
@@ -278,6 +289,32 @@ body {
   .skeleton { border-radius: 0.875rem; background: var(--skeleton); animation: pulse 1.4s ease-in-out infinite; }
   .skeleton-card { height: 9rem; margin-bottom: 0.75rem; }
   .skeleton-detail { height: 24rem; }
+
+  /* ---- 14-day pattern grid ---- */
+  .pg-wrap { margin-top: 0.5rem; max-width: 100%; overflow-x: auto; }
+  .pg { width: 100%; table-layout: fixed; border-collapse: separate; border-spacing: 2px; font-size: 0.85rem; }
+  .pg th, .pg td { padding: 0; }
+  .pg-rowhead { width: 9.5rem; text-align: left; font-weight: 600; padding-right: 0.4rem !important; line-height: 1.2; }
+  @media (max-width: 480px) { .pg-rowhead { width: 6.5rem; font-size: 0.75rem; } .pg-day { font-size: 0.6rem !important; } }
+  .pg-day { font-size: 0.72rem; font-weight: 600; color: var(--muted); text-align: center; white-space: nowrap; overflow: hidden; }
+  .pg-cell { height: 1.6rem; text-align: center; border-radius: 4px; font-weight: 700; line-height: 1.6rem; }
+  .pg-today { color: var(--foreground); text-decoration: underline; text-underline-offset: 2px; }
+  .pg-ok { background: var(--surface-2); color: var(--faint); }
+  .pg-none { background: repeating-linear-gradient(135deg, transparent 0 3px, var(--line) 3px 4px); }
+  .pg-hit { background: var(--yellow-soft); color: var(--yellow); box-shadow: inset 0 0 0 1px var(--yellow-dot); }
+  .pg-hit.pg-med { background: var(--red-soft); color: var(--red); box-shadow: inset 0 0 0 1px var(--red); }
+  .pg-weight th { padding-top: 0.35rem !important; }
+  .pg-spark-cell { position: relative; height: 2.6rem; padding-top: 0.35rem !important; }
+  .pg-spark { display: block; width: 100%; height: 2rem; overflow: visible; }
+  .pg-spark polyline { stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; }
+  .pg-spark-up { stroke: var(--red); }
+  .pg-spark-flat { stroke: var(--accent); }
+  .pg-spark-range { position: absolute; left: 0; top: 0; font-size: 0.72rem; }
+  .pg-delta { display: inline-block; font-size: 0.75rem; font-weight: 700; color: var(--muted); }
+  .pg-delta-up { color: var(--red); }
+  .pg-legend { display: flex; flex-wrap: wrap; gap: 0.35rem 1rem; margin-top: 0.6rem; font-size: 0.8rem; color: var(--muted); }
+  .pg-legend > span { display: inline-flex; align-items: center; gap: 0.35rem; }
+  .pg-key { display: inline-block; width: 1.1rem; height: 1.1rem; border-radius: 3px; text-align: center; line-height: 1.1rem; font-weight: 700; font-size: 0.8rem; }
   .reveal { animation: reveal 420ms cubic-bezier(0.2, 0.7, 0.2, 1) both; }
 
   .speaking-bars span {

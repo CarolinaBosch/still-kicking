@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import type { Alert, PatientState } from "@/lib/types";
-import { formatClock, formatWhen } from "./client-api";
+import { formatClock, formatWhen, nurseName } from "./client-api";
 import { ErrorNote, Spinner } from "./ui";
 
 export type AlertAction = { action: "acknowledge" | "resolve"; note?: string };
@@ -103,7 +103,7 @@ function AlertItem({
         <ul className="sms-log" aria-label="Simulated SMS log">
           {alert.sms_log.map((m, i) => (
             <li key={i}>
-              <span className="sms-tag">SMS</span> to {m.to} {m.name}: {m.text}
+              <span className="sms-tag">Simulated SMS</span> to {m.to} {nurseName(m.name)}: {m.text}
             </li>
           ))}
         </ul>
