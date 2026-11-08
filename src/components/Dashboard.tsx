@@ -202,9 +202,21 @@ export default function Dashboard() {
           </div>
         </div>
       )}
+
+      <footer className="demo-footer">
+        <a href={DEMO_VIDEO_URL} target="_blank" rel="noopener noreferrer">
+          Watch the 2-minute demo video
+        </a>
+        <span aria-hidden="true"> · </span>
+        <a href="https://github.com/CarolinaBosch/still-kicking" target="_blank" rel="noopener noreferrer">
+          Code on GitHub
+        </a>
+      </footer>
     </div>
   );
 }
+
+const DEMO_VIDEO_URL = "https://www.loom.com/share/ecdde797d42845019106adb87be5bd30";
 
 function TestResultView({ state }: { state: TestState }) {
   if (state.phase === "error") return <ErrorNote message={state.message} />;
