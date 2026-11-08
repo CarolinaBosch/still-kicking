@@ -103,7 +103,7 @@ function AlertItem({
         <ul className="sms-log" aria-label="Simulated SMS log">
           {alert.sms_log.map((m, i) => (
             <li key={i}>
-              <span className="sms-tag">SMS</span> to {m.to} {m.name}: {m.text}
+              <span className="sms-tag">Simulated SMS</span> to {m.to} {m.name}: {m.text}
             </li>
           ))}
         </ul>
