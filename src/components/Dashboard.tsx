@@ -217,9 +217,26 @@ export default function Dashboard() {
           </div>
         </div>
       )}
+
+      <footer className="clinical-ref" aria-label="Clinical reference">
+        <p>
+          <a href={CLINICAL_REFERENCE_URL} target="_blank" rel="noopener noreferrer">
+            Clinical reference
+            <span className="sr-only"> (AHRQ page on INTERACT Stop and Watch, opens in a new tab)</span>
+          </a>
+          : This prototype is inspired by the idea behind INTERACT&rsquo;s Stop and Watch, an early-warning
+          communication tool that helps caregivers notice and report changes from an older person&rsquo;s usual
+          condition. It is not a diagnostic score and cannot determine the level of care on its own. Stop and Watch
+          was designed for care settings; adapting its ideas for people at home requires clinical validation. A
+          human clinician reviews concerns.
+        </p>
+      </footer>
     </div>
   );
 }
+
+const CLINICAL_REFERENCE_URL =
+  "https://www.ahrq.gov/patient-safety/settings/long-term-care/resource/facilities/ltc/gdmod1.html";
 
 const DEMO_VIDEO_URL = "https://www.loom.com/share/ede33ea18fb5446dbdf6dd002b8bd0f0";
 
