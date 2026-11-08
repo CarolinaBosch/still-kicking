@@ -295,9 +295,9 @@ body {
   .pg-summary-quiet { background: var(--surface-2); border-left-color: var(--line); }
   .pg-summary-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); margin-bottom: 0.2rem; }
   .pg-summary ul { list-style: disc; padding-left: 1.1rem; display: grid; gap: 0.2rem; font-size: 0.9rem; line-height: 1.35; }
-  .pg { --pg-label: 9.5rem; margin-top: 0.75rem; display: grid; gap: 2px; font-size: 0.85rem; min-width: 0; }
+  .pg { --pg-label: 11rem; margin-top: 0.75rem; display: grid; gap: 2px; font-size: 0.85rem; min-width: 0; }
   .pg-row { display: grid; grid-template-columns: var(--pg-label) repeat(var(--pg-days), minmax(0, 1fr)); gap: 2px; align-items: center; min-width: 0; }
-  .pg-label { font-weight: 600; line-height: 1.2; padding-right: 0.4rem; min-width: 0; }
+  .pg-label { font-weight: 600; line-height: 1.2; padding-right: 0.4rem; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .pg-months { height: 1rem; }
   .pg-month { font-size: 0.68rem; font-weight: 700; color: var(--foreground); text-transform: uppercase; letter-spacing: 0.03em; white-space: nowrap; overflow: visible; }
   .pg-day { font-size: 0.72rem; font-weight: 600; color: var(--muted); text-align: center; font-variant-numeric: tabular-nums; min-width: 0; }
@@ -305,7 +305,7 @@ body {
   .pg-last { color: var(--foreground); text-decoration: underline; text-underline-offset: 2px; }
   .pg-cell { height: 1.6rem; display: flex; align-items: center; justify-content: center; border-radius: 4px; font-weight: 700; min-width: 0; font-size: 0.8rem; }
   .pg-key { display: inline-flex; align-items: center; justify-content: center; width: 1.1rem; height: 1.1rem; border-radius: 3px; font-weight: 700; font-size: 0.75rem; }
-  .pg-ok { background: var(--surface-2); color: var(--faint); font-weight: 400; }
+  .pg-ok { background: transparent; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--line) 45%, transparent); }
   .pg-na { background: transparent; color: var(--muted); box-shadow: inset 0 0 0 1px var(--line); border: 1px dashed var(--faint); }
   .pg-none { background: repeating-linear-gradient(135deg, transparent 0 3px, var(--line) 3px 5px); color: var(--muted); }
   .pg-hit { background: var(--yellow-soft); color: var(--yellow); box-shadow: inset 0 0 0 1px var(--yellow-dot); }
@@ -314,7 +314,7 @@ body {
   .pg-delta { font-weight: 700; color: var(--muted); }
   .pg-delta-up { color: var(--red); }
   .pg-weight-row { align-items: stretch; }
-  .pg-weight-label { display: flex; flex-direction: column; justify-content: space-between; font-size: 0.68rem; font-weight: 600; text-align: right; padding: 0.1rem 0.4rem 0.1rem 0; font-variant-numeric: tabular-nums; }
+  .pg-weight-label { display: flex; flex-direction: column; gap: 0.15rem; white-space: normal; font-size: 0.68rem; font-weight: 600; text-align: right; padding: 0.1rem 0.4rem 0.1rem 0; font-variant-numeric: tabular-nums; }
   .pg-weight-track { grid-column: 2 / -1; position: relative; height: 3.2rem; display: grid; grid-template-columns: repeat(var(--pg-days), minmax(0, 1fr)); gap: 2px; background: linear-gradient(var(--line), var(--line)) bottom / 100% 1px no-repeat; }
   .pg-weight-line { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
   .pg-weight-line path { fill: none; stroke-width: 2.5; stroke-linejoin: round; stroke-linecap: round; }
@@ -325,6 +325,27 @@ body {
   .pg-wdot-up { background: var(--red); }
   .pg-wdot-end { width: 9px; height: 9px; margin: 0 0 -4.5px -4.5px; }
   .pg-wgap { grid-row: 1; display: flex; align-items: center; justify-content: center; border-radius: 4px; color: var(--muted); font-size: 0.75rem; font-weight: 700; background: repeating-linear-gradient(135deg, transparent 0 3px, var(--line) 3px 5px); }
+  .pg-weekdays { height: 0.9rem; }
+  .pg-wd { font-size: 0.62rem; font-weight: 600; color: var(--muted); text-align: center; }
+  .pg-today-note { margin-top: 0.6rem; font-size: 0.8rem; font-weight: 600; color: var(--muted); text-align: right; }
+  .pg-pending { background: transparent; border: 1px dotted var(--muted); }
+  .pg-cellwrap { display: block; min-width: 0; }
+  .pg-btn { width: 100%; border: 0; cursor: pointer; font: inherit; font-weight: 700; }
+  .pg-btn:hover { filter: brightness(0.95); }
+  .pg-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .pg-open { outline: 2px solid var(--foreground); outline-offset: 1px; }
+  .pg-quiet { margin: 0.25rem 0 0.1rem; font-size: 0.8rem; color: var(--muted); }
+  .pg-quote { position: relative; margin-top: 0.6rem; padding: 0.5rem 2rem 0.5rem 0.75rem; border-radius: 0.5rem; background: var(--surface-2); font-size: 0.88rem; line-height: 1.4; }
+  .pg-quote-msg { display: block; margin-top: 0.2rem; color: var(--muted); }
+  .pg-quote-close { position: absolute; top: 0.25rem; right: 0.35rem; width: 1.6rem; height: 1.6rem; border: 0; background: transparent; font-size: 1.1rem; cursor: pointer; color: var(--muted); border-radius: 4px; }
+  .pg-quote-close:focus-visible { outline: 2px solid var(--accent); }
+  .pg-insight { margin-top: 0.6rem; font-size: 0.85rem; font-style: italic; color: var(--foreground); }
+  .pg-weight-title { font-size: 0.8rem; font-weight: 700; color: var(--foreground); text-align: left; white-space: nowrap; }
+  .pg-weight-scale { display: flex; flex-direction: column; justify-content: space-between; flex: 1; }
+  .pg-hfweek { background: color-mix(in srgb, var(--red-soft) 70%, transparent); }
+  .pg-hfday { box-shadow: inset 0 -3px 0 var(--red); }
+  .pg-hfkey { background: color-mix(in srgb, var(--red-soft) 70%, transparent); box-shadow: inset 0 -3px 0 var(--red); }
+  .pg-wdot { z-index: 1; }
   .pg-legend { display: flex; flex-wrap: wrap; gap: 0.35rem 1rem; margin-top: 0.75rem; font-size: 0.8rem; color: var(--muted); }
   .pg-legend > li { display: inline-flex; align-items: center; gap: 0.35rem; }
   @media (max-width: 560px) {
@@ -335,7 +356,9 @@ body {
     .pg-day { font-size: 0.62rem; letter-spacing: -0.02em; }
     .pg-month { font-size: 0.6rem; }
     .pg-cell { height: 1.5rem; font-size: 0.72rem; }
-    .pg-weight-row > .pg-weight-label { display: none; }
+    .pg-weight-row > .pg-weight-label { grid-column: 1 / -1; text-align: left; padding: 0.35rem 0 0; }
+    .pg-weight-row .pg-weight-scale { display: none; }
+    .pg-row > .pg-label { white-space: normal; }
     .pg-weight-track { grid-column: 1 / -1; }
   }
   .reveal { animation: reveal 420ms cubic-bezier(0.2, 0.7, 0.2, 1) both; }
