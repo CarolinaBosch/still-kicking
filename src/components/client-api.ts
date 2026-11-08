@@ -111,3 +111,8 @@ export function consecutiveMissed(attempts: { answered: boolean }[]): number {
 export function nurseName(name: string): string {
   return name.replace(/^\s*nurse\s+/i, "");
 }
+
+/** URL slug for the patient call screen: preferred name lowercased ("walt"). The page also accepts the id ("p1"). */
+export function patientSlug(p: { preferred_name: string }): string {
+  return p.preferred_name.trim().toLowerCase();
+}

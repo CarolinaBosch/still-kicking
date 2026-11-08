@@ -334,3 +334,20 @@ body {
   .skeleton, .reveal, .speaking-bars span, .spinner { animation: none; }
   .speaking-bars span { height: 10px; }
 }
+
+/* ---- patient call screen (/patient/[slug]) ---- */
+@layer components {
+  .brand-sub { display: block; font-size: 1rem; font-weight: 600; letter-spacing: 0; color: var(--muted); margin-top: 0.2rem; }
+  .phone-link-text { color: var(--foreground); margin: 0.35rem 0 0.75rem; max-width: 60ch; }
+  .phone-link { display: inline-flex; align-items: center; text-decoration: none; margin-bottom: 0.75rem; }
+
+  .phone-shell { min-height: 100dvh; display: flex; justify-content: center; padding: 1.25rem 1rem 2rem; }
+  .phone { width: 100%; max-width: 34rem; display: flex; flex-direction: column; gap: 1rem; min-width: 0; }
+  .phone-brand { font-weight: 700; color: var(--accent); font-size: 1.1rem; letter-spacing: -0.01em; }
+  .phone-hi { font-size: 1.5rem; font-weight: 600; color: var(--foreground); }
+  .phone-title { font-size: clamp(1.75rem, 7vw, 2.4rem); font-weight: 700; line-height: 1.15; letter-spacing: -0.02em; color: var(--foreground); overflow-wrap: anywhere; }
+  .phone-sub { display: block; margin-top: 0.4rem; font-size: 1.2rem; font-weight: 500; letter-spacing: 0; color: var(--muted); }
+  .phone-note { font-size: 1.1rem; color: var(--foreground); }
+  .phone-center { display: flex; justify-content: center; padding: 3rem 0; font-size: 1.15rem; }
+  .phone-foot { margin-top: auto; padding-top: 1.5rem; font-size: 0.85rem; color: var(--muted); text-align: center; }
+}

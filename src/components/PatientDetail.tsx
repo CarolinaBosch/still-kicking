@@ -1,8 +1,7 @@
 "use client";
 
-import CallPanel from "@/components/CallPanel";
 import type { Alert, AnalysisResult, Attribution, PatientState } from "@/lib/types";
-import { consecutiveMissed, nurseName } from "./client-api";
+import { consecutiveMissed, nurseName, patientSlug } from "./client-api";
 import { PatternGrid } from "./PatternGrid";
 import { ErrorNote, SandboxChip, Spinner, StatusLight } from "./ui";
 
@@ -23,15 +22,11 @@ export function PatientDetail({
   analysis,
   missed,
   onMissedCall,
-  onEmergency,
-  onAnalysis,
 }: {
   state: PatientState;
   analysis: AnalysisResult | null;
   missed: MissedState;
   onMissedCall: () => void;
-  onEmergency: (a: Alert) => void;
-  onAnalysis: (r: AnalysisResult) => void;
 }) {
   const p = state.patient;
   const missedCount = consecutiveMissed(state.attempts);
@@ -60,8 +55,13 @@ export function PatientDetail({
       </div>
 
       <div className="panel">
-        <h3 className="eyebrow">Check-in call</h3>
-        <CallPanel key={p.id} patient={p} onEmergency={onEmergency} onAnalysis={onAnalysis} />
+        <h3 className="eyebrow">Patient&rsquo;s phone</h3>
+        <p className="phone-link-text">
+          In real use the patient gets a phone call. For the demo, open their call screen in a second window.
+        </p>
+        <a className="btn phone-link" href={`/patient/${encodeURIComponent(patientSlug(p))}`} target="_blank" rel="noopener">
+          Open {p.preferred_name}&rsquo;s call screen
+        </a>
         <div className="missed-row">
           <button type="button" className="btn-quiet" onClick={onMissedCall} disabled={missed.busy}>
             {missed.busy ? <Spinner label="Recording…" /> : "Simulate missed call"}
