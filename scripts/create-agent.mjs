@@ -270,6 +270,25 @@ async function main() {
               description: "End the call after the goodbye, or after telling the person to call 911.",
               params: { systemToolType: "end_call" },
             },
+            // Second language: switches to Spanish mid-call when the person speaks Spanish or asks for it.
+            languageDetection: {
+              type: "system",
+              name: "language_detection",
+              description: "Switch to Spanish if the person speaks Spanish or asks for Spanish; back to English if asked.",
+              params: { systemToolType: "language_detection" },
+            },
+          },
+        },
+      },
+      // English stays the default; Spanish is an additional language (eleven_v4_turbo supports es with the clone).
+      languagePresets: {
+        es: {
+          overrides: {
+            agent: {
+              language: "es",
+              firstMessage:
+                "Hola {{preferred_name}}, le habla su enfermera de Still Kicking para su llamada diaria. ¿Hablo con {{preferred_name}}?",
+            },
           },
         },
       },
