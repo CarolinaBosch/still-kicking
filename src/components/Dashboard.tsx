@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import type { Alert, AnalysisResult, MissedCallResult, PatientState, TestRunResult } from "@/lib/types";
+import type { Alert, MissedCallResult, PatientState, TestRunResult } from "@/lib/types";
 import { AlertQueue, type AlertAction } from "./AlertQueue";
 import { api, sortAlerts } from "./client-api";
 import { PatientDetail, type MissedState } from "./PatientDetail";
@@ -24,7 +24,6 @@ export default function Dashboard() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   // Alerts raised during a call show instantly, before the next poll picks them up.
   const [liveAlerts, setLiveAlerts] = useState<Alert[]>([]);
-  const [analyses, setAnalyses] = useState<Record<string, AnalysisResult>>({});
   const [missed, setMissed] = useState<Record<string, MissedState>>({});
   const [tests, setTests] = useState<TestState>({ phase: "idle" });
   const [resetting, setResetting] = useState(false);
@@ -73,23 +72,6 @@ export default function Dashboard() {
     );
   }, []);
 
-  const onEmergency = useCallback(
-    (a: Alert) => {
-      upsertAlert(a);
-      void refresh();
-    },
-    [upsertAlert, refresh],
-  );
-
-  const onAnalysis = useCallback(
-    (r: AnalysisResult) => {
-      setAnalyses((cur) => ({ ...cur, [r.patient_id]: r }));
-      r.new_alerts.forEach(upsertAlert);
-      void refresh();
-    },
-    [upsertAlert, refresh],
-  );
-
   async function onMissedCall(patientId: string) {
     setMissed((cur) => ({ ...cur, [patientId]: { ...(cur[patientId] ?? NO_MISSED), busy: true, error: null } }));
     try {
@@ -128,7 +110,6 @@ export default function Dashboard() {
     try {
       await api<{ ok: true }>("/api/demo/reset", { method: "POST", timeoutMs: 60_000 });
       setLiveAlerts([]);
-      setAnalyses({});
       setMissed({});
       setTests({ phase: "idle" });
       await refresh();
@@ -143,7 +124,7 @@ export default function Dashboard() {
     <div className="shell">
       <header className="site-header">
         <div>
-          <h1 className="brand">Still Kicking</h1>
+          <h1 className="brand">Still Kicking <span className="brand-sub">Nurse dashboard</span></h1>
           <p className="tagline">A warm daily nurse check-in for older adults living at home.</p>
         </div>
         <p className="disclaimer">Prototype. Not a medical device. Not a replacement for 911. Synthetic patients.</p>
@@ -208,11 +189,9 @@ export default function Dashboard() {
             {selected ? (
               <PatientDetail
                 state={selected}
-                analysis={analyses[selected.patient.id] ?? selected.last_analysis}
+                analysis={selected.last_analysis}
                 missed={missed[selected.patient.id] ?? NO_MISSED}
                 onMissedCall={() => void onMissedCall(selected.patient.id)}
-                onEmergency={onEmergency}
-                onAnalysis={onAnalysis}
               />
             ) : (
               <p className="panel text-muted">Select a patient.</p>
