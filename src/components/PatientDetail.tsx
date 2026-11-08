@@ -2,7 +2,7 @@
 
 import CallPanel from "@/components/CallPanel";
 import type { Alert, AnalysisResult, Attribution, PatientState } from "@/lib/types";
-import { consecutiveMissed } from "./client-api";
+import { consecutiveMissed, nurseName } from "./client-api";
 import { PatternGrid } from "./PatternGrid";
 import { ErrorNote, SandboxChip, Spinner, StatusLight } from "./ui";
 
@@ -45,7 +45,7 @@ export function PatientDetail({
               {p.name} <span className="text-muted">(&ldquo;{p.preferred_name}&rdquo;, {p.age})</span>
             </h2>
             <p className="text-muted">
-              {p.conditions.join(" · ")} · Caregiver: {p.caregiver.name} ({p.caregiver.relationship}) · Nurse: {p.nurse.name}
+              {p.conditions.join(" · ")} · Caregiver: {p.caregiver.name} ({p.caregiver.relationship}) · Nurse: {nurseName(p.nurse.name)}
             </p>
           </div>
           <StatusLight status={state.status} large />

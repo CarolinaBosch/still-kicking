@@ -106,3 +106,8 @@ export function consecutiveMissed(attempts: { answered: boolean }[]): number {
   for (let i = attempts.length - 1; i >= 0 && !attempts[i].answered; i--) n++;
   return n;
 }
+
+/** Display-only: seed names already carry the title ("Nurse Sam Example"), and the UI adds its own "Nurse" label. */
+export function nurseName(name: string): string {
+  return name.replace(/^\s*nurse\s+/i, "");
+}
