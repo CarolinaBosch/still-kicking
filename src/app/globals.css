@@ -297,3 +297,52 @@ body {
   .skeleton, .reveal, .speaking-bars span, .spinner { animation: none; }
   .speaking-bars span { height: 10px; }
 }
+
+@layer components {
+  /* ---- 14-day pattern grid ---- */
+  .grid-legend { display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.78rem; flex-wrap: wrap; }
+  .grid-legend .pg-cell { width: 0.8rem; height: 0.8rem; margin-left: 0.4rem; }
+  .pg-wrap { margin-top: 0.6rem; overflow-x: auto; }
+  .pg-row { display: grid; grid-template-columns: minmax(9rem, 12rem) repeat(14, minmax(1.1rem, 1fr)); gap: 3px; align-items: center; min-width: 30rem; }
+  .pg-row + .pg-row { margin-top: 3px; }
+  .pg-head { font-size: 0.72rem; color: var(--faint); font-weight: 600; }
+  .pg-day { text-align: center; }
+  .pg-label { font-size: 0.85rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .pg-cell { display: inline-block; height: 1.1rem; border-radius: 3px; }
+  .pg-pos { background: var(--yellow-dot); }
+  .pg-meds { background: var(--red); }
+  .pg-neg { background: var(--green-soft); border: 1px solid #cfe6d7; }
+  .pg-na { background: var(--surface-2); border: 1px dashed var(--line); }
+  .pg-weight { display: grid; grid-template-columns: minmax(9rem, 12rem) 1fr auto; gap: 0.6rem; align-items: center; margin-top: 0.75rem; }
+  .pg-spark { width: 100%; height: 2rem; }
+  .pg-delta { font-size: 0.85rem; font-weight: 600; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .pg-delta-up { color: var(--red); }
+  .pg-note { margin-top: 0.5rem; font-size: 0.85rem; }
+
+  /* ---- user + finish line ---- */
+  .pitch { display: grid; gap: 0.5rem; margin-top: 1rem; grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 768px) { .pitch { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  .pitch-item { background: var(--surface); border: 1px solid var(--line); border-radius: 0.75rem; padding: 0.6rem 0.9rem; }
+  .pitch-item p { font-size: 0.95rem; }
+
+  /* ---- demo tour ---- */
+  .tour { margin: 1rem 0; background: var(--surface); border: 1px solid var(--line); border-radius: 0.875rem; padding: 0.75rem 1rem; }
+  .tour-top { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 0.9rem; }
+  .tour-steps { display: flex; flex-wrap: wrap; gap: 0.4rem; list-style: none; padding: 0; margin: 0.6rem 0 0; }
+  .tour-step {
+    display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.88rem; font-weight: 600;
+    border: 1px solid var(--line); background: var(--surface-2); color: var(--foreground);
+    border-radius: 999px; padding: 0.3rem 0.75rem 0.3rem 0.35rem; cursor: pointer;
+  }
+  .tour-step:hover { border-color: var(--accent); }
+  .tour-step[aria-current="step"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .tour-num {
+    display: inline-flex; align-items: center; justify-content: center; width: 1.4rem; height: 1.4rem;
+    border-radius: 999px; background: var(--surface); color: var(--accent); font-size: 0.78rem;
+  }
+  .tour-step[aria-current="step"] .tour-num { color: var(--accent); }
+  .tour-note { margin-top: 0.6rem; padding: 0.6rem 0.8rem; border-radius: 0.6rem; background: var(--accent-soft); }
+  .tour-note p { font-size: 0.95rem; }
+  .tour-say { font-style: normal; color: var(--accent); font-weight: 600; }
+  .tour-spot { outline: 3px solid var(--yellow-dot); outline-offset: 4px; border-radius: 0.9rem; transition: outline-color 0.3s; }
+}

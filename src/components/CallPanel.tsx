@@ -34,6 +34,26 @@ type Analysis =
 
 const EMERGENCY_TIMEOUT_MS = 8_000; // agent waits 10 s (responseTimeoutSecs)
 const ANALYSIS_TIMEOUT_MS = 180_000; // fresh Daytona sandbox + engine run
+const SPEAK_WAIT_MS = 22_000; // agent tool timeout is 25 s (scripts/create-agent.mjs)
+
+/** Plain-language result of the Daytona engine for the agent to share before goodbye. Never a diagnosis. */
+export function speakableResult(r: AnalysisResult, caregiverName: string): string {
+  const s = r.summary;
+  const watch = s.patterns_to_watch.slice(0, 2).join("; ");
+  const parts = [
+    "Analysis finished. In one or two short, kind sentences, share this with them in plain words. Do not diagnose and do not give medical advice.",
+    `Summary: ${s.today}`,
+  ];
+  if (s.medications) parts.push(`Medicines: ${s.medications}`);
+  if (watch) parts.push(`Their nurse will review: ${watch}.`);
+  parts.push(
+    s.status === "green"
+      ? `Tell them everything looks steady and ${caregiverName} will get a short summary.`
+      : `Tell them their nurse has been asked to follow up and ${caregiverName} has been sent a summary.`,
+  );
+  parts.push("Then say a warm goodbye and end the call.");
+  return parts.join(" ");
+}
 
 export function CallPanel(props: CallPanelProps) {
   return (
@@ -110,19 +130,27 @@ function CallPanelInner({ patient, onEmergency, onAnalysis }: CallPanelProps) {
     }
   });
 
-  useConversationClientTool(TOOL_SUBMIT, (params: Record<string, unknown>) => {
+  useConversationClientTool(TOOL_SUBMIT, async (params: Record<string, unknown>) => {
     if (submittedRef.current) return "Already saved. Say a warm goodbye.";
     submittedRef.current = true;
     const record = toCheckinRecord(params ?? {}, patient.id, callIdRef.current || newCallId());
     setAnalysis({ state: "running", since: Date.now() });
-    // Not awaited: the agent says goodbye while Daytona analyzes.
-    postJson<AnalysisResult>("/api/calls/complete", record, ANALYSIS_TIMEOUT_MS)
-      .then((result) => {
+    const run = postJson<AnalysisResult>("/api/calls/complete", record, ANALYSIS_TIMEOUT_MS).then(
+      (result) => {
         setAnalysis({ state: "done", sandboxId: result.sandbox_id, ms: result.sandbox_ms });
         onAnalysis(result);
-      })
-      .catch((err) => setAnalysis({ state: "error", message: errMessage(err) }));
-    return "Saved. Now say a warm goodbye and end the call.";
+        return result;
+      },
+      (err) => {
+        setAnalysis({ state: "error", message: errMessage(err) });
+        return null;
+      },
+    );
+    // Wait (briefly) for the Daytona engine so the agent can say the result out loud in the
+    // same call. If the sandbox is slow, the analysis keeps running and the agent says goodbye.
+    const result = await Promise.race([run, new Promise<null>((r) => setTimeout(() => r(null), SPEAK_WAIT_MS))]);
+    if (!result) return "Saved. The nurse will review your notes. Now say a warm goodbye and end the call.";
+    return speakableResult(result, patient.caregiver.name);
   });
 
   // Call timer and analysis elapsed time.

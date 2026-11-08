@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { Alert, AnalysisResult, MissedCallResult, PatientState, TestRunResult } from "@/lib/types";
 import { AlertQueue, type AlertAction } from "./AlertQueue";
+import { DemoTour } from "./DemoTour";
 import { api, sortAlerts } from "./client-api";
 import { PatientDetail, type MissedState } from "./PatientDetail";
 import { PatientList } from "./PatientList";
@@ -155,8 +156,22 @@ export default function Dashboard() {
         </p>
       )}
 
-      <section className="demo-bar" aria-label="Demo controls">
-        <span className="eyebrow">Demo controls</span>
+      <section className="pitch" aria-label="Who it's for">
+        <div className="pitch-item">
+          <span className="eyebrow">User</span>
+          <p>An older adult living alone with a chronic condition, and the daughter or son who worries about them.</p>
+        </div>
+        <div className="pitch-item">
+          <span className="eyebrow">Finish line</span>
+          <p>After every call, the nurse and caregiver know what changed, in plain words, and get alerted at once if it&rsquo;s serious.</p>
+        </div>
+        <div className="pitch-item">
+          <span className="eyebrow">How</span>
+          <p>ElevenLabs voice agent → tool calls → Daytona sandbox runs the analysis → the agent says the result in the same call.</p>
+        </div>
+      </section>
+
+      <DemoTour patients={patients} onSelect={setSelectedId}>
         <button type="button" className="btn" onClick={runTests} disabled={tests.phase === "running"}>
           {tests.phase === "running" ? <Spinner label="Running tests in Daytona…" /> : "Run tests in Daytona"}
         </button>
@@ -165,7 +180,7 @@ export default function Dashboard() {
         </button>
         <TestResultView state={tests} />
         {resetError && <ErrorNote message={resetError} />}
-      </section>
+      </DemoTour>
 
       {loadError && <ErrorNote message={`${loadError} Retrying every few seconds.`} onRetry={() => void refresh()} />}
 
@@ -203,7 +218,7 @@ export default function Dashboard() {
               <p className="panel text-muted">Select a patient.</p>
             )}
           </div>
-          <div className="col-alerts">
+          <div className="col-alerts" data-tour="alerts">
             <AlertQueue alerts={alerts} patients={patients} onAction={onAlertAction} />
           </div>
         </div>

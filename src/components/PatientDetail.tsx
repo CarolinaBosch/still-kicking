@@ -1,6 +1,7 @@
 "use client";
 
 import CallPanel from "@/components/CallPanel";
+import { PatternGrid } from "./PatternGrid";
 import type { Alert, AnalysisResult, Attribution, PatientState } from "@/lib/types";
 import { consecutiveMissed } from "./client-api";
 import { ErrorNote, SandboxChip, Spinner, StatusLight } from "./ui";
@@ -44,7 +45,7 @@ export function PatientDetail({
               {p.name} <span className="text-muted">(&ldquo;{p.preferred_name}&rdquo;, {p.age})</span>
             </h2>
             <p className="text-muted">
-              {p.conditions.join(" · ")} · Caregiver: {p.caregiver.name} ({p.caregiver.relationship}) · Nurse: {p.nurse.name}
+              {p.conditions.join(" · ")} · Caregiver: {p.caregiver.name} ({p.caregiver.relationship}) · Nurse: {nurseName(p.nurse.name)}
             </p>
           </div>
           <StatusLight status={state.status} large />
@@ -58,10 +59,14 @@ export function PatientDetail({
         </ul>
       </div>
 
-      <div className="panel">
+      <div data-tour="patterns">
+        <PatternGrid history={state.history} />
+      </div>
+
+      <div className="panel" data-tour="call">
         <h3 className="eyebrow">Check-in call</h3>
         <CallPanel key={p.id} patient={p} onEmergency={onEmergency} onAnalysis={onAnalysis} />
-        <div className="missed-row">
+        <div className="missed-row" data-tour="missed">
           <button type="button" className="btn-quiet" onClick={onMissedCall} disabled={missed.busy}>
             {missed.busy ? <Spinner label="Recording…" /> : "Simulate missed call"}
           </button>
@@ -78,7 +83,9 @@ export function PatientDetail({
         {missed.error && <ErrorNote message={missed.error} />}
       </div>
 
-      <AnalysisView analysis={analysis} />
+      <div data-tour="summary">
+        <AnalysisView analysis={analysis} />
+      </div>
     </section>
   );
 }
@@ -88,7 +95,7 @@ function AnalysisView({ analysis }: { analysis: AnalysisResult | null }) {
     return (
       <div className="panel">
         <h3 className="eyebrow">Caregiver summary</h3>
-        <p className="text-muted">No analysis yet. Start a check-in call to run the engine in Daytona.</p>
+        <p className="text-muted">No analysis yet for this call. At the end of a check-in the agent sends the record to a fresh Daytona sandbox, and the result appears here and is read out before goodbye.</p>
       </div>
     );
   }
@@ -157,4 +164,9 @@ function SummaryBlock({ title, items, empty }: { title: string; items: string[];
       )}
     </div>
   );
+}
+
+/** Seed names already start with "Nurse"; avoid "Nurse Nurse Sam". */
+export function nurseName(name: string): string {
+  return name.replace(/^nurse\s+/i, "");
 }

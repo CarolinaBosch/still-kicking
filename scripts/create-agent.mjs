@@ -169,9 +169,10 @@ const SUBMIT_CHECKIN = {
   },
   // Generating the full record takes a few seconds; force a short line first so the line is not silent.
   preToolSpeech: "force",
-  // The browser starts the Daytona analysis in the background and answers at once.
+  // The browser waits up to ~22 s for the Daytona engine so the agent can say the result
+  // out loud in the same call; on a slow sandbox it answers "saved" and analysis continues.
   expectsResponse: true,
-  responseTimeoutSecs: 10,
+  responseTimeoutSecs: 25,
 };
 
 const TOOLS = [TRIGGER_EMERGENCY_ALERT, SUBMIT_CHECKIN];
