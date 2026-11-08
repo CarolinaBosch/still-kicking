@@ -9,6 +9,7 @@
 // updates them instead of creating duplicates. Tool names and parameters must match the
 // useConversationClientTool handlers in src/components/Conversation.tsx and src/lib/types.ts.
 
+import { createHash } from "node:crypto";
 import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
@@ -204,6 +205,19 @@ async function loadPrompt() {
   return { prompt: section("System prompt"), firstMessage: section("First message") };
 }
 
+// Knowledge base: docs/knowledge-base.md as a text document, included in the prompt (usage_mode "prompt":
+// small doc, no retrieval latency). The name carries a content hash so edits create a fresh document.
+async function upsertKnowledgeBase(client) {
+  const text = await readFile(path.join(here, "..", "docs", "knowledge-base.md"), "utf8");
+  const hash = createHash("sha256").update(text).digest("hex").slice(0, 8);
+  const name = `Still Kicking: what this call is (${hash})`;
+  const { documents } = await client.conversationalAi.knowledgeBase.list({ search: "Still Kicking", pageSize: 100 });
+  const existing = documents.find((d) => d.name === name);
+  const id = existing ? existing.id : (await client.conversationalAi.knowledgeBase.documents.createFromText({ text, name })).id;
+  console.log(`${existing ? "Reusing" : "Created"} knowledge base doc ${name} (${id})`);
+  return { type: "text", name, id, usageMode: "prompt" };
+}
+
 async function upsertTool(client, config) {
   const { tools } = await client.conversationalAi.tools.list({ search: config.name, types: "client" });
   const existing = tools.find((t) => t.toolConfig?.name === config.name);
@@ -232,6 +246,7 @@ async function main() {
 
   const toolIds = [];
   for (const tool of TOOLS) toolIds.push(await upsertTool(client, tool));
+  const knowledgeBase = [await upsertKnowledgeBase(client)];
 
   const body = {
     name: AGENT_NAME,
@@ -247,6 +262,7 @@ async function main() {
           llm: LLM,
           temperature: TEMPERATURE,
           toolIds,
+          knowledgeBase,
           builtInTools: {
             endCall: {
               type: "system",
